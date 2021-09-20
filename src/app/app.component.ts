@@ -86,6 +86,15 @@ export class AppComponent {
     }
   }
 
+  getImagePath(partType: string) {
+    switch (partType) {
+      case 'head':
+        return '../assets/images/head.webp'    
+      default:
+        return '../assets/images/head.webp'
+    }
+  }
+
   getTotalWeight() {
     var totalWeight = 0
     for (let i = 0; i < this.activeParts.length; i++) {

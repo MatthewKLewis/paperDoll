@@ -4,8 +4,8 @@
     <button>Sort By...</button>
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
       <div class="box" *ngFor="let part of inactiveParts" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
-        <p>{{part.type}}</p>
         <p>{{part.weight}} kgs</p>
         <p>{{part.powerConsumption}} kw</p>
         <p>{{part.description}}</p>
@@ -20,8 +20,8 @@
     <button>Clear All</button>
     <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
       <div class="box" *ngFor="let part of activeParts" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
-        <p>{{part.type}}</p>
         <p>{{part.weight}} kgs</p>
         <p>{{part.powerConsumption}} kw</p>
         <p>{{part.description}}</p>
