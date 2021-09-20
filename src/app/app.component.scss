@@ -53,11 +53,20 @@ button {
 }
 
 .cdk-drag-preview {
+  .icon {
+    width: 60px;
+    height: 60px;
+  }
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    min-height: 100px;
+    margin: 5px;
+    padding: 20px 10px;
+    border: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
     box-sizing: border-box;
-    border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    cursor: move;
+    background: white;
   }
   
   .cdk-drag-placeholder {
@@ -65,7 +74,7 @@ button {
   }
   
   .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    transition: transform 250ms cubic-bezier(1.000, -0.355, 0.000, 1.405);
   }
   
   .example-box:last-child {
@@ -73,5 +82,5 @@ button {
   }
   
   .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    transition: transform 250ms cubic-bezier(1.000, -0.355, 0.000, 1.405);
   }
