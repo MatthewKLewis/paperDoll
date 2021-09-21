@@ -1,9 +1,12 @@
 <div class="wrapper" cdkDropListGroup>
 
-  <div class="header"><marquee>Mech Shop</marquee></div>
+  <div class="header">
+    <marquee>Mech Shop</marquee>
+  </div>
 
   <div class="container">
-    <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
+    <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list"
+      (cdkDropListDropped)="drop($event)">
 
       <button (click)="inactivePartFilter = '' ">All</button>
       <button (click)="inactivePartFilter = 'sensor' ">Heads</button>
@@ -12,19 +15,22 @@
       <button (click)="inactivePartFilter = 'leg' ">Legs</button>
       <button (click)="inactivePartFilter = 'misc' ">Misc</button>
 
-        <div *ngFor="let part of inactiveParts" [class]="'box' + ' ' + part.quality + ' ' + (inactivePartFilter && !part.type.includes(inactivePartFilter) && 'disabled')" (mouseover)="hoverToCompare(part)" cdkDrag>
-          <img class="icon" [src]="getImagePath(part.type)">
-          <p>{{part.name}}</p>
-          <p>{{part.weight}}kgs</p>
-          <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-          <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-          <p>${{part.cost}}</p>
-        </div>
+      <div *ngFor="let part of inactiveParts"
+        [class]="'box' + ' ' + part.quality + ' ' + (inactivePartFilter && !part.type.includes(inactivePartFilter) && 'disabled')"
+        (mouseover)="hoverToCompare(part)" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
+        <p>{{part.name}}</p>
+        <p>{{part.weight}}kgs</p>
+        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
+        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p>${{part.cost}}</p>
+      </div>
     </div>
   </div>
 
   <div class="container">
-    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
+    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list"
+      (cdkDropListDropped)="drop($event)">
       <div [class]="'box ' + part.quality" *ngFor="let part of activeParts" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
@@ -34,12 +40,12 @@
 
   <div class="container">
     <div class="stats">
-      <p>Total Mech Value: </p>
+      <p>Total Mech Value: {{getTotalMechValue()}}</p>
       <hr>
-      <p>Power Production: </p>
-      <p>Power Consumption: </p>
+      <p>Power Production: {{getTotalPowerProduction()}}</p>
+      <p>Power Consumption: {{getTotalPowerConsumption()}}</p>
       <hr>
-      <p>Weight: </p>
+      <p>Weight: {{getTotalWeight()}}</p>
       <hr>
       <p>Head Armor: </p>
       <p>Core Armor: </p>
@@ -76,5 +82,5 @@
       <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
     </div>
   </div>
-  
+
 </div>

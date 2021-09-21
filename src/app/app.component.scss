@@ -128,8 +128,3 @@ hr {
 .cdk-drag-animating { transition: transform 250ms cubic-bezier(1, -0.355, 0, 1.405); }
 .cdk-drag-placeholder { opacity: 0; }
 .example-box:last-child { border: none; }
-
-.example-box.cdk-drag-disabled {
-  background: #ccc;
-  cursor: default;
-}

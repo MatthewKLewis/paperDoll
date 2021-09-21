@@ -24,7 +24,7 @@ interface Part {
   powerConsumption: number;
   description: string;
 
-  cost?: number;
+  cost: number;
   powerProduction?: number;
   attack?: Attack;
   defense?: Defense;
@@ -104,6 +104,7 @@ export class AppComponent {
       weight: 100,
       description: 'an advanced sensor array',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'EXPERT CORE',
@@ -113,6 +114,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 10,
       powerProduction: 300,
+      cost: 100,
     },
     {
       name: 'EXPERT Left ARM',
@@ -122,6 +124,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 10,
       attack: { damageType: 'melee', damage: 10, armorPiercing: 0 },
+      cost: 100,
     },
     {
       name: 'ULTIMATE Right ARM',
@@ -130,6 +133,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'SWIFT LEGS',
@@ -138,6 +142,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'HEAVY LEGS',
@@ -146,6 +151,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'SHOULDER MOUNTED ROCKET SYSTEM',
@@ -154,6 +160,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'SHOULDER MOUNTED LASER SYSTEM',
@@ -162,6 +169,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
   ];
   activeParts: Array<Part> = [
@@ -172,6 +180,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      cost: 100,
     },
     {
       name: 'Standard Core',
@@ -181,6 +190,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 20,
       powerProduction: 200,
+      cost: 100,
     },
     {
       name: 'Standard Right Arm',
@@ -189,6 +199,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 30,
+      cost: 100,
     },
     {
       name: 'Junk Left Arm',
@@ -197,6 +208,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 40,
+      cost: 100,
     },
     {
       name: 'Standard Legs',
@@ -205,6 +217,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 50,
+      cost: 100,
     },
   ];
   activeAndHoverParts: Array<Part> = []
@@ -290,22 +303,14 @@ export class AppComponent {
     }
   }
 
-  getTotalWeight() {
-    var totalWeight = 0;
+  /* // Stat Getters // */
+  getTotalMechValue() {
+    var totalValue = 0;
     for (let i = 0; i < this.activeParts.length; i++) {
-      totalWeight += this.activeParts[i].weight;
+      totalValue += this.activeParts[i].cost || 0;
     }
-    return totalWeight;
+    return totalValue;
   }
-
-  getTotalPowerProduction() {
-    var totalPP = 0;
-    for (let i = 0; i < this.activeParts.length; i++) {
-      totalPP += this.activeParts[i].powerProduction || 0;
-    }
-    return totalPP;
-  }
-
   getTotalPowerConsumption() {
     var totalPC = 0;
     for (let i = 0; i < this.activeParts.length; i++) {
@@ -313,10 +318,24 @@ export class AppComponent {
     }
     return totalPC;
   }
-
+  getTotalPowerProduction() {
+    var totalPP = 0;
+    for (let i = 0; i < this.activeParts.length; i++) {
+      totalPP += this.activeParts[i].powerProduction || 0;
+    }
+    return totalPP;
+  }
+  getTotalWeight() {
+    var totalWeight = 0;
+    for (let i = 0; i < this.activeParts.length; i++) {
+      totalWeight += this.activeParts[i].weight;
+    }
+    return totalWeight;
+  }
   getArrayOfWeapons() {
     return this.activeParts.filter((part: Part)=>{return part.attack})
   }
+
 
   hoverToCompare(hovPart: Part) {
     this.activeAndHoverParts = JSON.parse(JSON.stringify(this.activeParts))
