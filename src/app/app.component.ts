@@ -22,12 +22,16 @@ interface Part {
   quality: string;
   weight: number;
   description: string;
+  armorValue: number;
   
   cost: number;
   powerConsumption?: number;
   powerProduction?: number;
+
   attack?: Attack;
   defense?: Defense;
+
+
 }
 
 function sortByPartType(partA: Part, partB: Part): number {
@@ -100,6 +104,7 @@ export class AppComponent {
       weight: 100,
       description: 'an advanced sensor array',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 400,
     },
     {
@@ -109,6 +114,7 @@ export class AppComponent {
       weight: 600,
       description: 'a mecha part',
       powerProduction: 300,
+      armorValue: 100,
       cost: 600,
     },
     {
@@ -118,6 +124,7 @@ export class AppComponent {
       weight: 200,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       attack: { damageType: 'melee', damage: 10, armorPiercing: 0 },
       cost: 350,
     },
@@ -128,6 +135,7 @@ export class AppComponent {
       weight: 220,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 700,
     },
     {
@@ -137,6 +145,7 @@ export class AppComponent {
       weight: 400,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 1250,
     },
     {
@@ -146,6 +155,7 @@ export class AppComponent {
       weight: 800,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 1400,
     },
     {
@@ -155,6 +165,7 @@ export class AppComponent {
       weight: 160,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 400,
     },
     {
@@ -164,6 +175,7 @@ export class AppComponent {
       weight: 140,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 400,
     },
   ];
@@ -175,6 +187,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
+      armorValue: 100,
       cost: 80,
     },
     {
@@ -184,6 +197,7 @@ export class AppComponent {
       weight: 550,
       description: 'a mecha part',
       powerProduction: 200,
+      armorValue: 100,
       cost: 120,
     },
     {
@@ -193,6 +207,7 @@ export class AppComponent {
       weight: 110,
       description: 'a mecha part',
       powerConsumption: 30,
+      armorValue: 100,
       cost: 100,
     },
     {
@@ -202,6 +217,7 @@ export class AppComponent {
       weight: 140,
       description: 'a mecha part',
       powerConsumption: 40,
+      armorValue: 100,
       cost: 60,
     },
     {
@@ -211,6 +227,7 @@ export class AppComponent {
       weight: 400,
       description: 'a mecha part',
       powerConsumption: 50,
+      armorValue: 100,
       cost: 100,
     },
   ];
@@ -352,6 +369,41 @@ export class AppComponent {
       }
     }
     return totalWeight;
+  }
+  getHeadArmor(hover: boolean = false) {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+    } else {
+      return this.activeParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+    }
+  }
+  getCoreArmor(hover: boolean = false) {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'core'})?.armorValue;
+    } else {
+      return this.activeParts.find((part: Part)=>{return part.type = 'core'})?.armorValue;
+    }
+  }
+  getLarmArmor(hover: boolean = false) {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'larm'})?.armorValue;
+    } else {
+      return this.activeParts.find((part: Part)=>{return part.type = 'larm'})?.armorValue;
+    }
+  }
+  getRarmArmor(hover: boolean = false) {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'rarm'})?.armorValue;
+    } else {
+      return this.activeParts.find((part: Part)=>{return part.type = 'rarm'})?.armorValue;
+    }
+  }
+  getLegArmor(hover: boolean = false) {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'legs'})?.armorValue;
+    } else {
+      return this.activeParts.find((part: Part)=>{return part.type = 'legs'})?.armorValue;
+    }
   }
 
   hoverToCompare(hovPart: Part) {
