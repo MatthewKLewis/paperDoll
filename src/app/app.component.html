@@ -1,20 +1,23 @@
 <div class="wrapper" cdkDropListGroup>
 
-  <div class="header">Mech Shop</div>
+  <div class="header"><marquee>Mech Shop</marquee></div>
 
   <div class="container">
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
-      <div 
-        *ngFor="let part of inactiveParts" cdkDrag
-        [class]="'box' + ' ' + part.quality"
-        (mouseover)="hoverOverPart(part)">
-        <img class="icon" [src]="getImagePath(part.type)">
-        <p>{{part.name}}</p>
-        <p>{{part.weight}}kgs</p>
-        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-        <p>${{part.cost}}</p>
-      </div>
+      <button (click)="inactivePartFilter = ''">All</button>
+      <button (click)="inactivePartFilter = 'sensor'">Heads</button>
+      <button (click)="inactivePartFilter = 'core'">Cores</button>
+      <button (click)="inactivePartFilter = 'arm'">Arms</button>
+      <button (click)="inactivePartFilter = 'leg'">Legs</button>
+      <button (click)="inactivePartFilter = 'misc'">Misc</button>
+        <div cdkDrag *ngFor="let part of inactiveParts" [class]="'box' + ' ' + part.quality" (mouseover)="hoverToCompare(part)">
+          <img class="icon" [src]="getImagePath(part.type)">
+          <p>{{part.name}}</p>
+          <p>{{part.weight}}kgs</p>
+          <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
+          <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+          <p>${{part.cost}}</p>
+        </div>
     </div>
   </div>
 
@@ -67,7 +70,6 @@
 
   <div class="container">
     <div class="stats">
-      <button mat-raised-button color="primary">Switch View</button>
       <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
       <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
     </div>

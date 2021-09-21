@@ -94,6 +94,7 @@ export class AppComponent {
 
   //audio
   anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.wav')
+  inactivePartFilter: string = ''
 
   inactiveParts: Array<Part> = [
     {
@@ -208,6 +209,9 @@ export class AppComponent {
   ];
   activeAndHoverParts: Array<Part> = []
 
+  constructor() {
+    this.anvilHit.volume = 0.1
+  }
 
   drop(event: CdkDragDrop<any[]>) {
     var newContainerId = event.container.id;
@@ -271,6 +275,10 @@ export class AppComponent {
     this.anvilHit.play()
   }
 
+  filterInactiveParts() {
+    return this.inactiveParts.filter((part: Part)=>{return !this.inactivePartFilter || part.type == this.inactivePartFilter})
+  }
+
   getImagePath(partType: string) {
     switch (partType) {
       case 'sensor':
@@ -314,7 +322,7 @@ export class AppComponent {
     return this.activeParts.filter((part: Part)=>{return part.attack})
   }
 
-  hoverOverPart(hovPart: Part) {
+  hoverToCompare(hovPart: Part) {
     this.activeAndHoverParts = JSON.parse(JSON.stringify(this.activeParts))
     this.activeAndHoverParts[this.activeAndHoverParts.findIndex((part: Part)=>{return part.type == hovPart.type})] = hovPart;
   }
