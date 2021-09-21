@@ -27,7 +27,7 @@
           <p>{{part.weight}}kgs</p>
           <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
           <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-          <p>${{part.cost.toFixed(2)}}</p>
+          <p>{{part.cost}}</p>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
           <p>{{part.weight}}kgs</p>
           <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
           <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-          <p>${{part.cost.toFixed(2)}}</p>
+          <p>{{part.cost}}</p>
         </div>
       </div>
     </div>
@@ -82,14 +82,21 @@
             > {{getTotalWeight(true)}}
           </span>
         </p>
+        <p class="sub">Top Weight: 0</p>
+        <p class="sub">Leg Weight: 0</p>
         <p>Leg Power: {{'xxx'}}</p>
         <p>Booster Power: {{'xxx'}}</p>
         <hr>
         <p>Head Armor: {{getHeadArmor(false)}}</p>
+        <p class="sub">Head Thermal Resistance: 0</p>
         <p>Core Armor: {{getCoreArmor(false)}}</p>
+        <p class="sub">Core Thermal Resistance: 0</p>
         <p>L Arm Armor: {{getLarmArmor(false)}}</p>
+        <p class="sub">L Arm Thermal Resistance: 0</p>
         <p>R Arm Armor: {{getRarmArmor(false)}}</p>
+        <p class="sub">R Arm Thermal Resistance: 0</p>
         <p>Leg Armor: {{getLegArmor(false)}}</p>
+        <p class="sub">Leg Thermal Resistance: 0</p>
         <hr>
         <p>R Arm Weapon:</p>
         <p>L Arm Weapon:</p>

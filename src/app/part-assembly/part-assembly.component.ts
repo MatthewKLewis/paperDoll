@@ -4,74 +4,46 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-
-interface Attack {
-  damageType: string;
-  damage: number;
-  armorPiercing: number;
-}
-
-interface Defense {
-  name: string;
-  type: string;
-}
-
-interface Part {
-  name: string;
-  type: string;
-  quality: string;
-  weight: number;
-  description: string;
-  armorValue: number;
-  
-  cost: number;
-  powerConsumption?: number;
-  powerProduction?: number;
-
-  attack?: Attack;
-  defense?: Defense;
-
-
-}
+import { Part, Attack, Defense } from '../parts-service.service'
 
 function sortByPartType(partA: Part, partB: Part): number {
   var partAValue = 0;
   var partBValue = 0;
   switch (partA.type) {
     case 'sensor':
-      partAValue = 5;
+      partAValue = 10.5;
       break;
     case 'core':
-      partAValue = 4;
+      partAValue = 6.5;
       break;
     case 'rarm':
-      partAValue = 3;
+      partAValue = 4.5;
       break;
     case 'larm':
-      partAValue = 3;
+      partAValue = 3.5;
       break;
     case 'legs':
-      partAValue = 2;
+      partAValue = 2.5;
       break;
     case 'misc':
-      partAValue = 1;
+      partAValue = 1.5;
       break;
     default:
-      partAValue = 0;
+      partAValue = 0.5;
       break;
   }
   switch (partB.type) {
     case 'sensor':
-      partBValue = 5;
+      partBValue = 10;
       break;
     case 'core':
-      partBValue = 4;
+      partBValue = 6;
       break;
     case 'rarm':
-      partAValue = 3;
+      partBValue = 4;
       break;
     case 'larm':
-      partAValue = 3;
+      partBValue = 3;
       break;
     case 'legs':
       partBValue = 2;
@@ -92,14 +64,13 @@ function sortByPartType(partA: Part, partB: Part): number {
   styleUrls: ['./part-assembly.component.scss'],
 })
 export class PartAssemblyComponent {
-  //audio
   anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.wav')
   inactivePartFilter: string = ''
-
   inactiveParts: Array<Part> = [
     {
       name: 'EXPERT HEAD',
       type: 'sensor',
+      manufacturer: 'Anaheim Electronics',
       quality: 'performance',
       weight: 100,
       description: 'an advanced sensor array',
@@ -110,6 +81,7 @@ export class PartAssemblyComponent {
     {
       name: 'EXPERT CORE',
       type: 'core',
+      manufacturer: 'Anaheim Electronics',
       quality: 'performance',
       weight: 600,
       description: 'a mecha part',
@@ -120,6 +92,7 @@ export class PartAssemblyComponent {
     {
       name: 'EXPERT Left ARM',
       type: 'larm',
+      manufacturer: 'Anaheim Electronics',
       quality: 'performance',
       weight: 200,
       description: 'a mecha part',
@@ -131,6 +104,7 @@ export class PartAssemblyComponent {
     {
       name: 'ULTIMATE Right ARM',
       type: 'rarm',
+      manufacturer: 'Anaheim Electronics',
       quality: 'elite',
       weight: 220,
       description: 'a mecha part',
@@ -141,6 +115,7 @@ export class PartAssemblyComponent {
     {
       name: 'SWIFT LEGS',
       type: 'legs',
+      manufacturer: 'Anaheim Electronics',
       quality: 'master',
       weight: 400,
       description: 'a mecha part',
@@ -151,6 +126,7 @@ export class PartAssemblyComponent {
     {
       name: 'HEAVY LEGS',
       type: 'legs',
+      manufacturer: 'Anaheim Electronics',
       quality: 'master',
       weight: 800,
       description: 'a mecha part',
@@ -161,6 +137,7 @@ export class PartAssemblyComponent {
     {
       name: 'SHOULDER ROCKET SYSTEM',
       type: 'rshoulder',
+      manufacturer: 'Anaheim Electronics',
       quality: 'performance',
       weight: 160,
       description: 'a mecha part',
@@ -171,6 +148,7 @@ export class PartAssemblyComponent {
     {
       name: 'SHOULDER LASER SYSTEM',
       type: 'lshoulder',
+      manufacturer: 'Anaheim Electronics',
       quality: 'performance',
       weight: 140,
       description: 'a mecha part',
@@ -183,6 +161,7 @@ export class PartAssemblyComponent {
     {
       name: 'Junk Head',
       type: 'sensor',
+      manufacturer: 'Anaheim Electronics',
       quality: 'junk',
       weight: 100,
       description: 'a mecha part',
@@ -193,6 +172,7 @@ export class PartAssemblyComponent {
     {
       name: 'Standard Core',
       type: 'core',
+      manufacturer: 'Anaheim Electronics',
       quality: 'stock',
       weight: 550,
       description: 'a mecha part',
@@ -203,6 +183,7 @@ export class PartAssemblyComponent {
     {
       name: 'Standard Right Arm',
       type: 'rarm',
+      manufacturer: 'Anaheim Electronics',
       quality: 'stock',
       weight: 110,
       description: 'a mecha part',
@@ -213,6 +194,7 @@ export class PartAssemblyComponent {
     {
       name: 'Junk Left Arm',
       type: 'larm',
+      manufacturer: 'Anaheim Electronics',
       quality: 'junk',
       weight: 140,
       description: 'a mecha part',
@@ -223,6 +205,7 @@ export class PartAssemblyComponent {
     {
       name: 'Standard Legs',
       type: 'legs',
+      manufacturer: 'Anaheim Electronics',
       quality: 'stock',
       weight: 400,
       description: 'a mecha part',
@@ -235,6 +218,14 @@ export class PartAssemblyComponent {
 
   constructor() {
     this.anvilHit.volume = 0.1
+    
+    //sort
+    this.inactiveParts.sort((partA, partB) => {
+      return sortByPartType(partA, partB);
+    });
+    this.activeParts.sort((partA, partB) => {
+      return sortByPartType(partA, partB);
+    });
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -372,37 +363,37 @@ export class PartAssemblyComponent {
   }
   getHeadArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'sensor'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'sensor'})?.armorValue;
     }
   }
   getCoreArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'core'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'core'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'core'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'core'})?.armorValue;
     }
   }
   getLarmArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'larm'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'larm'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'larm'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'larm'})?.armorValue;
     }
   }
   getRarmArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'rarm'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'rarm'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'rarm'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'rarm'})?.armorValue;
     }
   }
   getLegArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'legs'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'legs'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'legs'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'legs'})?.armorValue;
     }
   }
 
