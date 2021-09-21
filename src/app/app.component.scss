@@ -81,7 +81,7 @@ hr {
   .master {
     color: white;
     font-weight: bold;
-    background-image: url("../assets/images/carbonFiber.png");
+    filter: drop-shadow(0 0 0.75rem crimson);
     box-shadow: inset 0px 0px 0px 1px black;
   }
 
@@ -123,16 +123,16 @@ hr {
 // DRAG PREVIEW
 .cdk-drag-preview {
   display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    margin: 5px;
-    padding: 10px 10px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    .icon {
-      width: 30px;
-      height: 30px;
-      border: 1px solid #999;
-    }
+  grid-template-columns: 38px 50% auto auto auto;
+  margin: 5px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  .icon {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #999;
+  }
 }
 .junk {
   background-color: rgb(112, 89, 89);
@@ -157,7 +157,6 @@ hr {
 .master {
   color: white;
   font-weight: bold;
-  background-image: url("../assets/images/carbonFiber.png");
   box-shadow: inset 0px 0px 0px 1px black;
 }
 .disabled {
@@ -166,3 +165,7 @@ hr {
   padding: 0px;
   opacity: 0;
 }
+
+/* micro classes */
+.red-text {  color: red; }
+.blue-text {  color: blue; font-weight: bold; }

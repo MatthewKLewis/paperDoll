@@ -17,7 +17,7 @@
 
       <div *ngFor="let part of inactiveParts"
         [class]="'box' + ' ' + part.quality + ' ' + (inactivePartFilter && !part.type.includes(inactivePartFilter) && 'disabled')"
-        (mouseover)="hoverToCompare(part)" cdkDrag>
+        (mouseenter)="hoverToCompare(part)" (mouseleave)="hoverClear()" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
@@ -44,12 +44,42 @@
 
   <div class="container">
     <div class="stats">
-      <p>Total Mech Value: {{getTotalMechValue()}}</p>
+      <p>
+        Total Mech Value: {{getTotalMechValue(false)}}
+        <span
+          *ngIf="activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': getTotalMechValue(false) > getTotalMechValue(true), 'blue-text': getTotalMechValue(false) < getTotalMechValue(true)} ">
+          > {{getTotalMechValue(true)}}
+        </span>
+      </p>
       <hr>
-      <p>Power Production: {{getTotalPowerProduction()}}</p>
-      <p>Power Consumption: {{getTotalPowerConsumption()}}</p>
+      <p>
+        Power Production: {{getTotalPowerProduction(false)}}
+        <span
+          *ngIf="activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': getTotalPowerProduction(false) > getTotalPowerProduction(true), 'blue-text': getTotalPowerProduction(false) < getTotalPowerProduction(true)} ">
+          > {{getTotalPowerProduction(true)}}
+        </span>
+      </p>
+      <p>
+        Power Consumption: {{getTotalPowerConsumption(false)}}
+        <span
+          *ngIf="activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': getTotalPowerConsumption(false) < getTotalPowerConsumption(true), 'blue-text': getTotalPowerConsumption(false) > getTotalPowerConsumption(true)} ">
+          > {{getTotalPowerConsumption(true)}}
+        </span>
+      </p>
       <hr>
-      <p>Weight: {{getTotalWeight()}}</p>
+      <p>
+        Total Weight: {{getTotalWeight(false)}}
+        <span
+          *ngIf="activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': getTotalWeight(false) < getTotalWeight(true), 'blue-text': getTotalWeight(false) > getTotalWeight(true)} ">
+          > {{getTotalWeight(true)}}
+        </span>
+      </p>
+      <p>Leg Power: {{'xxx'}}</p>
+      <p>Booster Power: {{'xxx'}}</p>
       <hr>
       <p>Head Armor: </p>
       <p>Core Armor: </p>
