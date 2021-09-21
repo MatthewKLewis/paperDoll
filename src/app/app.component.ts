@@ -104,7 +104,7 @@ export class AppComponent {
       weight: 100,
       description: 'an advanced sensor array',
       powerConsumption: 10,
-      cost: 100,
+      cost: 400,
     },
     {
       name: 'EXPERT CORE',
@@ -114,7 +114,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 10,
       powerProduction: 300,
-      cost: 100,
+      cost: 600,
     },
     {
       name: 'EXPERT Left ARM',
@@ -124,7 +124,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 10,
       attack: { damageType: 'melee', damage: 10, armorPiercing: 0 },
-      cost: 100,
+      cost: 350,
     },
     {
       name: 'ULTIMATE Right ARM',
@@ -133,7 +133,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 700,
     },
     {
       name: 'SWIFT LEGS',
@@ -142,7 +142,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 1250,
     },
     {
       name: 'HEAVY LEGS',
@@ -151,25 +151,25 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 1400,
     },
     {
-      name: 'SHOULDER MOUNTED ROCKET SYSTEM',
+      name: 'SHOULDER ROCKET SYSTEM',
       type: 'rshoulder',
       quality: 'performance',
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 400,
     },
     {
-      name: 'SHOULDER MOUNTED LASER SYSTEM',
+      name: 'SHOULDER LASER SYSTEM',
       type: 'lshoulder',
       quality: 'performance',
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 400,
     },
   ];
   activeParts: Array<Part> = [
@@ -180,7 +180,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 10,
-      cost: 100,
+      cost: 80,
     },
     {
       name: 'Standard Core',
@@ -190,7 +190,7 @@ export class AppComponent {
       description: 'a mecha part',
       powerConsumption: 20,
       powerProduction: 200,
-      cost: 100,
+      cost: 120,
     },
     {
       name: 'Standard Right Arm',
@@ -208,7 +208,7 @@ export class AppComponent {
       weight: 100,
       description: 'a mecha part',
       powerConsumption: 40,
-      cost: 100,
+      cost: 60,
     },
     {
       name: 'Standard Legs',

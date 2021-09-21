@@ -23,7 +23,7 @@
         <p>{{part.weight}}kgs</p>
         <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
         <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-        <p>${{part.cost}}</p>
+        <p>${{part.cost.toFixed(2)}}</p>
       </div>
     </div>
   </div>
@@ -34,6 +34,10 @@
       <div [class]="'box ' + part.quality" *ngFor="let part of activeParts" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
+        <p>{{part.weight}}kgs</p>
+        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
+        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p>${{part.cost.toFixed(2)}}</p>
       </div>
     </div>
   </div>
@@ -61,12 +65,14 @@
   </div>
 
   <div class="container">
-    <div class="stats">1</div>
+    <div class="stub">
+      <b>Career Stats:</b>
+    </div>
   </div>
 
   <div class="container">
-    <div class="stats">
-      <b>Active and Hover Parts</b>
+    <div class="stub">
+      <b>Next Mission:</b>
     </div>
     <!-- <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
       <div [class]="'box ' + part.quality" *ngFor="let part of activeAndHoverParts" cdkDrag>
@@ -77,7 +83,7 @@
   </div>
 
   <div class="container">
-    <div class="stats">
+    <div class="stub">
       <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
       <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
     </div>
