@@ -1,6 +1,8 @@
 <div class="wrapper" cdkDropListGroup>
+
+  <div class="header">Mech Shop</div>
+
   <div class="container">
-    <h2>Inventory</h2>
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
       <ng-component></ng-component>
       <div [class]="'box' + ' ' + part.quality" *ngFor="let part of inactiveParts" cdkDrag>
@@ -15,17 +17,15 @@
   </div>
 
   <div class="container">
-    <h2>Your Mech</h2>
-    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="paper-doll" (cdkDropListDropped)="drop($event)">
-      <div [class]="'doll' + ' ' + part.type + ' ' + part.quality" *ngFor="let part of activeParts" cdkDrag>
-        <img class='picture' [src]="getImagePath(part.type)">
+    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
+      <div [class]="'box ' + part.quality" *ngFor="let part of activeParts" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <h2>Stats</h2>
     <div class="stats">
       <button mat-raised-button color="primary">Switch View</button>
       <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
@@ -36,4 +36,15 @@
       <p>Weight: {{getTotalWeight()}}</p>
     </div>
   </div>
+
+  <div class="container">
+    <div class="stats"></div>
+  </div>
+  <div class="container">
+    <div class="stats"></div>
+  </div>
+  <div class="container">
+    <div class="stats"></div>
+  </div>
+  
 </div>
