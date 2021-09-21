@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatButtonModule} from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatMenuModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -29,25 +29,48 @@
 
   <div class="container">
     <div class="stats">
-      <button mat-raised-button color="primary">Switch View</button>
-      <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
-      <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
+      <p>Total Mech Value: </p>
+      <hr>
+      <p>Power Production: </p>
+      <p>Power Consumption: </p>
+      <hr>
+      <p>Weight: </p>
+      <hr>
+      <p>Head Armor: </p>
+      <p>Core Armor: </p>
+      <p>L Arm Armor: </p>
+      <p>R Arm Armor: </p>
+      <p>Leg Armor: </p>
+      <hr>
+      <p>R Arm Weapon:</p>
+      <p>L Arm Weapon:</p>
+      <p>Additional Weapon:</p>
+      <p>Additional Weapon:</p>
     </div>
   </div>
 
   <div class="container">
     <div class="stats">1</div>
   </div>
+
   <div class="container">
-    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
+    <div class="stats">
+      <b>Active and Hover Parts</b>
+    </div>
+    <!-- <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
       <div [class]="'box ' + part.quality" *ngFor="let part of activeAndHoverParts" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
       </div>
-    </div>
+    </div> -->
   </div>
+
   <div class="container">
-    <div class="stats">3</div>
+    <div class="stats">
+      <button mat-raised-button color="primary">Switch View</button>
+      <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
+      <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
+    </div>
   </div>
   
 </div>

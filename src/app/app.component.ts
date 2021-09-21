@@ -95,9 +95,6 @@ export class AppComponent {
   //audio
   anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.wav')
 
-  errorMessage: string = '';
-  partFilter: string = '';
-
   inactiveParts: Array<Part> = [
     {
       name: 'EXPERT HEAD',
@@ -272,12 +269,6 @@ export class AppComponent {
 
     //play anvil hit
     this.anvilHit.play()
-  }
-
-  filterInactiveParts() {
-    return this.inactiveParts.filter((part) => {
-      return !this.partFilter || part.type.includes(this.partFilter);
-    });
   }
 
   getImagePath(partType: string) {
