@@ -91,6 +91,10 @@ function sortByPartType(partA: Part, partB: Part): number {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+
+  //audio
+  anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.wav')
+
   errorMessage: string = '';
   partFilter: string = '';
 
@@ -162,7 +166,6 @@ export class AppComponent {
       powerConsumption: 10,
     },
   ];
-
   activeParts: Array<Part> = [
     {
       name: 'Junk Head',
@@ -206,6 +209,8 @@ export class AppComponent {
       powerConsumption: 50,
     },
   ];
+  activeAndHoverParts: Array<Part> = []
+
 
   drop(event: CdkDragDrop<any[]>) {
     var newContainerId = event.container.id;
@@ -264,6 +269,9 @@ export class AppComponent {
     this.activeParts.sort((partA, partB) => {
       return sortByPartType(partA, partB);
     });
+
+    //play anvil hit
+    this.anvilHit.play()
   }
 
   filterInactiveParts() {
@@ -309,6 +317,15 @@ export class AppComponent {
       totalPC += this.activeParts[i].powerConsumption;
     }
     return totalPC;
+  }
+
+  getArrayOfWeapons() {
+    return this.activeParts.filter((part: Part)=>{return part.attack})
+  }
+
+  hoverOverPart(hovPart: Part) {
+    this.activeAndHoverParts = JSON.parse(JSON.stringify(this.activeParts))
+    this.activeAndHoverParts[this.activeAndHoverParts.findIndex((part: Part)=>{return part.type == hovPart.type})] = hovPart;
   }
 
   isMechaComplete(): boolean {

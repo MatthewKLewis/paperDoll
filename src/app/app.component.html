@@ -4,8 +4,10 @@
 
   <div class="container">
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
-      <ng-component></ng-component>
-      <div [class]="'box' + ' ' + part.quality" *ngFor="let part of inactiveParts" cdkDrag>
+      <div 
+        *ngFor="let part of inactiveParts" cdkDrag
+        [class]="'box' + ' ' + part.quality"
+        (mouseover)="hoverOverPart(part)">
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
@@ -30,21 +32,22 @@
       <button mat-raised-button color="primary">Switch View</button>
       <button [disabled]="!isMechaComplete()" mat-raised-button color="primary">Ready!</button>
       <p *ngIf="!isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
-      <p>Power Production: {{getTotalPowerProduction()}}</p>
-      <p>Power Consumption: {{getTotalPowerConsumption()}}</p>
-      <p>Net Power: {{getTotalPowerProduction() - getTotalPowerConsumption()}}</p>
-      <p>Weight: {{getTotalWeight()}}</p>
     </div>
   </div>
 
   <div class="container">
-    <div class="stats"></div>
+    <div class="stats">1</div>
   </div>
   <div class="container">
-    <div class="stats"></div>
+    <div id="activePartsElement" cdkDropList [cdkDropListData]="activeParts" class="list" (cdkDropListDropped)="drop($event)">
+      <div [class]="'box ' + part.quality" *ngFor="let part of activeAndHoverParts" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
+        <p>{{part.name}}</p>
+      </div>
+    </div>
   </div>
   <div class="container">
-    <div class="stats"></div>
+    <div class="stats">3</div>
   </div>
   
 </div>
