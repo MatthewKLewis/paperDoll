@@ -84,6 +84,13 @@ hr {
     background-image: url("../assets/images/carbonFiber.png");
     box-shadow: inset 0px 0px 0px 1px black;
   }
+
+  .disabled {
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    opacity: 0;
+  }
 }
 
 .stats {
@@ -121,3 +128,8 @@ hr {
 .cdk-drag-animating { transition: transform 250ms cubic-bezier(1, -0.355, 0, 1.405); }
 .cdk-drag-placeholder { opacity: 0; }
 .example-box:last-child { border: none; }
+
+.example-box.cdk-drag-disabled {
+  background: #ccc;
+  cursor: default;
+}

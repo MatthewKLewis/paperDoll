@@ -4,13 +4,15 @@
 
   <div class="container">
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="inactiveParts" class="list" (cdkDropListDropped)="drop($event)">
-      <button (click)="inactivePartFilter = ''">All</button>
-      <button (click)="inactivePartFilter = 'sensor'">Heads</button>
-      <button (click)="inactivePartFilter = 'core'">Cores</button>
-      <button (click)="inactivePartFilter = 'arm'">Arms</button>
-      <button (click)="inactivePartFilter = 'leg'">Legs</button>
-      <button (click)="inactivePartFilter = 'misc'">Misc</button>
-        <div cdkDrag *ngFor="let part of inactiveParts" [class]="'box' + ' ' + part.quality" (mouseover)="hoverToCompare(part)">
+
+      <button (click)="inactivePartFilter = '' ">All</button>
+      <button (click)="inactivePartFilter = 'sensor' ">Heads</button>
+      <button (click)="inactivePartFilter = 'core' ">Cores</button>
+      <button (click)="inactivePartFilter = 'arm' ">Arms</button>
+      <button (click)="inactivePartFilter = 'leg' ">Legs</button>
+      <button (click)="inactivePartFilter = 'misc' ">Misc</button>
+
+        <div *ngFor="let part of inactiveParts" [class]="'box' + ' ' + part.quality + ' ' + (inactivePartFilter && !part.type.includes(inactivePartFilter) && 'disabled')" (mouseover)="hoverToCompare(part)" cdkDrag>
           <img class="icon" [src]="getImagePath(part.type)">
           <p>{{part.name}}</p>
           <p>{{part.weight}}kgs</p>

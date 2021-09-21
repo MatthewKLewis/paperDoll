@@ -275,10 +275,6 @@ export class AppComponent {
     this.anvilHit.play()
   }
 
-  filterInactiveParts() {
-    return this.inactiveParts.filter((part: Part)=>{return !this.inactivePartFilter || part.type == this.inactivePartFilter})
-  }
-
   getImagePath(partType: string) {
     switch (partType) {
       case 'sensor':
