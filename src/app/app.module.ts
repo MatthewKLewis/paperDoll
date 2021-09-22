@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomPartComponent } from './custom-part/custom-part.component';
 import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
+import { MatSliderModule } from '@angular/material/slider'; 
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
     MatButtonModule,
     BrowserAnimationsModule,
     MatTooltipModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

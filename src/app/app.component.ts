@@ -38,7 +38,7 @@ function sortByPartType(partA: Part, partB: Part): number {
   var partAValue = 0;
   var partBValue = 0;
   switch (partA.type) {
-    case 'sensor':
+    case 'head':
       partAValue = 5;
       break;
     case 'core':
@@ -61,7 +61,7 @@ function sortByPartType(partA: Part, partB: Part): number {
       break;
   }
   switch (partB.type) {
-    case 'sensor':
+    case 'head':
       partBValue = 5;
       break;
     case 'core':
@@ -99,10 +99,10 @@ export class AppComponent {
   inactiveParts: Array<Part> = [
     {
       name: 'EXPERT HEAD',
-      type: 'sensor',
+      type: 'head',
       quality: 'performance',
       weight: 100,
-      description: 'an advanced sensor array',
+      description: 'an advanced head array',
       powerConsumption: 10,
       armorValue: 100,
       cost: 400,
@@ -182,7 +182,7 @@ export class AppComponent {
   activeParts: Array<Part> = [
     {
       name: 'Junk Head',
-      type: 'sensor',
+      type: 'head',
       quality: 'junk',
       weight: 100,
       description: 'a mecha part',
@@ -304,7 +304,7 @@ export class AppComponent {
 
   getImagePath(partType: string) {
     switch (partType) {
-      case 'sensor':
+      case 'head':
         return '../assets/images/Head.png';
       case 'core':
         return '../assets/images/Core.png';
@@ -372,9 +372,9 @@ export class AppComponent {
   }
   getHeadArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type = 'head'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type = 'sensor'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type = 'head'})?.armorValue;
     }
   }
   getCoreArmor(hover: boolean = false) {

@@ -28,11 +28,16 @@ hr {
     background-color: #ccc;
     border-radius: 5px;
     grid-column: 1/4;
+
+    input, span {
+        margin: 5px;
+        height: 24px;
+    }
 }
 
 .section-title {
   margin: 5px;
-  text-align: center;
+  padding: 5px;
   border: 1px solid grey;
   border-radius: 5px;
 }

@@ -1,20 +1,46 @@
 <div class="wrapper">
 
     <div class="header">
+        <a routerLink="">Back to Assembly...</a>
         <marquee>Custom Parts Manufacture</marquee>
     </div>
 
-    <div class="section-title">Sliders</div>
+    <div class="header">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="typeMenu">Select Type</button>
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="manufacturerMenu">Select Manufacturer</button>
+        <span>Name</span>
+        <input type='text' (change)="changeName($event)">
+    </div>
 
-    <div class="section-title">Stats</div>
+    <div class="section-title">
+        <p>Armor Value</p>
+        <mat-slider aria-label="unit(s)"></mat-slider>
+    </div>
+
+    <div class="section-title">
+        <p>Name: {{tempPart.name}}</p>
+        <p>Type: {{tempPart.type}}</p>
+        <p>Manufacturer: {{tempPart.manufacturer}}</p>
+        <p>Weight: {{workingValues.baseWeight * workingValues.weightMultiplier}}</p>
+        <p>Description: {{tempPart.description}}</p>
+        <p>Armor Value: {{tempPart.armorValue}}</p>
+    </div>
 
     <div class="section-title">Cost</div>
-
-
-    <div class="container">1</div>
-
-    <div class="container">2</div>
-
-    <div class="container">3</div>
-
+    
 </div>
+
+<mat-menu #typeMenu="matMenu">
+    <button mat-menu-item (click)="pickPartType('head')">Head</button>
+    <button mat-menu-item (click)="pickPartType('core')">Core</button>
+    <button mat-menu-item (click)="pickPartType('larm')">Left Arm</button>
+    <button mat-menu-item (click)="pickPartType('rarm')">Right Arm</button>
+    <button mat-menu-item (click)="pickPartType('legs')">Legs</button>
+    <button mat-menu-item (click)="pickPartType('misc')">Shoulder Weapon</button>
+</mat-menu>
+
+<mat-menu #manufacturerMenu="matMenu">
+    <button mat-menu-item (click)="pickManufacturer('San Ysidro')">San Ysidro</button>
+    <button mat-menu-item (click)="pickManufacturer('Yantian Mechanics Concern')">Yantian Mechanics Concern</button>
+    <button mat-menu-item (click)="pickManufacturer('Corcellyx')">Corcellyx</button>
+</mat-menu>

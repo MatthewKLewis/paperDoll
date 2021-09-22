@@ -4,13 +4,13 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Part, Attack, Defense } from '../parts-service.service'
+import { Part, Attack, Defense, PartsService } from '../parts-service.service'
 
 function sortByPartType(partA: Part, partB: Part): number {
   var partAValue = 0;
   var partBValue = 0;
   switch (partA.type) {
-    case 'sensor':
+    case 'head':
       partAValue = 10.5;
       break;
     case 'core':
@@ -33,7 +33,7 @@ function sortByPartType(partA: Part, partB: Part): number {
       break;
   }
   switch (partB.type) {
-    case 'sensor':
+    case 'head':
       partBValue = 10;
       break;
     case 'core':
@@ -64,160 +64,18 @@ function sortByPartType(partA: Part, partB: Part): number {
   styleUrls: ['./part-assembly.component.scss'],
 })
 export class PartAssemblyComponent {
-  anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.wav')
+  
+  anvilHit: HTMLAudioElement = new Audio('../assets/sounds/anvil.mp3')
+
   inactivePartFilter: string = ''
-  inactiveParts: Array<Part> = [
-    {
-      name: 'EXPERT HEAD',
-      type: 'sensor',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 100,
-      description: 'an advanced sensor array',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-    {
-      name: 'EXPERT CORE',
-      type: 'core',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 600,
-      description: 'a mecha part',
-      powerProduction: 300,
-      armorValue: 100,
-      cost: 600,
-    },
-    {
-      name: 'EXPERT Left ARM',
-      type: 'larm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 200,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      attack: { damageType: 'melee', damage: 10, armorPiercing: 0 },
-      cost: 350,
-    },
-    {
-      name: 'ULTIMATE Right ARM',
-      type: 'rarm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'elite',
-      weight: 220,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 700,
-    },
-    {
-      name: 'SWIFT LEGS',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'master',
-      weight: 400,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 1250,
-    },
-    {
-      name: 'HEAVY LEGS',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'master',
-      weight: 800,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 1400,
-    },
-    {
-      name: 'SHOULDER ROCKET SYSTEM',
-      type: 'rshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 160,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-    {
-      name: 'SHOULDER LASER SYSTEM',
-      type: 'lshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-  ];
-  activeParts: Array<Part> = [
-    {
-      name: 'Junk Head',
-      type: 'sensor',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 100,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 80,
-    },
-    {
-      name: 'Standard Core',
-      type: 'core',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 550,
-      description: 'a mecha part',
-      powerProduction: 200,
-      armorValue: 100,
-      cost: 120,
-    },
-    {
-      name: 'Standard Right Arm',
-      type: 'rarm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 110,
-      description: 'a mecha part',
-      powerConsumption: 30,
-      armorValue: 100,
-      cost: 100,
-    },
-    {
-      name: 'Junk Left Arm',
-      type: 'larm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 40,
-      armorValue: 100,
-      cost: 60,
-    },
-    {
-      name: 'Standard Legs',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 400,
-      description: 'a mecha part',
-      powerConsumption: 50,
-      armorValue: 100,
-      cost: 100,
-    },
-  ];
+
+  inactiveParts: Array<Part> = [];
+  activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = []
 
-  constructor() {
+  constructor(public partsService: PartsService) {
     this.anvilHit.volume = 0.1
+    this.inactiveParts = this.partsService.inactiveParts
     
     //sort
     this.inactiveParts.sort((partA, partB) => {
@@ -295,7 +153,7 @@ export class PartAssemblyComponent {
 
   getImagePath(partType: string) {
     switch (partType) {
-      case 'sensor':
+      case 'head':
         return '../assets/images/Head.png';
       case 'core':
         return '../assets/images/Core.png';
@@ -363,9 +221,9 @@ export class PartAssemblyComponent {
   }
   getHeadArmor(hover: boolean = false) {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'sensor'})?.armorValue;
+      return this.activeAndHoverParts.find((part: Part)=>{return part.type == 'head'})?.armorValue;
     } else {
-      return this.activeParts.find((part: Part)=>{return part.type == 'sensor'})?.armorValue;
+      return this.activeParts.find((part: Part)=>{return part.type == 'head'})?.armorValue;
     }
   }
   getCoreArmor(hover: boolean = false) {
