@@ -6,27 +6,37 @@
     </div>
 
     <div class="header">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="typeMenu">Select Type</button>
         <button mat-raised-button color="primary" [matMenuTriggerFor]="manufacturerMenu">Select Manufacturer</button>
-        <span>Name</span>
-        <input type='text' (change)="changeName($event)">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="typeMenu">Select Type</button>
+        <span *ngIf="tempPart.manufacturer">{{tempPart.manufacturer}} |</span>
+        <span *ngIf="tempPart.type">{{getTitleForPart(tempPart.type)}}</span>
     </div>
 
-    <div class="section-title">
-        <p>Armor Value</p>
-        <mat-slider aria-label="unit(s)"></mat-slider>
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+        <p>Priority by Percentage:</p>
+        <div *ngFor="let prop of sliderValues | keyvalue" class="sliderable-value">
+            <p>{{prop.key}}: {{prop.value}}</p>
+            <mat-slider thumbLabel [(ngModel)]="prop.value" [max]="maxPoints" (change)="calculatePoints($event, prop.key)"></mat-slider>
+        </div>
     </div>
-
-    <div class="section-title">
-        <p>Name: {{tempPart.name}}</p>
-        <p>Type: {{tempPart.type}}</p>
+    
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+        <p>Type: {{getTitleForPart(tempPart.type)}}</p>
         <p>Manufacturer: {{tempPart.manufacturer}}</p>
-        <p>Weight: {{workingValues.baseWeight * workingValues.weightMultiplier}}</p>
-        <p>Description: {{tempPart.description}}</p>
-        <p>Armor Value: {{tempPart.armorValue}}</p>
+        <p>Weight: {{determinedValues.baseWeight * determinedValues.weightMultiplier}}</p>
+        <!-- <p>Description: {{tempPart.description}}</p> -->
+        <!-- <p>Armor Value: {{tempPart.armorValue}}</p> -->
+    </div>
+    
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+        <p>Remaining Points: {{remainingPoints}}</p>
+        <progress [value]="remainingPoints" [max]="maxPoints"></progress>
+        <button mat-raised-button *ngIf="remainingPoints == 0" (click)="mockUp()">Mock Up Design</button>
     </div>
 
-    <div class="section-title">Cost</div>
+    <div *ngIf="mockUpReady" class="header">
+        MOCKUP!
+    </div>
     
 </div>
 

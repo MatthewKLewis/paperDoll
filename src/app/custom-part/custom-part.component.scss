@@ -13,6 +13,10 @@ hr {
     background-color: white;
     height: 1px;
 }
+
+mat-slider, progress {
+    width: 90%;
+}
   
 .wrapper {
     margin-left: 20px;
@@ -40,6 +44,14 @@ hr {
   padding: 5px;
   border: 1px solid grey;
   border-radius: 5px;
+
+  .sliderable-value {
+      padding: 5px;
+      border: 1px solid grey;
+      p {
+          margin: 0;
+      }
+  }
 }
 
 .container {
