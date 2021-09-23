@@ -98,6 +98,9 @@
         <p>Leg Armor: {{getLegArmor(false)}}</p>
         <p class="sub">Leg Thermal Resistance: 0</p>
         <hr>
+        <p>Sensor Range: 100</p>
+        <p>Sensor Strength: 100</p>
+        <hr>
         <p>R Arm Weapon:</p>
         <p>L Arm Weapon:</p>
         <p>Additional Weapon:</p>
@@ -107,7 +110,8 @@
   
     <div class="container">
       <div class="stub">
-        <a routerLink="/custom-part">Custom Parts Shop</a>
+        <button routerLink="/custom-part">Custom Parts Shop</button>
+        <button (click)="addSpecialParts()">Add Special Parts</button>
       </div>
     </div>
   

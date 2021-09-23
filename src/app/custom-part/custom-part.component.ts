@@ -171,6 +171,8 @@ export class CustomPartComponent implements OnInit {
 
   //Mock Up
   mockUp() {
+    console.log(this.tempPart)
+    console.log(this.sliderValues)
     this.mockUpReady = true;
   }
 }

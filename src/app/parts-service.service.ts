@@ -11,6 +11,11 @@ export interface Defense {
   type: string;
 }
 
+export interface Sensor {
+  range: number;
+  decibels: number;
+}
+
 export interface Part {
   name: string;
   type: string;
@@ -26,6 +31,7 @@ export interface Part {
 
   attack?: Attack;
   defense?: Defense;
+  sensor?: Sensor;
 }
 
 @Injectable({
@@ -34,6 +40,100 @@ export interface Part {
 export class PartsService {
 
   inactiveParts: Array<Part> = [
+    {
+      name: 'Junk Head',
+      type: 'head',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'junk',
+      weight: 100,
+      description: 'a mecha part',
+      powerConsumption: 10,
+      armorValue: 100,
+      sensor: {range: 10, decibels: 10},
+      cost: 80,
+    },
+    {
+      name: 'Standard Head',
+      type: 'head',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'stock',
+      weight: 90,
+      description: 'a mecha part',
+      powerConsumption: 10,
+      armorValue: 120,
+      sensor: {range: 20, decibels: 15},
+
+      cost: 80,
+    },
+    {
+      name: 'Standard Core',
+      type: 'core',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'stock',
+      weight: 550,
+      description: 'a mecha part',
+      powerProduction: 200,
+      armorValue: 100,
+      cost: 120,
+    },
+    {
+      name: 'Standard Right Arm',
+      type: 'rarm',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'stock',
+      weight: 110,
+      description: 'a mecha part',
+      powerConsumption: 30,
+      armorValue: 100,
+      cost: 100,
+    },
+    {
+      name: 'Junk Left Arm',
+      type: 'larm',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'junk',
+      weight: 140,
+      description: 'a mecha part',
+      powerConsumption: 40,
+      armorValue: 100,
+      cost: 60,
+    },
+    {
+      name: 'Standard Legs',
+      type: 'legs',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'stock',
+      weight: 400,
+      description: 'a mecha part',
+      powerConsumption: 50,
+      armorValue: 100,
+      cost: 100,
+    },
+  ];
+
+  inactiveSpecialParts: Array<Part> = [
+    {
+      name: 'SHOULDER ROCKET SYSTEM',
+      type: 'rshoulder',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'performance',
+      weight: 160,
+      description: 'a mecha part',
+      powerConsumption: 10,
+      armorValue: 100,
+      cost: 400,
+    },
+    {
+      name: 'SHOULDER LASER SYSTEM',
+      type: 'lshoulder',
+      manufacturer: 'Anaheim Electronics',
+      quality: 'performance',
+      weight: 140,
+      description: 'a mecha part',
+      powerConsumption: 10,
+      armorValue: 100,
+      cost: 400,
+    },
     {
       name: 'EXPERT HEAD',
       type: 'head',
@@ -101,84 +201,7 @@ export class PartsService {
       armorValue: 100,
       cost: 1400,
     },
-    {
-      name: 'SHOULDER ROCKET SYSTEM',
-      type: 'rshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 160,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-    {
-      name: 'SHOULDER LASER SYSTEM',
-      type: 'lshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-    {
-      name: 'Junk Head',
-      type: 'head',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 100,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 80,
-    },
-    {
-      name: 'Standard Core',
-      type: 'core',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 550,
-      description: 'a mecha part',
-      powerProduction: 200,
-      armorValue: 100,
-      cost: 120,
-    },
-    {
-      name: 'Standard Right Arm',
-      type: 'rarm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 110,
-      description: 'a mecha part',
-      powerConsumption: 30,
-      armorValue: 100,
-      cost: 100,
-    },
-    {
-      name: 'Junk Left Arm',
-      type: 'larm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 40,
-      armorValue: 100,
-      cost: 60,
-    },
-    {
-      name: 'Standard Legs',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 400,
-      description: 'a mecha part',
-      powerConsumption: 50,
-      armorValue: 100,
-      cost: 100,
-    },
-  ];
+  ]
 
   constructor() { }
 
@@ -195,4 +218,5 @@ export class PartsService {
     }
     return tempPart;
   }
+
 }

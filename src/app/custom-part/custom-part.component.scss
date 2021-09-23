@@ -17,6 +17,9 @@ hr {
 mat-slider, progress {
     width: 90%;
 }
+::ng-deep.mat-menu-content {
+    overflow: hidden!important;
+}
   
 .wrapper {
     margin-left: 20px;

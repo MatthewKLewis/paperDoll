@@ -271,4 +271,8 @@ export class PartAssemblyComponent {
       return true;
     }
   }
+
+  addSpecialParts() {
+    this.inactiveParts.push(...this.partsService.inactiveSpecialParts)
+  }
 }
