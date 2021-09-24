@@ -173,8 +173,8 @@ export class PartsService {
     {
       name: 'Yamashita', models: [
         { name: 'Masamune', class: 'light', bonuses: [] },
-        { name: '1', class: 'medium', bonuses: [] },
-        { name: '2', class: 'heavy', bonuses: [] },
+        { name: 'Dan-No-Ura', class: 'medium', bonuses: [] },
+        { name: 'Goro', class: 'heavy', bonuses: [] },
       ]
     },
     {
