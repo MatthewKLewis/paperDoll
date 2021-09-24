@@ -7,16 +7,20 @@ import { AppComponent } from './app.component';
 import { MatButtonModule} from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomPartComponent } from './custom-part/custom-part.component';
-import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table'; 
+
+import { CustomPartComponent } from './custom-part/custom-part.component';
+import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
+import { MakeModelComponent } from './make-model/make-model.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomPartComponent,
-    PartAssemblyComponent
+    PartAssemblyComponent,
+    MakeModelComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSliderModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

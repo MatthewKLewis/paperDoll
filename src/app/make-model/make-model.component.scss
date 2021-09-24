@@ -17,6 +17,7 @@ hr {
 mat-slider, progress {
     width: 90%;
 }
+
 ::ng-deep.mat-menu-content {
     overflow: hidden!important;
 }
@@ -41,22 +42,27 @@ mat-slider, progress {
     }
 }
 
-.section {
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid rgba($color: #fff, $alpha: 0.3);
-box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3);
-
-  .sliderable-value {
-      margin: 2px;
-      padding: 5px;
-      border: 1px solid grey;
-      p {
-          margin: 0;
-      }
-  }
+table {
+    width: 100%;
 }
 
-.container {
-  margin: 5px;
+.mat-column-name {
+    width: 20%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-light {
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-medium {
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-heavy {
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
 }

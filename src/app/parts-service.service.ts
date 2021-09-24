@@ -70,29 +70,42 @@ export interface Sensor {
   range: number;
   decibels: number;
 }
+export interface Mobility {
+  speed: number;
+  stability: number;
+  thrust: number;
+}
 export interface Part {
   id: number;
   name: string;
-  type: string;
-  manufacturer: string;
-  quality: string;
-  weight: number;
   description: string;
+
+  type: string;
+  subType?: string;
+  quality: string;
+
+  manufacturer: string;
+
+  weight: number;
   armorValue: number;
+  powerConsumption?: number;
+
   cost: number;
 
-  subType?: string;
-
-  powerConsumption?: number;
+  sensor?: Sensor;
   powerProduction?: number;
-
   attack?: Attack;
   defense?: Defense;
-  sensor?: Sensor;
+  mobility?: Mobility
+}
+export interface Model {
+  name: string,
+  class: string,
+  bonuses: Array<any>
 }
 export interface Manufacturer {
   name: string;
-  bonuses: Array<any>;
+  models: Array<Model>;
 }
 
 //END OF INTERFACES AND UTILITY FUNCTIONS
@@ -115,14 +128,62 @@ export class PartsService {
   ];
 
   manufacturers: Array<Manufacturer> = [
-    { name: 'Avonisimmo', bonuses: [] },
-    { name: 'Corgistics', bonuses: [] },
-    { name: 'Fleetwood Marine', bonuses: [] },
-    { name: 'GAZAN', bonuses: [] },
-    { name: 'Mantissa', bonuses: [] },
-    { name: 'Vincente', bonuses: [] },
-    { name: 'Yamashita', bonuses: [] },
-    { name: 'Yantian Industrian', bonuses: [] },
+    {
+      name: 'Avonisimmo', models: [
+        { name: 'Evra', class: 'light', bonuses: [] },
+        { name: 'Guillaume', class: 'medium', bonuses: [] },
+        { name: 'Valjean', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Corgistics', models: [
+        { name: 'iFrame', class: 'light', bonuses: [] },
+        { name: 'CorPro', class: 'medium', bonuses: [] },
+        { name: 'Black', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Fleetwood Marine', models: [
+        { name: 'FM-12', class: 'light', bonuses: [] },
+        { name: 'FM-34', class: 'medium', bonuses: [] },
+        { name: 'FM-56', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'GAZAN', models: [
+        { name: 'Razvedik', class: 'light', bonuses: [] },
+        { name: 'Bog-tier', class: 'medium', bonuses: [] },
+        { name: 'Smetann', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Mantissa', models: [
+        { name: 'SigFig', class: 'light', bonuses: [] },
+        { name: 'Hyperion', class: 'medium', bonuses: [] },
+        { name: 'Significand', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Vincente', models: [
+        { name: 'Goshawk', class: 'light', bonuses: [] },
+        { name: 'Eagle', class: 'medium', bonuses: [] },
+        { name: 'Condor', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Yamashita', models: [
+        { name: 'Masamune', class: 'light', bonuses: [] },
+        { name: '1', class: 'medium', bonuses: [] },
+        { name: '2', class: 'heavy', bonuses: [] },
+      ]
+    },
+    {
+      name: 'Yantian Industrian', models: [
+        { name: 'Chobra', class: 'light', bonuses: [] },
+        { name: '3', class: 'medium', bonuses: [] },
+        { name: '4', class: 'heavy', bonuses: [] },
+      ]
+    },
   ];
 
   activeParts: Array<Part> = [];
@@ -226,10 +287,10 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 400,
-      attack: { 
-        damageType: 'explosive', 
-        damage: 40, 
-        armorPiercing: 5 
+      attack: {
+        damageType: 'explosive',
+        damage: 40,
+        armorPiercing: 5
       },
     },
     {
@@ -243,9 +304,9 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 400,
-      attack: { 
-        damageType: 'laser', 
-        damage: 80, 
+      attack: {
+        damageType: 'laser',
+        damage: 80,
         armorPiercing: 15
       },
     },
@@ -284,9 +345,9 @@ export class PartsService {
       powerConsumption: 40,
       armorValue: 100,
       cost: 350,
-      attack: { 
-        damageType: 'ballistic', 
-        damage: 40, 
+      attack: {
+        damageType: 'ballistic',
+        damage: 40,
         armorPiercing: 4
       },
     },
@@ -301,10 +362,10 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 700,
-      attack: { 
-        damageType: 'energy', 
-        damage: 100, 
-        armorPiercing: 10 
+      attack: {
+        damageType: 'energy',
+        damage: 100,
+        armorPiercing: 10
       },
     },
     {
@@ -333,7 +394,7 @@ export class PartsService {
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
   drop(event: CdkDragDrop<any[]>) {
     var newContainerId = event.container.id;
