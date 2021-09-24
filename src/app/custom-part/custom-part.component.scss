@@ -31,7 +31,6 @@ mat-slider, progress {
 .header {
     margin: 5px;
     padding: 5px;
-    border: 1px solid grey;
     background-color: #ccc;
     border-radius: 5px;
     grid-column: 1/4;
@@ -42,11 +41,11 @@ mat-slider, progress {
     }
 }
 
-.section-title {
+.section {
   margin: 5px;
   padding: 5px;
-  border: 1px solid grey;
   border-radius: 5px;
+  box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3);
 
   .sliderable-value {
       margin: 2px;

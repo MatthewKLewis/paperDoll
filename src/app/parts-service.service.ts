@@ -127,7 +127,6 @@ export class PartsService {
 
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
-
   inactiveParts: Array<Part> = [
     {
       id: 1,
@@ -179,6 +178,11 @@ export class PartsService {
       powerConsumption: 30,
       armorValue: 100,
       cost: 100,
+      attack: {
+        damage: 10,
+        damageType: 'ballistic',
+        armorPiercing: 1
+      }
     },
     {
       id: 5,
@@ -191,6 +195,11 @@ export class PartsService {
       powerConsumption: 40,
       armorValue: 100,
       cost: 60,
+      attack: {
+        damage: 10,
+        damageType: 'ballistic',
+        armorPiercing: 1
+      }
     },
     {
       id: 6,
@@ -205,7 +214,6 @@ export class PartsService {
       cost: 100,
     },
   ];
-
   inactiveSpecialParts: Array<Part> = [
     {
       id: 7,
@@ -218,6 +226,11 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 400,
+      attack: { 
+        damageType: 'explosive', 
+        damage: 40, 
+        armorPiercing: 5 
+      },
     },
     {
       id: 8,
@@ -230,6 +243,11 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 400,
+      attack: { 
+        damageType: 'laser', 
+        damage: 80, 
+        armorPiercing: 15
+      },
     },
     {
       id: 9,
@@ -263,10 +281,14 @@ export class PartsService {
       quality: 'performance',
       weight: 200,
       description: 'a mecha part',
-      powerConsumption: 10,
+      powerConsumption: 40,
       armorValue: 100,
-      attack: { damageType: 'melee', damage: 10, armorPiercing: 0 },
       cost: 350,
+      attack: { 
+        damageType: 'ballistic', 
+        damage: 40, 
+        armorPiercing: 4
+      },
     },
     {
       id: 12,
@@ -279,6 +301,11 @@ export class PartsService {
       powerConsumption: 10,
       armorValue: 100,
       cost: 700,
+      attack: { 
+        damageType: 'energy', 
+        damage: 100, 
+        armorPiercing: 10 
+      },
     },
     {
       id: 13,
@@ -466,6 +493,28 @@ export class PartsService {
       })?.armorValue;
     }
   }
+  getRarmWeaponDamage(hover: boolean = false): number {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part) => {
+        return part.type === 'rarm'
+      })?.attack?.damage || 0;
+    } else {
+      return this.activeParts.find((part: Part) => {
+        return part.type === 'rarm'
+      })?.attack?.damage || 0;
+    }
+  }
+  getLarmWeaponDamage(hover: boolean = false): number {
+    if (hover) {
+      return this.activeAndHoverParts.find((part: Part) => {
+        return part.type === 'larm'
+      })?.attack?.damage || 0;
+    } else {
+      return this.activeParts.find((part: Part) => {
+        return part.type === 'larm'
+      })?.attack?.damage || 0;
+    }
+  }
 
   hoverToCompare(hovPart: Part) {
     this.activeAndHoverParts = JSON.parse(JSON.stringify(this.activeParts));
@@ -490,5 +539,10 @@ export class PartsService {
     } else {
       return true;
     }
+  }
+
+  //admin
+  addSpecialParts() {
+    this.inactiveParts.push(...this.inactiveSpecialParts)
   }
 }

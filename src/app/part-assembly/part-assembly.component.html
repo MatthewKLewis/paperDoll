@@ -4,10 +4,6 @@
       <marquee>Mech Shop</marquee>
     </div>
   
-    <div class="section-title">Inventory</div>
-    <div class="section-title">Mecha</div>
-    <div class="section-title">Stats</div>
-  
     <div class="container">
       <div id="inactivePartsElement" cdkDropList [cdkDropListData]="partsService.inactiveParts" class="list"
         (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
@@ -96,9 +92,21 @@
         <p>Sensor Range: 100</p>
         <p>Sensor Strength: 100</p>
         <hr>
-        <p>R Arm Weapon:</p>
+        <p>
+          R Arm Weapon Damage: {{partsService.getRarmWeaponDamage(false)}}
+          <span *ngIf="partsService.activeAndHoverParts.length > 0" 
+            [ngClass]="{'red-text': partsService.getRarmWeaponDamage(false) > partsService.getRarmWeaponDamage(true), 'blue-text': partsService.getRarmWeaponDamage(false) < partsService.getRarmWeaponDamage(true)} ">
+            > {{partsService.getRarmWeaponDamage(true)}}
+          </span>
+        </p>
         <p class="sub">R Shoulder Weapon:</p>
-        <p>L Arm Weapon:</p>
+        <p>
+          L Arm Weapon Damage: {{partsService.getLarmWeaponDamage(false)}}
+          <span *ngIf="partsService.activeAndHoverParts.length > 0" 
+            [ngClass]="{'red-text': partsService.getLarmWeaponDamage(false) > partsService.getLarmWeaponDamage(true), 'blue-text': partsService.getLarmWeaponDamage(false) < partsService.getLarmWeaponDamage(true)} ">
+            > {{partsService.getLarmWeaponDamage(true)}}
+          </span>
+        </p>
         <p class="sub">L Shoulder Weapon:</p>
       </div>
     </div>
@@ -106,12 +114,19 @@
     <div class="container">
       <div class="stub">
         <button routerLink="/custom-part">Custom Parts Shop</button>
+        <button (click)="partsService.addSpecialParts()">Add Specials</button>
       </div>
     </div>
   
     <div class="container">
-      <div class="stub">
-        <b>Next Mission:</b>
+      <div class="dolly">
+        <div class="doll-slot lshoulder">L Shoulder</div>
+        <div class="doll-slot rshoulder">R Shoulder</div>
+        <div class="doll-slot head">Head</div>
+        <div class="doll-slot core">Core</div>
+        <div class="doll-slot larm">Left Arm</div>
+        <div class="doll-slot rarm">Right Arm</div>
+        <div class="doll-slot legs">Legs</div>
       </div>
     </div>
   

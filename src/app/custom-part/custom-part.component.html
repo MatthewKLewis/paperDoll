@@ -12,7 +12,7 @@
         <span *ngIf="tempPart.type">{{getTitleForPart(tempPart.type)}}</span>
     </div>
 
-    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section">
         <p>Priority by Percentage:</p>
         <div *ngFor="let prop of sliderValues | keyvalue" class="sliderable-value">
             <p>{{prop.key}}: {{prop.value}}</p>
@@ -48,13 +48,13 @@
         </div>
     </div>
     
-    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section">
         <p>Type: {{getTitleForPart(tempPart.type)}}</p>
         <p>Manufacturer: {{tempPart.manufacturer}}</p>
         <p>Weight: {{tempPart.weight}}</p>
     </div>
     
-    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
+    <div *ngIf="tempPart.type && tempPart.manufacturer" class="section">
         <p>Remaining Points: {{remainingPoints}}</p>
         <progress [value]="remainingPoints" [max]="maxPoints"></progress>
         <button mat-raised-button *ngIf="remainingPoints == 0" (click)="mockUp()">Mock Up Design</button>
@@ -75,50 +75,50 @@
 </mat-menu>
 
 <mat-menu #headMenu="matMenu">
-    <button>0000</button>
-    <button>0000</button>
-    <button>0000</button>
-    <button>0000</button>
+    <button mat-menu-item>0000</button>
+    <button mat-menu-item>0000</button>
+    <button mat-menu-item>0000</button>
+    <button mat-menu-item>0000</button>
 </mat-menu>
 
 <mat-menu #coreMenu="matMenu">
-    <button>1111</button>
-    <button>1111</button>
-    <button>1111</button>
-    <button>1111</button>
+    <button mat-menu-item>1111</button>
+    <button mat-menu-item>1111</button>
+    <button mat-menu-item>1111</button>
+    <button mat-menu-item>1111</button>
 </mat-menu>
 
 <mat-menu #rarmMenu="matMenu">
-    <button>2222</button>
-    <button>2222</button>
-    <button>2222</button>
-    <button>2222</button>
+    <button mat-menu-item>2222</button>
+    <button mat-menu-item>2222</button>
+    <button mat-menu-item>2222</button>
+    <button mat-menu-item>2222</button>
 </mat-menu>
 
 <mat-menu #larmMenu="matMenu">
-    <button>3333</button>
-    <button>3333</button>
-    <button>3333</button>
-    <button>3333</button>
+    <button mat-menu-item>3333</button>
+    <button mat-menu-item>3333</button>
+    <button mat-menu-item>3333</button>
+    <button mat-menu-item>3333</button>
 </mat-menu>
 
 <mat-menu #legsMenu="matMenu">
-    <button>5555</button>
-    <button>5555</button>
-    <button>5555</button>
-    <button>5555</button>
+    <button mat-menu-item>5555</button>
+    <button mat-menu-item>5555</button>
+    <button mat-menu-item>5555</button>
+    <button mat-menu-item>5555</button>
 </mat-menu>
 
 <mat-menu #rshoulderMenu="matMenu">
-    <button>6666</button>
-    <button>6666</button>
-    <button>6666</button>
-    <button>6666</button>
+    <button mat-menu-item>6666</button>
+    <button mat-menu-item>6666</button>
+    <button mat-menu-item>6666</button>
+    <button mat-menu-item>6666</button>
 </mat-menu>
 
 <mat-menu #lshoulderMenu="matMenu">
-    <button>7777</button>
-    <button>7777</button>
-    <button>7777</button>
-    <button>7777</button>
+    <button mat-menu-item>7777</button>
+    <button mat-menu-item>7777</button>
+    <button mat-menu-item>7777</button>
+    <button mat-menu-item>7777</button>
 </mat-menu>
