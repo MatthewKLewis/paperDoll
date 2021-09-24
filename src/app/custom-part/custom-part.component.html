@@ -18,14 +18,40 @@
             <p>{{prop.key}}: {{prop.value}}</p>
             <mat-slider thumbLabel [(ngModel)]="prop.value" [max]="maxPoints" (change)="calculatePoints($event, prop.key)"></mat-slider>
         </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'head'">
+            <p>Head Options Dropdown</p>
+            <button [mat-menu-trigger-for]="headMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'core'">
+            <p>Core Options Dropdown</p>
+            <button [mat-menu-trigger-for]="coreMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'rarm'">
+            <p>Right Arm Options Dropdown</p>
+            <button [mat-menu-trigger-for]="rarmMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'larm'">
+            <p>Left Arm Options Dropdown</p>
+            <button [mat-menu-trigger-for]="larmMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'legs'">
+            <p>Legs Options Dropdown</p>
+            <button [mat-menu-trigger-for]="legsMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'rshoulder'">
+            <p>Right Shoulder Options Dropdown</p>
+            <button [mat-menu-trigger-for]="rshoulderMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
+        <div class="sliderable-value" *ngIf="tempPart.type == 'lshoulder'">
+            <p>Left Shoulder Options Dropdown</p>
+            <button [mat-menu-trigger-for]="lshoulderMenu" mat-flat-button color="primary">Choose One...</button>
+        </div>
     </div>
     
     <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
         <p>Type: {{getTitleForPart(tempPart.type)}}</p>
         <p>Manufacturer: {{tempPart.manufacturer}}</p>
-        <p>Weight: {{determinedValues.baseWeight * determinedValues.weightMultiplier}}</p>
-        <!-- <p>Description: {{tempPart.description}}</p> -->
-        <!-- <p>Armor Value: {{tempPart.armorValue}}</p> -->
+        <p>Weight: {{tempPart.weight}}</p>
     </div>
     
     <div *ngIf="tempPart.type && tempPart.manufacturer" class="section-title">
@@ -41,16 +67,58 @@
 </div>
 
 <mat-menu #typeMenu="matMenu">
-    <button mat-menu-item (click)="pickPartType('head')">Head</button>
-    <button mat-menu-item (click)="pickPartType('core')">Core</button>
-    <button mat-menu-item (click)="pickPartType('larm')">Left Arm</button>
-    <button mat-menu-item (click)="pickPartType('rarm')">Right Arm</button>
-    <button mat-menu-item (click)="pickPartType('legs')">Legs</button>
-    <button mat-menu-item (click)="pickPartType('misc')">Shoulder Weapon</button>
+    <button *ngFor="let type of partsService.partTypes" mat-menu-item (click)="pickPartType(type)">{{getTitleForPart(type)}}</button>
 </mat-menu>
 
 <mat-menu #manufacturerMenu="matMenu">
-    <button mat-menu-item (click)="pickManufacturer('San Ysidro')">San Ysidro</button>
-    <button mat-menu-item (click)="pickManufacturer('Yantian Mechanics Concern')">Yantian Concern</button>
-    <button mat-menu-item (click)="pickManufacturer('Corcellyx')">Corcellyx</button>
+    <button *ngFor="let manufacturer of partsService.manufacturers" mat-menu-item (click)="pickManufacturer(manufacturer.name)">{{manufacturer.name}}</button>
+</mat-menu>
+
+<mat-menu #headMenu="matMenu">
+    <button>0000</button>
+    <button>0000</button>
+    <button>0000</button>
+    <button>0000</button>
+</mat-menu>
+
+<mat-menu #coreMenu="matMenu">
+    <button>1111</button>
+    <button>1111</button>
+    <button>1111</button>
+    <button>1111</button>
+</mat-menu>
+
+<mat-menu #rarmMenu="matMenu">
+    <button>2222</button>
+    <button>2222</button>
+    <button>2222</button>
+    <button>2222</button>
+</mat-menu>
+
+<mat-menu #larmMenu="matMenu">
+    <button>3333</button>
+    <button>3333</button>
+    <button>3333</button>
+    <button>3333</button>
+</mat-menu>
+
+<mat-menu #legsMenu="matMenu">
+    <button>5555</button>
+    <button>5555</button>
+    <button>5555</button>
+    <button>5555</button>
+</mat-menu>
+
+<mat-menu #rshoulderMenu="matMenu">
+    <button>6666</button>
+    <button>6666</button>
+    <button>6666</button>
+    <button>6666</button>
+</mat-menu>
+
+<mat-menu #lshoulderMenu="matMenu">
+    <button>7777</button>
+    <button>7777</button>
+    <button>7777</button>
+    <button>7777</button>
 </mat-menu>

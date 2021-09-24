@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Part } from '../parts-service.service';
+import { Part, PartsService } from '../parts-service.service';
 
 @Component({
   selector: 'app-custom-part',
@@ -7,15 +7,11 @@ import { Part } from '../parts-service.service';
   styleUrls: ['./custom-part.component.scss'],
 })
 export class CustomPartComponent implements OnInit {
-
   maxPoints: number = 100;
   remainingPoints: number = 100;
-  determinedValues: any = {
-    baseWeight: 0,
-    weightMultiplier: 0,
-  };
   sliderValues: Map<string, number> = new Map<string, number>();
   tempPart: Part = {
+    id: -1,
     name: '',
     type: '',
     manufacturer: '',
@@ -28,7 +24,7 @@ export class CustomPartComponent implements OnInit {
 
   mockUpReady: boolean = false;
 
-  constructor() {}
+  constructor(public partsService: PartsService) {}
 
   ngOnInit(): void {}
 
@@ -80,16 +76,23 @@ export class CustomPartComponent implements OnInit {
       case 'head':
         return 'Head';
       case 'core':
-          return 'Core';
+        return 'Core';
       case 'legs':
         return 'Legs';
+      case 'rshoulder':
+        return 'Right Shoulder';
+      case 'lshoulder':
+        return 'Left Shoulder';
+      case 'slotted':
+        return 'Slot Item';
       default:
-        return "ERROR!";
+        return 'ERROR!';
     }
   }
 
   pickPartType(type: string) {
     this.tempPart = {
+      id: -1,
       name: '',
       type: type,
       manufacturer: this.tempPart.manufacturer,
@@ -100,42 +103,51 @@ export class CustomPartComponent implements OnInit {
       cost: -1,
     };
 
-    this.sliderValues = new Map<string, number>()
+    this.sliderValues = new Map<string, number>();
+
     switch (type) {
       case 'head':
-        this.determinedValues.baseWeight = 100;
+        this.tempPart.weight = 100;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('radarRange', 0);
+
         break;
       case 'core':
-        this.determinedValues.baseWeight = 400;
+        this.tempPart.weight = 400;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('powerProduction', 0);
         break;
       case 'rarm':
-        this.determinedValues.baseWeight = 180;
+        this.tempPart.weight = 180;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('damageValue', 0);
         this.sliderValues.set('armorPiercing', 0);
         this.sliderValues.set('damageOverTime', 0);
         break;
       case 'larm':
-        this.determinedValues.baseWeight = 180;
+        this.tempPart.weight = 180;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('damageValue', 0);
         this.sliderValues.set('armorPiercing', 0);
         this.sliderValues.set('damageOverTime', 0);
         break;
       case 'legs':
-        this.determinedValues.baseWeight = 500;
+        this.tempPart.weight = 500;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('mobility', 0);
         this.sliderValues.set('boost', 0);
         break;
-      case 'misc':
-        this.determinedValues.baseWeight = 100;
+      case 'rshoulder':
+        this.tempPart.weight = 100;
         this.sliderValues.set('armorValue', 0);
-
+        break;
+      case 'rshoulder':
+        this.tempPart.weight = 100;
+        this.sliderValues.set('armorValue', 0);
+        break;
+      case 'lshoulder':
+        this.tempPart.weight = 100;
+        this.sliderValues.set('armorValue', 0);
         break;
       default:
         break;
@@ -144,6 +156,7 @@ export class CustomPartComponent implements OnInit {
 
   pickManufacturer(manufacturer: string) {
     this.tempPart = {
+      id: -1,
       name: '',
       type: this.tempPart.type,
       manufacturer: manufacturer,
@@ -153,26 +166,12 @@ export class CustomPartComponent implements OnInit {
       armorValue: -1,
       cost: -1,
     };
-
-    switch (manufacturer) {
-      case 'San Ysidro':
-        this.determinedValues.weightMultiplier = 0.8;
-        break;
-      case 'Yantian Mechanics Concern':
-        this.determinedValues.weightMultiplier = 1;
-        break;
-      case 'Corcellyx':
-        this.determinedValues.weightMultiplier = 1.2;
-        break;
-      default:
-        break;
-    }
   }
 
   //Mock Up
   mockUp() {
-    console.log(this.tempPart)
-    console.log(this.sliderValues)
+    console.log(this.tempPart);
+    console.log(this.sliderValues);
     this.mockUpReady = true;
   }
 }
