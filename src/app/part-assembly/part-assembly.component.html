@@ -1,140 +1,166 @@
 <div class="wrapper" cdkDropListGroup>
 
-    <div class="header">
-      <marquee>Mech Shop</marquee>
-    </div>
-  
-    <div class="container">
-      <div id="inactivePartsElement" cdkDropList [cdkDropListData]="partsService.inactiveParts" class="list"
-        (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
-  
-        <button (click)="partsService.inactivePartFilter = '' ">All</button>
-        <button (click)="partsService.inactivePartFilter = 'head' ">Heads</button>
-        <button (click)="partsService.inactivePartFilter = 'core' ">Cores</button>
-        <button (click)="partsService.inactivePartFilter = 'arm' ">Arms</button>
-        <button (click)="partsService.inactivePartFilter = 'leg' ">Legs</button>
-        <button (click)="partsService.inactivePartFilter = 'misc' ">Misc</button>
-  
-        <div *ngFor="let part of partsService.inactiveParts"
-          [class]="'box' + ' ' + part.quality + ' ' + (partsService.inactivePartFilter && !part.type.includes(partsService.inactivePartFilter) && 'disabled')"
-          (mouseenter)="partsService.hoverToCompare(part)" (mouseleave)="partsService.hoverClear()" cdkDrag>
-          <img class="icon" [src]="getImagePath(part.type)">
-          <p>{{part.name}}</p>
-          <p>{{part.weight}}kgs</p>
-          <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-          <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-          <p>{{part.cost}}</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div id="activePartsElement" cdkDropList [cdkDropListData]="partsService.activeParts" class="list"
-        (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
-        <div [class]="'box ' + part.quality" *ngFor="let part of partsService.activeParts" cdkDrag>
-          <img class="icon" [src]="getImagePath(part.type)">
-          <p>{{part.name}}</p>
-          <p>{{part.weight}}kgs</p>
-          <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-          <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-          <p>{{part.cost}}</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div class="stats">
-        <p>
-          Total Mech Value: {{partsService.getTotalMechValue(false)}}
-          <span
-            *ngIf="partsService.activeAndHoverParts.length > 0"
-            [ngClass]="{'red-text': partsService.getTotalMechValue(false) > partsService.getTotalMechValue(true), 'blue-text': partsService.getTotalMechValue(false) < partsService.getTotalMechValue(true)} ">
-            > {{partsService.getTotalMechValue(true)}}
-          </span>
-        </p>
-        <hr>
-        <p>
-          Power Production: {{partsService.getTotalPowerProduction(false)}}
-          <span
-            *ngIf="partsService.activeAndHoverParts.length > 0"
-            [ngClass]="{'red-text': partsService.getTotalPowerProduction(false) > partsService.getTotalPowerProduction(true), 'blue-text': partsService.getTotalPowerProduction(false) < partsService.getTotalPowerProduction(true)} ">
-            > {{partsService.getTotalPowerProduction(true)}}
-          </span>
-        </p>
-        <p>
-          Power Consumption: {{partsService.getTotalPowerConsumption(false)}}
-          <span
-            *ngIf="partsService.activeAndHoverParts.length > 0"
-            [ngClass]="{'red-text': partsService.getTotalPowerConsumption(false) < partsService.getTotalPowerConsumption(true), 'blue-text': partsService.getTotalPowerConsumption(false) > partsService.getTotalPowerConsumption(true)} ">
-            > {{partsService.getTotalPowerConsumption(true)}}
-          </span>
-        </p>
-        <hr>
-        <p>
-          Total Weight: {{partsService.getTotalWeight(false)}}
-          <span
-            *ngIf="partsService.activeAndHoverParts.length > 0"
-            [ngClass]="{'red-text': partsService.getTotalWeight(false) < partsService.getTotalWeight(true), 'blue-text': partsService.getTotalWeight(false) > partsService.getTotalWeight(true)} ">
-            > {{partsService.getTotalWeight(true)}}
-          </span>
-        </p>
-        <p class="sub">Top Weight: 0</p>
-        <p class="sub">Leg Weight: 0</p>
-        <p>Leg Power: {{'xxx'}}</p>
-        <p>Booster Power: {{'xxx'}}</p>
-        <hr>
-        <p>Head Armor: {{partsService.getHeadArmor(false)}}</p>
-        <p>Core Armor: {{partsService.getCoreArmor(false)}}</p>
-        <p>L Arm Armor: {{partsService.getLarmArmor(false)}}</p>
-        <p>R Arm Armor: {{partsService.getRarmArmor(false)}}</p>
-        <p>Leg Armor: {{partsService.getLegArmor(false)}}</p>
-        <hr>
-        <p>Sensor Range: 100</p>
-        <p>Sensor Strength: 100</p>
-        <hr>
-        <p>
-          R Arm Weapon Damage: {{partsService.getRarmWeaponDamage(false)}}
-          <span *ngIf="partsService.activeAndHoverParts.length > 0" 
-            [ngClass]="{'red-text': partsService.getRarmWeaponDamage(false) > partsService.getRarmWeaponDamage(true), 'blue-text': partsService.getRarmWeaponDamage(false) < partsService.getRarmWeaponDamage(true)} ">
-            > {{partsService.getRarmWeaponDamage(true)}}
-          </span>
-        </p>
-        <p class="sub">R Shoulder Weapon:</p>
-        <p>
-          L Arm Weapon Damage: {{partsService.getLarmWeaponDamage(false)}}
-          <span *ngIf="partsService.activeAndHoverParts.length > 0" 
-            [ngClass]="{'red-text': partsService.getLarmWeaponDamage(false) > partsService.getLarmWeaponDamage(true), 'blue-text': partsService.getLarmWeaponDamage(false) < partsService.getLarmWeaponDamage(true)} ">
-            > {{partsService.getLarmWeaponDamage(true)}}
-          </span>
-        </p>
-        <p class="sub">L Shoulder Weapon:</p>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div class="stub">
-        <button routerLink="/custom-part">Custom Parts Shop</button>
-        <button (click)="partsService.addSpecialParts()">Add Specials</button>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div class="dolly">
-        <div class="doll-slot lshoulder">L Shoulder</div>
-        <div class="doll-slot rshoulder">R Shoulder</div>
-        <div class="doll-slot head">Head</div>
-        <div class="doll-slot core">Core</div>
-        <div class="doll-slot larm">Left Arm</div>
-        <div class="doll-slot rarm">Right Arm</div>
-        <div class="doll-slot legs">Legs</div>
-      </div>
-    </div>
-  
-    <div class="container">
-      <div class="stub">
-        <button [disabled]="!partsService.isMechaComplete()" mat-raised-button color="primary">Ready!</button>
-        <p *ngIf="!partsService.isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
-      </div>
-    </div>
-  
+  <div class="header">
+    <marquee>Mech Shop</marquee>
   </div>
+
+  <div class="container">
+    <div id="inactivePartsElement" cdkDropList [cdkDropListData]="partsService.inactiveParts" class="list"
+      (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
+
+      <button (click)="partsService.inactivePartFilter = '' ">All</button>
+      <button (click)="partsService.inactivePartFilter = 'head' ">Heads</button>
+      <button (click)="partsService.inactivePartFilter = 'core' ">Cores</button>
+      <button (click)="partsService.inactivePartFilter = 'arm' ">Arms</button>
+      <button (click)="partsService.inactivePartFilter = 'leg' ">Legs</button>
+      <button (click)="partsService.inactivePartFilter = 'misc' ">Misc</button>
+
+      <div *ngFor="let part of partsService.inactiveParts"
+        [class]="'box' + ' ' + part.quality + ' ' + (partsService.inactivePartFilter && !part.type.includes(partsService.inactivePartFilter) && 'disabled')"
+        (mouseenter)="partsService.hoverToCompare(part)" (mouseleave)="partsService.hoverClear()" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
+        <p>{{part.name}}</p>
+        <p>{{part.weight}}kgs</p>
+        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
+        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p>{{part.cost}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="activePartsElement" cdkDropList [cdkDropListData]="partsService.activeParts" class="list"
+      (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
+      <div [class]="'box ' + part.quality" *ngFor="let part of partsService.activeParts" cdkDrag>
+        <img class="icon" [src]="getImagePath(part.type)">
+        <p>{{part.name}}</p>
+        <p>{{part.weight}}kgs</p>
+        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
+        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p>{{part.cost}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats">
+      <p>
+        Total Mech Value: {{partsService.getTotalMechValue(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getTotalMechValue(false) > partsService.getTotalMechValue(true), 'blue-text': partsService.getTotalMechValue(false) < partsService.getTotalMechValue(true)} ">
+          > {{partsService.getTotalMechValue(true)}}
+        </span>
+      </p>
+      <hr>
+      <p>
+        Power Production: {{partsService.getTotalPowerProduction(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getTotalPowerProduction(false) > partsService.getTotalPowerProduction(true), 'blue-text': partsService.getTotalPowerProduction(false) < partsService.getTotalPowerProduction(true)} ">
+          > {{partsService.getTotalPowerProduction(true)}}
+        </span>
+      </p>
+      <p>
+        Power Consumption: {{partsService.getTotalPowerConsumption(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getTotalPowerConsumption(false) < partsService.getTotalPowerConsumption(true), 'blue-text': partsService.getTotalPowerConsumption(false) > partsService.getTotalPowerConsumption(true)} ">
+          > {{partsService.getTotalPowerConsumption(true)}}
+        </span>
+      </p>
+      <hr>
+      <p>
+        Total Weight: {{partsService.getTotalWeight(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getTotalWeight(false) < partsService.getTotalWeight(true), 'blue-text': partsService.getTotalWeight(false) > partsService.getTotalWeight(true)} ">
+          > {{partsService.getTotalWeight(true)}}
+        </span>
+      </p>
+      <p class="sub">Top Weight: 0</p>
+      <p class="sub">Leg Weight: 0</p>
+      <p>Leg Power: {{'xxx'}}</p>
+      <p>Booster Power: {{'xxx'}}</p>
+      <hr>
+      <p>
+        Head Armor: {{partsService.getHeadArmor(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getHeadArmor(false) > partsService.getHeadArmor(true), 'blue-text': partsService.getHeadArmor(false) < partsService.getHeadArmor(true)} ">
+          > {{partsService.getHeadArmor(true)}}
+        </span>
+      </p>
+      <p>
+        Core Armor: {{partsService.getCoreArmor(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getCoreArmor(false) > partsService.getCoreArmor(true), 'blue-text': partsService.getCoreArmor(false) < partsService.getCoreArmor(true)} ">
+          > {{partsService.getCoreArmor(true)}}
+        </span>
+      </p>
+      <p>
+        L Arm Armor: {{partsService.getLarmArmor(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getLarmArmor(false) > partsService.getLarmArmor(true), 'blue-text': partsService.getLarmArmor(false) < partsService.getLarmArmor(true)} ">
+          > {{partsService.getLarmArmor(true)}}
+        </span>
+      </p>
+      <p>
+        R Arm Armor: {{partsService.getRarmArmor(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getRarmArmor(false) > partsService.getRarmArmor(true), 'blue-text': partsService.getRarmArmor(false) < partsService.getRarmArmor(true)} ">
+          > {{partsService.getRarmArmor(true)}}
+        </span>
+      </p>
+      <p>
+        Leg Armor: {{partsService.getLegArmor(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getLegArmor(false) > partsService.getLegArmor(true), 'blue-text': partsService.getLegArmor(false) < partsService.getLegArmor(true)} ">
+          > {{partsService.getLegArmor(true)}}
+        </span>
+      </p>
+      <hr>
+      <p>Sensor Range: 100</p>
+      <p>Sensor Strength: 100</p>
+      <hr>
+      <p>
+        R Arm Weapon Damage: {{partsService.getRarmWeaponDamage(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getRarmWeaponDamage(false) > partsService.getRarmWeaponDamage(true), 'blue-text': partsService.getRarmWeaponDamage(false) < partsService.getRarmWeaponDamage(true)} ">
+          > {{partsService.getRarmWeaponDamage(true)}}
+        </span>
+      </p>
+      <p class="sub">R Shoulder Weapon:</p>
+      <p>
+        L Arm Weapon Damage: {{partsService.getLarmWeaponDamage(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getLarmWeaponDamage(false) > partsService.getLarmWeaponDamage(true), 'blue-text': partsService.getLarmWeaponDamage(false) < partsService.getLarmWeaponDamage(true)} ">
+          > {{partsService.getLarmWeaponDamage(true)}}
+        </span>
+      </p>
+      <p class="sub">L Shoulder Weapon:</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stub">
+      <button routerLink="/custom-part">Custom Parts Shop</button>
+      <button (click)="partsService.addSpecialParts()">Add Specials</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="dolly">
+      <!-- <div [ngClass]="{'red-text': partsService.getLShoulderDamage(false)} " class="doll-slot lshoulder">L Shoulder</div> -->
+      <!-- <div [ngClass]="{'red-text': partsService.getRShoulderDamage(false)} " class="doll-slot rshoulder">R Shoulder</div> -->
+      <div [ngClass]="{'filled-doll': partsService.getHeadArmor(false)} " class="doll-slot head">Head</div>
+      <div [ngClass]="{'filled-doll': partsService.getCoreArmor(false)} " class="doll-slot core">Core</div>
+      <div [ngClass]="{'filled-doll': partsService.getLarmWeaponDamage(false)} " class="doll-slot larm">Left Arm</div>
+      <div [ngClass]="{'filled-doll': partsService.getRarmWeaponDamage(false)} " class="doll-slot rarm">Right Arm</div>
+      <div [ngClass]="{'filled-doll': partsService.getLegArmor(false)} " class="doll-slot legs">Legs</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stub">
+      <button [disabled]="!partsService.isMechaComplete()" mat-raised-button color="primary">Ready!</button>
+      <p *ngIf="!partsService.isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
+    </div>
+  </div>
+
+</div>

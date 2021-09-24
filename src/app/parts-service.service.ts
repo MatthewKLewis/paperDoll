@@ -16,10 +16,10 @@ function sortByPartType(partA: Part, partB: Part): number {
       partAValue = 6.5;
       break;
     case 'rarm':
-      partAValue = 4.5;
+      partAValue = 3.5;
       break;
     case 'larm':
-      partAValue = 3.5;
+      partAValue = 4.5;
       break;
     case 'legs':
       partAValue = 2.5;
@@ -39,10 +39,10 @@ function sortByPartType(partA: Part, partB: Part): number {
       partBValue = 6;
       break;
     case 'rarm':
-      partBValue = 4;
+      partBValue = 3;
       break;
     case 'larm':
-      partBValue = 3;
+      partBValue = 4;
       break;
     case 'legs':
       partBValue = 2;
@@ -438,59 +438,59 @@ export class PartsService {
     }
     return totalWeight;
   }
-  getHeadArmor(hover: boolean = false) {
+  getHeadArmor(hover: boolean = false): number {
     if (hover) {
       return this.activeAndHoverParts.find((part: Part) => {
         return part.type == 'head';
-      })?.armorValue;
+      })?.armorValue || 0;
     } else {
       return this.activeParts.find((part: Part) => {
         return part.type == 'head';
-      })?.armorValue;
+      })?.armorValue || 0;
     }
   }
-  getCoreArmor(hover: boolean = false) {
+  getCoreArmor(hover: boolean = false): number {
     if (hover) {
       return this.activeAndHoverParts.find((part: Part) => {
         return part.type == 'core';
-      })?.armorValue;
+      })?.armorValue || 0;
     } else {
       return this.activeParts.find((part: Part) => {
         return part.type == 'core';
-      })?.armorValue;
+      })?.armorValue || 0;
     }
   }
-  getLarmArmor(hover: boolean = false) {
+  getLarmArmor(hover: boolean = false): number {
     if (hover) {
       return this.activeAndHoverParts.find((part: Part) => {
         return part.type == 'larm';
-      })?.armorValue;
+      })?.armorValue || 0;
     } else {
       return this.activeParts.find((part: Part) => {
         return part.type == 'larm';
-      })?.armorValue;
+      })?.armorValue || 0;
     }
   }
-  getRarmArmor(hover: boolean = false) {
+  getRarmArmor(hover: boolean = false): number {
     if (hover) {
       return this.activeAndHoverParts.find((part: Part) => {
         return part.type == 'rarm';
-      })?.armorValue;
+      })?.armorValue || 0;
     } else {
       return this.activeParts.find((part: Part) => {
         return part.type == 'rarm';
-      })?.armorValue;
+      })?.armorValue || 0;
     }
   }
-  getLegArmor(hover: boolean = false) {
+  getLegArmor(hover: boolean = false): number {
     if (hover) {
       return this.activeAndHoverParts.find((part: Part) => {
         return part.type == 'legs';
-      })?.armorValue;
+      })?.armorValue || 0;
     } else {
       return this.activeParts.find((part: Part) => {
         return part.type == 'legs';
-      })?.armorValue;
+      })?.armorValue || 0;
     }
   }
   getRarmWeaponDamage(hover: boolean = false): number {
