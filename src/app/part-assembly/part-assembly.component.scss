@@ -56,27 +56,27 @@
     }
   
     /* Quality Backgrounds */
-    .junk {
+    .a1 {
       background-color: rgb(112, 89, 89);
       box-shadow: inset 0px 0px 0px 1px black;
     }
-    .stock {
+    .a2 {
       background: linear-gradient(#ededed, #a3a3a3);
       box-shadow: inset 0px 0px 0px 1px black;
     }
-    .performance {
+    .a3 {
       background: linear-gradient( 217deg, rgba(197, 190, 169, 0.8), rgba(255, 0, 0, 0) 100%),
                   linear-gradient( 127deg, rgba(186, 187, 148, 0.8), rgba(0, 255, 0, 0) 100%),
                   linear-gradient( 336deg, rgba(255, 255, 255, 0.8), rgba(0, 0, 255, 0) 100%);
                   box-shadow: inset 0px 0px 0px 1px black;
                 }
-    .elite {
+    .a4 {
       background: linear-gradient(217deg,rgba(206, 153, 55, 0.8),rgba(255, 0, 0, 0) 100%),
                   linear-gradient(127deg,rgba(211, 190, 71, 0.8),rgba(0, 255, 0, 0) 100%),
                   linear-gradient(336deg,rgba(255, 253, 188, 0.8),rgba(0, 0, 255, 0) 100%);
                   box-shadow: inset 0px 0px 0px 1px black;
                 }
-    .master {
+    .a5 {
       background: linear-gradient(217deg,rgba(163, 176, 201, 0.8),rgba(47, 95, 97, 0) 70.71%),
                   linear-gradient(127deg,rgba(194, 172, 172, 0.8),rgba(0, 255, 0, 0) 70.71%),
                   linear-gradient(336deg,rgba(201, 170, 207, 0.8),rgba(0, 0, 255, 0) 70.71%);
@@ -175,27 +175,27 @@
       border: 1px solid grey;
     }
   }
-  .junk {
+  .a1 {
     background-color: rgb(112, 89, 89);
     box-shadow: inset 0px 0px 0px 1px black;
   }
-  .stock {
+  .a2 {
     background: linear-gradient(#ededed, #a3a3a3);
     box-shadow: inset 0px 0px 0px 1px black;
   }
-  .performance {
+  .a3 {
     background: linear-gradient( 217deg, rgba(197, 190, 169, 0.8), rgba(255, 0, 0, 0) 100%),
                 linear-gradient( 127deg, rgba(186, 187, 148, 0.8), rgba(0, 255, 0, 0) 100%),
                 linear-gradient( 336deg, rgba(255, 255, 255, 0.8), rgba(0, 0, 255, 0) 100%);
                 box-shadow: inset 0px 0px 0px 1px black;
               }
-  .elite {
+  .a4 {
     background: linear-gradient(217deg,rgba(206, 153, 55, 0.8),rgba(255, 0, 0, 0) 100%),
                 linear-gradient(127deg,rgba(211, 190, 71, 0.8),rgba(0, 255, 0, 0) 100%),
                 linear-gradient(336deg,rgba(255, 253, 188, 0.8),rgba(0, 0, 255, 0) 100%);
                 box-shadow: inset 0px 0px 0px 1px black;
   }
-  .master {
+  .a5 {
     background: linear-gradient(217deg,rgba(163, 176, 201, 0.8),rgba(47, 95, 97, 0) 70.71%),
                 linear-gradient(127deg,rgba(194, 172, 172, 0.8),rgba(0, 255, 0, 0) 70.71%),
                 linear-gradient(336deg,rgba(201, 170, 207, 0.8),rgba(0, 0, 255, 0) 70.71%);

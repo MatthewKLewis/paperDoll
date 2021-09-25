@@ -8,8 +8,10 @@
 
     <div class="header">
         <button mat-raised-button color="primary" [matMenuTriggerFor]="manufacturerMenu">Select Manufacturer</button>
+        <button [disabled]="!tempPart.manufacturer" mat-raised-button color="primary" [matMenuTriggerFor]="modelMenu">Select Model</button>
         <button mat-raised-button color="primary" [matMenuTriggerFor]="typeMenu">Select Type</button>
         <span *ngIf="tempPart.manufacturer">{{tempPart.manufacturer}} |</span>
+        <span *ngIf="tempPart.manufacturer">{{tempPart.model}} |</span>
         <span *ngIf="tempPart.type">{{getTitleForPart(tempPart.type)}}</span>
     </div>
 
@@ -72,7 +74,34 @@
 </mat-menu>
 
 <mat-menu #manufacturerMenu="matMenu">
-    <button *ngFor="let manufacturer of partsService.manufacturers" mat-menu-item (click)="pickManufacturer(manufacturer.name)">{{manufacturer.name}}</button>
+    <button *ngFor="let manufacturer of partsService.manufacturers" mat-menu-item (click)="pickManufacturer(manufacturer)">{{manufacturer.name}}</button>
+</mat-menu>
+
+<mat-menu #modelMenu="matMenu">
+    <div *ngIf="tempPart.manufacturer.name == 'Avionissimo'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[0].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Corgistics'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[1].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Fleetwood Marine'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[2].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'GAZAN'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[3].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Mantissa'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[4].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Vincente'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[5].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Yamashita'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[6].models">{{model.name}}</button>
+    </div>
+    <div *ngIf="tempPart.manufacturer.name == 'Yantian Industrial'">
+        <button mat-menu-item *ngFor="let model of partsService.manufacturers[7].models">{{model.name}}</button>
+    </div>
 </mat-menu>
 
 <mat-menu #headMenu="matMenu">

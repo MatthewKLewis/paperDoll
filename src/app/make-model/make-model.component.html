@@ -7,6 +7,7 @@
     </div>
 
     <div class="header">
+        <span>Makes</span>
         <table mat-table [dataSource]="partsService.manufacturers" class="mat-elevation-z8">
             
             <!-- Name Column -->
@@ -14,34 +15,82 @@
                 <th mat-header-cell *matHeaderCellDef> Name </th>
                 <td mat-cell *matCellDef="let manufacturer"> {{manufacturer.name}} </td>
             </ng-container>
+
+            <!-- scout Column -->
+            <ng-container matColumnDef="scout">
+                <th mat-header-cell *matHeaderCellDef> Scout Model </th>
+                <td mat-cell *matCellDef="let manufacturer" [class]="'a' + manufacturer.models[0].industryRating">
+                    {{manufacturer.models[0]?.name}}
+                </td>
+            </ng-container>
             
             <!-- light Column -->
             <ng-container matColumnDef="light">
                 <th mat-header-cell *matHeaderCellDef> Light Model </th>
-                <td mat-cell *matCellDef="let manufacturer"> {{manufacturer.models[0]?.name}} </td>
+                <td mat-cell *matCellDef="let manufacturer" [class]="'a' + manufacturer.models[1].industryRating">
+                    {{manufacturer.models[1]?.name}}
+                </td>
             </ng-container>
 
             <!-- medium Column -->
             <ng-container matColumnDef="medium">
                 <th mat-header-cell *matHeaderCellDef> Medium Model </th>
-                <td mat-cell *matCellDef="let manufacturer"> {{manufacturer.models[1]?.name}} </td>
+                <td mat-cell *matCellDef="let manufacturer" [class]="'a' + manufacturer.models[2].industryRating">
+                    {{manufacturer.models[2]?.name}}
+                </td>
             </ng-container>
 
             <!-- heavy Column -->
             <ng-container matColumnDef="heavy">
                 <th mat-header-cell *matHeaderCellDef> Heavy Model </th>
-                <td mat-cell *matCellDef="let manufacturer"> {{manufacturer.models[2]?.name}} </td>
+                <td mat-cell *matCellDef="let manufacturer" [class]="'a' + manufacturer.models[3].industryRating">
+                    {{manufacturer.models[3]?.name}}
+                </td>
             </ng-container>
 
+            <!-- superheavy Column -->
+            <ng-container matColumnDef="superheavy">
+                <th mat-header-cell *matHeaderCellDef> SuperHeavy Model </th>
+                <td mat-cell *matCellDef="let manufacturer" [class]="'a' + manufacturer.models[4].industryRating">
+                    {{manufacturer.models[4]?.name}}
+                </td>
+            </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
 
+    <div class="header">
+        <span>Models</span>
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="allModels">
+
+            <ng-container matColumnDef="industryRating">
+                <th mat-header-cell mat-sort-header="industryRating" *matHeaderCellDef>Rating (5: Best, 1: Worst)</th>
+                <td mat-cell *matCellDef="let model"> {{model.industryRating}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header="name" *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let model">{{model.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="class">
+                <th mat-header-cell mat-sort-header="class" *matHeaderCellDef>Class</th>
+                <td mat-cell *matCellDef="let model"> {{model.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell mat-sort-header="description" *matHeaderCellDef>description</th>
+                <td mat-cell *matCellDef="let model"> {{model.description}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedModelColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedModelColumns;"></tr>
+        </table>
+    </div>
+
 </div>
-
-
 
 <mat-menu #typeMenu="matMenu">
 

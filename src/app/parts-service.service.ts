@@ -78,13 +78,14 @@ export interface Mobility {
 export interface Part {
   id: number;
   name: string;
-  description: string;
+  description?: string;
 
   type: string;
-  subType?: string;
-  quality: string;
+  class: string;
+  quality: number;
 
-  manufacturer: string;
+  manufacturer: Manufacturer;
+  model?: string;
 
   weight: number;
   armorValue: number;
@@ -96,12 +97,14 @@ export interface Part {
   powerProduction?: number;
   attack?: Attack;
   defense?: Defense;
-  mobility?: Mobility
+  mobility?: Mobility;
 }
 export interface Model {
-  name: string,
-  class: string,
-  bonuses: Array<any>
+  name: string;
+  class: string;
+  description?: string;
+  industryRating: number;
+  bonuses: Array<any>;
 }
 export interface Manufacturer {
   name: string;
@@ -116,285 +119,148 @@ export interface Manufacturer {
 export class PartsService {
   inactivePartFilter: string = '';
 
-  partTypes: Array<string> = [
-    'head',
-    'core',
-    'larm',
-    'rarm',
-    'legs',
-    'rshoulder',
-    'lshoulder',
-    'slotted',
-  ];
+  partTypes: Array<string> = ['head', 'core', 'larm', 'rarm', 'legs'];
 
   manufacturers: Array<Manufacturer> = [
     {
-      name: 'Avonisimmo', models: [
-        { name: 'Evra', class: 'light', bonuses: [] },
-        { name: 'Guillaume', class: 'medium', bonuses: [] },
-        { name: 'Valjean', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Avionissimo',
+      models: [
+        {
+          name: 'Evra',
+          class: 'scout',
+          industryRating: 5,
+          description: `The Avionissimo Evra is the lightest frame from this manufacturer, and their best regarded.`,
+          bonuses: [],
+        },
+        {
+          name: 'Hugo',
+          class: 'light',
+          industryRating: 4,
+          description: `Avionissimo's Hugo model is a solid entry in the light mech category.`,
+          bonuses: [],
+        },
+        { name: 'Guillaume', class: 'medium', industryRating: 3, bonuses: [] },
+        { name: 'Valjean', class: 'heavy', industryRating: 2, bonuses: [] },
+        { name: 'CRAV', class: 'superheavy', industryRating: 1, bonuses: [] },
+      ],
     },
     {
-      name: 'Corgistics', models: [
-        { name: 'iFrame', class: 'light', bonuses: [] },
-        { name: 'CorPro', class: 'medium', bonuses: [] },
-        { name: 'Black', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Corgistics',
+      models: [
+        {
+          name: 'Micro',
+          class: 'scout',
+          industryRating: 4,
+          description: `The Corgistics Micro packs a lot of firepower into the smallest yet mecha platform.`,
+          bonuses: [],
+        },
+        { name: 'cFrame', class: 'light', industryRating: 3, bonuses: [] },
+        { name: 'CorPro', class: 'medium', industryRating: 5, bonuses: [] },
+        { name: 'Black', class: 'heavy', industryRating: 2, bonuses: [] },
+        {
+          name: 'HeavyBlack',
+          class: 'superheavy',
+          industryRating: 1,
+          bonuses: [],
+        },
+      ],
     },
     {
-      name: 'Fleetwood Marine', models: [
-        { name: 'FM-12', class: 'light', bonuses: [] },
-        { name: 'FM-34', class: 'medium', bonuses: [] },
-        { name: 'FM-56', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Fleetwood Marine',
+      models: [
+        { name: 'FM-00', class: 'scout', industryRating: 1, bonuses: [] },
+        { name: 'FM-12', class: 'light', industryRating: 2, bonuses: [] },
+        { name: 'FM-34', class: 'medium', industryRating: 4, bonuses: [] },
+        {
+          name: 'FM-56',
+          class: 'heavy',
+          industryRating: 5,
+          description: `The FM-56 is the premiere heavy mecha platform for military applications`,
+          bonuses: [],
+        },
+        { name: 'FM-78', class: 'superheavy', industryRating: 3, bonuses: [] },
+      ],
     },
     {
-      name: 'GAZAN', models: [
-        { name: 'Razvedik', class: 'light', bonuses: [] },
-        { name: 'Bog-tier', class: 'medium', bonuses: [] },
-        { name: 'Smetann', class: 'heavy', bonuses: [] },
-      ]
+      name: 'GAZAN',
+      models: [
+        { name: 'Kalinka', class: 'scout', industryRating: 1, bonuses: [] },
+        { name: 'Razvedik', class: 'light', industryRating: 2, bonuses: [] },
+        { name: 'Bog-tier', class: 'medium', industryRating: 3, bonuses: [] },
+        { name: 'Smetann', class: 'heavy', industryRating: 4, bonuses: [] },
+        {
+          name: 'Josef',
+          class: 'superheavy',
+          industryRating: 5,
+          description: `The GAZAN Josef - The best in class mecha for the SuperHeavy category.`,
+          bonuses: [],
+        },
+      ],
     },
     {
-      name: 'Mantissa', models: [
-        { name: 'SigFig', class: 'light', bonuses: [] },
-        { name: 'Hyperion', class: 'medium', bonuses: [] },
-        { name: 'Significand', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Mantissa',
+      models: [
+        { name: 'Hyperion', class: 'scout', industryRating: 4, bonuses: [] },
+        { name: 'Radix', class: 'light', industryRating: 5, bonuses: [] },
+        { name: 'Abscissa', class: 'medium', industryRating: 3, bonuses: [] },
+        { name: 'Significand', class: 'heavy', industryRating: 2, bonuses: [] },
+        {
+          name: 'Ordinate',
+          class: 'superheavy',
+          industryRating: 1,
+          bonuses: [],
+        },
+      ],
     },
     {
-      name: 'Vincente', models: [
-        { name: 'Goshawk', class: 'light', bonuses: [] },
-        { name: 'Eagle', class: 'medium', bonuses: [] },
-        { name: 'Condor', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Vincente',
+      models: [
+        { name: 'Piper', class: 'scout', industryRating: 1, bonuses: [] },
+        { name: 'Goshawk', class: 'light', industryRating: 2, bonuses: [] },
+        { name: 'Eagle', class: 'medium', industryRating: 4, bonuses: [] },
+        { name: 'Condor', class: 'heavy', industryRating: 5, bonuses: [] },
+        {
+          name: 'Double Condor',
+          class: 'superheavy',
+          industryRating: 3,
+          bonuses: [],
+        },
+      ],
     },
     {
-      name: 'Yamashita', models: [
-        { name: 'Masamune', class: 'light', bonuses: [] },
-        { name: 'Dan-No-Ura', class: 'medium', bonuses: [] },
-        { name: 'Goro', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Yamashita',
+      models: [
+        { name: 'Tanto', class: 'scout', industryRating: 3, bonuses: [] },
+        { name: 'Dan-No-Ura', class: 'light', industryRating: 5, bonuses: [] },
+        { name: 'Uji', class: 'medium', industryRating: 4, bonuses: [] },
+        { name: 'Goro', class: 'heavy', industryRating: 1, bonuses: [] },
+        {
+          name: 'Ichi-no-Tani',
+          class: 'superheavy',
+          industryRating: 2,
+          bonuses: [],
+        },
+      ],
     },
     {
-      name: 'Yantian Industrian', models: [
-        { name: 'Chobra', class: 'light', bonuses: [] },
-        { name: '3', class: 'medium', bonuses: [] },
-        { name: '4', class: 'heavy', bonuses: [] },
-      ]
+      name: 'Yantian Industrial',
+      models: [
+        { name: 'Aifeng', class: 'scout', industryRating: 2, bonuses: [] },
+        { name: 'Chobra', class: 'light', industryRating: 1, bonuses: [] },
+        { name: 'QXHJ', class: 'medium', industryRating: 5, bonuses: [] },
+        { name: 'RuppShch', class: 'heavy', industryRating: 4, bonuses: [] },
+        { name: 'Baseus', class: 'superheavy', industryRating: 3, bonuses: [] },
+      ],
     },
   ];
 
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
-  inactiveParts: Array<Part> = [
-    {
-      id: 1,
-      name: 'Junk Head',
-      type: 'head',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 100,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      sensor: { range: 10, decibels: 10 },
-      cost: 80,
-    },
-    {
-      id: 2,
-      name: 'Standard Head',
-      type: 'head',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 90,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 120,
-      sensor: { range: 20, decibels: 15 },
+  inactiveParts: Array<Part> = [];
 
-      cost: 80,
-    },
-    {
-      id: 3,
-      name: 'Standard Core',
-      type: 'core',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 550,
-      description: 'a mecha part',
-      powerProduction: 200,
-      armorValue: 100,
-      cost: 120,
-    },
-    {
-      id: 4,
-      name: 'Standard Right Arm',
-      type: 'rarm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 110,
-      description: 'a mecha part',
-      powerConsumption: 30,
-      armorValue: 100,
-      cost: 100,
-      attack: {
-        damage: 10,
-        damageType: 'ballistic',
-        armorPiercing: 1
-      }
-    },
-    {
-      id: 5,
-      name: 'Junk Left Arm',
-      type: 'larm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'junk',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 40,
-      armorValue: 100,
-      cost: 60,
-      attack: {
-        damage: 10,
-        damageType: 'ballistic',
-        armorPiercing: 1
-      }
-    },
-    {
-      id: 6,
-      name: 'Standard Legs',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'stock',
-      weight: 400,
-      description: 'a mecha part',
-      powerConsumption: 50,
-      armorValue: 100,
-      cost: 100,
-    },
-  ];
-  inactiveSpecialParts: Array<Part> = [
-    {
-      id: 7,
-      name: 'SHOULDER ROCKET SYSTEM',
-      type: 'rshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 160,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-      attack: {
-        damageType: 'explosive',
-        damage: 40,
-        armorPiercing: 5
-      },
-    },
-    {
-      id: 8,
-      name: 'SHOULDER LASER SYSTEM',
-      type: 'lshoulder',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 140,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-      attack: {
-        damageType: 'laser',
-        damage: 80,
-        armorPiercing: 15
-      },
-    },
-    {
-      id: 9,
-      name: 'EXPERT HEAD',
-      type: 'head',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 100,
-      description: 'an advanced head array',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 400,
-    },
-    {
-      id: 10,
-      name: 'EXPERT CORE',
-      type: 'core',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 600,
-      description: 'a mecha part',
-      powerProduction: 300,
-      armorValue: 100,
-      cost: 600,
-    },
-    {
-      id: 11,
-      name: 'EXPERT Left ARM',
-      type: 'larm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'performance',
-      weight: 200,
-      description: 'a mecha part',
-      powerConsumption: 40,
-      armorValue: 100,
-      cost: 350,
-      attack: {
-        damageType: 'ballistic',
-        damage: 40,
-        armorPiercing: 4
-      },
-    },
-    {
-      id: 12,
-      name: 'ULTIMATE Right ARM',
-      type: 'rarm',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'elite',
-      weight: 220,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 700,
-      attack: {
-        damageType: 'energy',
-        damage: 100,
-        armorPiercing: 10
-      },
-    },
-    {
-      id: 13,
-      name: 'SWIFT LEGS',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'master',
-      weight: 400,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 1250,
-    },
-    {
-      id: 14,
-      name: 'HEAVY LEGS',
-      type: 'legs',
-      manufacturer: 'Anaheim Electronics',
-      quality: 'master',
-      weight: 800,
-      description: 'a mecha part',
-      powerConsumption: 10,
-      armorValue: 100,
-      cost: 1400,
-    },
-  ];
-
-  constructor() { }
+  constructor() {
+    this.createEveryPart();
+  }
 
   drop(event: CdkDragDrop<any[]>) {
     var newContainerId = event.container.id;
@@ -501,82 +367,111 @@ export class PartsService {
   }
   getHeadArmor(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type == 'head';
-      })?.armorValue || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'head';
+        })?.armorValue || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type == 'head';
-      })?.armorValue || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'head';
+        })?.armorValue || 0
+      );
     }
   }
   getCoreArmor(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type == 'core';
-      })?.armorValue || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'core';
+        })?.armorValue || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type == 'core';
-      })?.armorValue || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'core';
+        })?.armorValue || 0
+      );
     }
   }
   getLarmArmor(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type == 'larm';
-      })?.armorValue || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'larm';
+        })?.armorValue || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type == 'larm';
-      })?.armorValue || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'larm';
+        })?.armorValue || 0
+      );
     }
   }
   getRarmArmor(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type == 'rarm';
-      })?.armorValue || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'rarm';
+        })?.armorValue || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type == 'rarm';
-      })?.armorValue || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'rarm';
+        })?.armorValue || 0
+      );
     }
   }
   getLegArmor(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type == 'legs';
-      })?.armorValue || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'legs';
+        })?.armorValue || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type == 'legs';
-      })?.armorValue || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'legs';
+        })?.armorValue || 0
+      );
     }
   }
   getRarmWeaponDamage(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type === 'rarm'
-      })?.attack?.damage || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type === 'rarm';
+        })?.attack?.damage || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type === 'rarm'
-      })?.attack?.damage || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type === 'rarm';
+        })?.attack?.damage || 0
+      );
     }
   }
   getLarmWeaponDamage(hover: boolean = false): number {
     if (hover) {
-      return this.activeAndHoverParts.find((part: Part) => {
-        return part.type === 'larm'
-      })?.attack?.damage || 0;
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type === 'larm';
+        })?.attack?.damage || 0
+      );
     } else {
-      return this.activeParts.find((part: Part) => {
-        return part.type === 'larm'
-      })?.attack?.damage || 0;
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type === 'larm';
+        })?.attack?.damage || 0
+      );
     }
   }
 
+  //Mecha Stats and Readiness
   hoverToCompare(hovPart: Part) {
     this.activeAndHoverParts = JSON.parse(JSON.stringify(this.activeParts));
     var indexOfReplacement = this.activeAndHoverParts.findIndex(
@@ -592,7 +487,6 @@ export class PartsService {
   hoverClear() {
     this.activeAndHoverParts = [];
   }
-
   isMechaComplete(): boolean {
     //TO-DO
     if (this.activeParts.length < 5) {
@@ -602,8 +496,121 @@ export class PartsService {
     }
   }
 
-  //admin
-  addSpecialParts() {
-    this.inactiveParts.push(...this.inactiveSpecialParts)
+  //Display
+  getTitleForPart(short: string) {
+    switch (short) {
+      case 'rarm':
+        return 'Right Arm';
+      case 'larm':
+        return 'Left Arm';
+      case 'head':
+        return 'Head';
+      case 'core':
+        return 'Core';
+      case 'legs':
+        return 'Legs';
+      case 'rshoulder':
+        return 'Right Shoulder';
+      case 'lshoulder':
+        return 'Left Shoulder';
+      case 'slotted':
+        return 'Slot Item';
+      default:
+        return 'ERROR!';
+    }
+  }
+
+  //part gen
+  createEveryPart() {
+    for (let i = 0; i < this.manufacturers.length; i++) {
+      for (let j = 0; j < this.manufacturers[i].models.length; j++) {
+        for (let k = 0; k < this.partTypes.length; k++) {
+          //base identity
+          var tempPart: Part = {
+            id: i * 100 + j * 10 + k,
+            name: this.manufacturers[i].models[j].name + ' ' + this.getTitleForPart(this.partTypes[k]),
+            description: this.manufacturers[i].models[j].description || '',
+            manufacturer: this.manufacturers[i],
+            class: this.manufacturers[i].models[j].class,
+            quality: this.manufacturers[i].models[j].industryRating,
+            type: this.partTypes[k],
+            weight: 0,
+            powerConsumption: 0,
+            armorValue: 0,
+            cost: 0,
+          };
+
+          //base weight, power, armor
+          switch (this.partTypes[k]) {
+            case 'rarm':
+              tempPart.weight = 100
+              tempPart.powerConsumption = 20
+              tempPart.armorValue = 100
+              tempPart.attack = {
+                damageType: 'ballistic',
+                damage: 10,
+                armorPiercing: 1,
+              }
+              break;
+            case 'larm':
+              tempPart.weight = 100
+              tempPart.powerConsumption = 20
+              tempPart.armorValue = 100
+              tempPart.attack = {
+                damageType: 'ballistic',
+                damage: 10,
+                armorPiercing: 1,
+              }
+              break;
+            case 'head':
+              tempPart.weight = 50
+              tempPart.powerConsumption = 20
+              tempPart.armorValue = 80
+              break;
+            case 'core':
+              tempPart.weight = 300
+              tempPart.powerProduction = 200
+              tempPart.armorValue = 350
+              break;
+            case 'legs':
+              tempPart.weight = 400
+              tempPart.powerConsumption = 100
+              tempPart.armorValue = 400
+              break;
+            case 'rshoulder':
+              tempPart.weight = 40
+              tempPart.powerConsumption = 10
+              tempPart.armorValue = 80
+              break;
+            case 'lshoulder':
+              tempPart.weight = 40
+              tempPart.powerConsumption = 10
+              tempPart.armorValue = 80
+              break;
+            case 'slotted':
+              tempPart.weight = 10
+              tempPart.powerConsumption = 10
+              tempPart.armorValue = 10
+              break;
+            default:
+              tempPart.weight = -1
+              tempPart.powerConsumption = -1
+              tempPart.armorValue = -1
+              break;
+          }
+
+          tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4)
+          if (tempPart.powerProduction) {tempPart.powerProduction += tempPart.quality * 10}
+
+          //class mod
+
+          //type mod
+
+          //manufacturer mod
+
+          this.inactiveParts.push(tempPart)
+        }
+      }
+    }
   }
 }

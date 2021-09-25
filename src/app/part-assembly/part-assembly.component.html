@@ -16,8 +16,11 @@
       <button (click)="partsService.inactivePartFilter = 'misc' ">Misc</button>
 
       <div *ngFor="let part of partsService.inactiveParts"
-        [class]="'box' + ' ' + part.quality + ' ' + (partsService.inactivePartFilter && !part.type.includes(partsService.inactivePartFilter) && 'disabled')"
-        (mouseenter)="partsService.hoverToCompare(part)" (mouseleave)="partsService.hoverClear()" cdkDrag>
+        [class]="'box' + ' a' + part.quality + ' ' + (partsService.inactivePartFilter && !part.type.includes(partsService.inactivePartFilter) && 'disabled')"
+        (mouseenter)="partsService.hoverToCompare(part)" 
+        (mouseleave)="partsService.hoverClear()" cdkDrag
+        (click)="toolTip(part)"
+      >
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
@@ -31,7 +34,7 @@
   <div class="container">
     <div id="activePartsElement" cdkDropList [cdkDropListData]="partsService.activeParts" class="list"
       (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
-      <div [class]="'box ' + part.quality" *ngFor="let part of partsService.activeParts" cdkDrag>
+      <div [class]="'box ' + ' a' + part.quality" *ngFor="let part of partsService.activeParts" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
@@ -142,7 +145,6 @@
       <button routerLink="/custom-part">Custom Parts Shop</button>
       <button routerLink="/make-model">Table of Manufacturer Makes and Models</button>
       <br>
-      <button (click)="partsService.addSpecialParts()">Add Specials</button>
     </div>
   </div>
 

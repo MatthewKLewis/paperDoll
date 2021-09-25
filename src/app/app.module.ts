@@ -9,7 +9,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 import { CustomPartComponent } from './custom-part/custom-part.component';
 import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
@@ -34,6 +35,7 @@ import { MakeModelComponent } from './make-model/make-model.component';
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

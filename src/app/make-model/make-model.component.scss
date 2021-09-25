@@ -1,7 +1,7 @@
 * {
     font-family: 'Calibri';
 }
-  
+
 button {
     margin: 5px 0px 10px 5px;
 }
@@ -18,13 +18,17 @@ mat-slider, progress {
     width: 90%;
 }
 
+tr.mat-row {
+    height: 5px;
+}
+
 ::ng-deep.mat-menu-content {
     overflow: hidden!important;
 }
   
 .wrapper {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 80px;
+    margin-right: 80px;
     display: grid;
     grid-template-columns: 32% 32% 32%;
 }
@@ -47,7 +51,12 @@ table {
 }
 
 .mat-column-name {
-    width: 20%;
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-scout {
+    width: 10%;
     border-right: 1px solid #e0e0e0;
     padding: 10px;
 }
@@ -66,3 +75,29 @@ table {
     border-right: 1px solid #e0e0e0;
     padding: 10px;
 }
+.mat-column-superheavy {
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-industryRating {
+    width: 5%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-class {
+    width: 10%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+.mat-column-description {
+    width: 20%;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+}
+
+.a1 { background-color: rgba(255, 0, 0, 0.1);}
+.a2 { background-color: rgba(255, 166, 0, 0.1);}
+.a3 { background-color: rgba(255, 255, 0, 0.1);}
+.a4 { background-color: rgba(0, 128, 0, 0.1);}
+.a5 { background-color: rgba(0, 0, 255, 0.1);}

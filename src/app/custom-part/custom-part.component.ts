@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Part, PartsService } from '../parts-service.service';
+import { Manufacturer, Part, PartsService } from '../parts-service.service';
 
 @Component({
   selector: 'app-custom-part',
@@ -14,8 +14,13 @@ export class CustomPartComponent implements OnInit {
     id: -1,
     name: '',
     type: '',
-    manufacturer: '',
-    quality: '',
+    class: '',
+    manufacturer: {
+      name: '',
+      models: [],
+    },
+    model: '',
+    quality: 0,
     weight: -1,
     description: '',
     armorValue: -1,
@@ -95,8 +100,9 @@ export class CustomPartComponent implements OnInit {
       id: -1,
       name: '',
       type: type,
+      class: '',
       manufacturer: this.tempPart.manufacturer,
-      quality: '',
+      quality: 0,
       weight: -1,
       description: '',
       armorValue: -1,
@@ -154,13 +160,14 @@ export class CustomPartComponent implements OnInit {
     }
   }
 
-  pickManufacturer(manufacturer: string) {
+  pickManufacturer(manufacturer: Manufacturer) {
     this.tempPart = {
       id: -1,
       name: '',
       type: this.tempPart.type,
+      class: '',
       manufacturer: manufacturer,
-      quality: '',
+      quality: 0,
       weight: -1,
       description: '',
       armorValue: -1,

@@ -31,4 +31,8 @@ export class PartAssemblyComponent {
     }
   }
 
+  toolTip(part: Part) {
+    console.log(part);
+  }
+
 }
