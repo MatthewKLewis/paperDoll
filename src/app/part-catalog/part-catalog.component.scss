@@ -1,0 +1,51 @@
+* {
+    font-family: 'Calibri';
+}
+
+button {
+    margin: 5px 0px 10px 5px;
+}
+  
+hr {
+    margin: 10px 0 10px;
+    border: none;
+    width: 100%;
+    background-color: white;
+    height: 1px;
+}
+
+mat-slider, progress {
+    width: 90%;
+}
+
+tr.mat-row {
+    height: 5px;
+}
+
+::ng-deep.mat-menu-content {
+    overflow: hidden!important;
+}
+  
+.wrapper {
+    margin-left: 80px;
+    margin-right: 80px;
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+}
+
+.header {
+    margin: 5px;
+    padding: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    grid-column: 1/4;
+
+    input, span {
+        margin: 5px;
+        height: 24px;
+    }
+}
+
+table {
+    width: 100%;
+}

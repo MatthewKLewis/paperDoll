@@ -15,6 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { CustomPartComponent } from './custom-part/custom-part.component';
 import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
 import { MakeModelComponent } from './make-model/make-model.component';
+import { PartCatalogComponent } from './part-catalog/part-catalog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MakeModelComponent } from './make-model/make-model.component';
     CustomPartComponent,
     PartAssemblyComponent,
     MakeModelComponent,
+    PartCatalogComponent,
   ],
   imports: [
     BrowserModule,

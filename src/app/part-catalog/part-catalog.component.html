@@ -1,0 +1,46 @@
+<div class="wrapper">
+
+    <div class="header">
+        <button routerLink="">Back to Assembly...</button>
+        <marquee>Every Part</marquee>
+        <p>Reference for Each Part</p>
+    </div>
+
+    <div class="header">
+        <span>Models</span>
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="allParts">
+
+            <ng-container matColumnDef="industryRating">
+                <th mat-header-cell mat-sort-header="industryRating" *matHeaderCellDef>Rating (5: Best, 1: Worst)</th>
+                <td mat-cell *matCellDef="let model"> {{model.industryRating}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header="name" *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let model">{{model.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="class">
+                <th mat-header-cell mat-sort-header="class" *matHeaderCellDef>Class</th>
+                <td mat-cell *matCellDef="let model"> {{model.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell mat-sort-header="description" *matHeaderCellDef>description</th>
+                <td mat-cell *matCellDef="let model"> {{model.description}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedModelColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedModelColumns;"></tr>
+        </table>
+    </div>
+
+</div>
+
+<mat-menu #typeMenu="matMenu">
+
+</mat-menu>
+
+<mat-menu #manufacturerMenu="matMenu">
+
+</mat-menu>
