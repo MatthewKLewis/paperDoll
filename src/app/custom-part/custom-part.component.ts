@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Manufacturer, Part, PartsService } from '../parts-service.service';
+import { Manufacturer, Part, PartsService, partType } from '../parts-service.service';
 
 @Component({
   selector: 'app-custom-part',
@@ -13,11 +13,12 @@ export class CustomPartComponent implements OnInit {
   tempPart: Part = {
     id: -1,
     name: '',
-    type: '',
+    type: partType.any,
     class: '',
     manufacturer: {
       name: '',
       models: [],
+      bonuses: [],
     },
     model: '',
     quality: 0,
@@ -25,6 +26,7 @@ export class CustomPartComponent implements OnInit {
     description: '',
     armorValue: -1,
     cost: -1,
+    bonuses: [],
   };
 
   mockUpReady: boolean = false;
@@ -72,34 +74,34 @@ export class CustomPartComponent implements OnInit {
     this.tempPart.name = event.srcElement.value;
   }
 
-  getTitleForPart(short: string) {
+  getTitleForPart(short: partType) {
     switch (short) {
-      case 'rarm':
+      case partType.rarm:
         return 'Right Arm';
-      case 'larm':
+      case partType.larm:
         return 'Left Arm';
-      case 'head':
+      case partType.head:
         return 'Head';
-      case 'core':
+      case partType.core:
         return 'Core';
-      case 'legs':
+      case partType.legs:
         return 'Legs';
-      case 'rshoulder':
+      case partType.rshoulder:
         return 'Right Shoulder';
-      case 'lshoulder':
+      case partType.lshoulder:
         return 'Left Shoulder';
-      case 'slotted':
+      case partType.slotted:
         return 'Slot Item';
       default:
         return 'ERROR!';
     }
   }
 
-  pickPartType(type: string) {
+  pickPartType(type: partType) {
     this.tempPart = {
       id: -1,
       name: '',
-      type: type,
+      type: partType.any,
       class: '',
       manufacturer: this.tempPart.manufacturer,
       quality: 0,
@@ -107,51 +109,48 @@ export class CustomPartComponent implements OnInit {
       description: '',
       armorValue: -1,
       cost: -1,
+      bonuses: []
     };
 
     this.sliderValues = new Map<string, number>();
 
     switch (type) {
-      case 'head':
+      case partType.head:
         this.tempPart.weight = 100;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('radarRange', 0);
 
         break;
-      case 'core':
+      case partType.core:
         this.tempPart.weight = 400;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('powerProduction', 0);
         break;
-      case 'rarm':
+      case partType.rarm:
         this.tempPart.weight = 180;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('damageValue', 0);
         this.sliderValues.set('armorPiercing', 0);
         this.sliderValues.set('damageOverTime', 0);
         break;
-      case 'larm':
+      case partType.larm:
         this.tempPart.weight = 180;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('damageValue', 0);
         this.sliderValues.set('armorPiercing', 0);
         this.sliderValues.set('damageOverTime', 0);
         break;
-      case 'legs':
+      case partType.legs:
         this.tempPart.weight = 500;
         this.sliderValues.set('armorValue', 0);
         this.sliderValues.set('mobility', 0);
         this.sliderValues.set('boost', 0);
         break;
-      case 'rshoulder':
+      case partType.rshoulder:
         this.tempPart.weight = 100;
         this.sliderValues.set('armorValue', 0);
         break;
-      case 'rshoulder':
-        this.tempPart.weight = 100;
-        this.sliderValues.set('armorValue', 0);
-        break;
-      case 'lshoulder':
+      case partType.lshoulder:
         this.tempPart.weight = 100;
         this.sliderValues.set('armorValue', 0);
         break;
@@ -172,6 +171,7 @@ export class CustomPartComponent implements OnInit {
       description: '',
       armorValue: -1,
       cost: -1,
+      bonuses: []
     };
   }
 

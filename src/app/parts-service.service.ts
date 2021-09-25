@@ -5,56 +5,8 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
 
-function sortByPartType(partA: Part, partB: Part): number {
-  var partAValue = 0;
-  var partBValue = 0;
-  switch (partA.type) {
-    case 'head':
-      partAValue = 10.5;
-      break;
-    case 'core':
-      partAValue = 6.5;
-      break;
-    case 'rarm':
-      partAValue = 3.5;
-      break;
-    case 'larm':
-      partAValue = 4.5;
-      break;
-    case 'legs':
-      partAValue = 2.5;
-      break;
-    case 'misc':
-      partAValue = 1.5;
-      break;
-    default:
-      partAValue = 0.5;
-      break;
-  }
-  switch (partB.type) {
-    case 'head':
-      partBValue = 10;
-      break;
-    case 'core':
-      partBValue = 6;
-      break;
-    case 'rarm':
-      partBValue = 3;
-      break;
-    case 'larm':
-      partBValue = 4;
-      break;
-    case 'legs':
-      partBValue = 2;
-      break;
-    case 'misc':
-      partBValue = 1;
-      break;
-    default:
-      partBValue = 0;
-      break;
-  }
-  return partBValue - partAValue;
+function sortByPartType(partA: Part, partB: Part): number {  
+  return partA.type - partB.type;
 }
 
 export interface Attack {
@@ -80,7 +32,7 @@ export interface Part {
   name: string;
   description?: string;
 
-  type: string;
+  type: partType;
   class: string;
   quality: number;
 
@@ -99,10 +51,10 @@ export interface Part {
   defense?: Defense;
   mobility?: Mobility;
 
-  bonuses?: Array<any>
+  bonuses: Array<any>
 }
 export interface Bonus {
-  partKey: string,
+  partKey: partType,
   description?: string;
   modifier: string,
 }
@@ -116,7 +68,19 @@ export interface Model {
 export interface Manufacturer {
   name: string;
   models: Array<Model>;
-  bonuses?: Array<Bonus>
+  bonuses: Array<Bonus>;
+}
+
+export enum partType {
+  'head' = 777,
+  'core',
+  'larm',
+  'rarm',
+  'legs',
+  'lshoulder',
+  'rshoulder',
+  'slotted',
+  'any',
 }
 
 //END OF INTERFACES AND UTILITY FUNCTIONS
@@ -125,20 +89,23 @@ export interface Manufacturer {
   providedIn: 'root',
 })
 export class PartsService {
-  inactivePartFilter: string = '';
 
-  partTypes: Array<string> = ['head', 'core', 'larm', 'rarm', 'legs'];
-
+  partTypes: Array<partType> = [partType.head, partType.core, partType.larm, partType.rarm, partType.legs];
   manufacturers: Array<Manufacturer> = [
     {
       name: 'Avionissimo',
+      bonuses: [
+        {partKey: partType.any, description: 'all avionissimo parts are slightly lighter than the competition', modifier: 'weight|-|5'}
+      ],
       models: [
         {
           name: 'Evra',
           class: 'scout',
           industryRating: 5,
           description: `The Avionissimo Evra is the lightest frame from this manufacturer, and their best regarded.`,
-          bonuses: [],
+          bonuses: [
+            {partKey: partType.legs, description: '', modifier: 'mobility|+|5'}
+          ],
         },
         {
           name: 'Hugo',
@@ -154,6 +121,7 @@ export class PartsService {
     },
     {
       name: 'Corgistics',
+      bonuses: [],
       models: [
         {
           name: 'Micro',
@@ -175,6 +143,7 @@ export class PartsService {
     },
     {
       name: 'Fleetwood Marine',
+      bonuses: [],
       models: [
         { name: 'FM-00', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'FM-12', class: 'light', industryRating: 2, bonuses: [] },
@@ -191,6 +160,7 @@ export class PartsService {
     },
     {
       name: 'GAZAN',
+      bonuses: [],
       models: [
         { name: 'Kalinka', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'Razvedik', class: 'light', industryRating: 2, bonuses: [] },
@@ -207,6 +177,7 @@ export class PartsService {
     },
     {
       name: 'Mantissa',
+      bonuses: [],
       models: [
         { name: 'Hyperion', class: 'scout', industryRating: 4, bonuses: [] },
         { name: 'Radix', class: 'light', industryRating: 5, bonuses: [] },
@@ -222,6 +193,7 @@ export class PartsService {
     },
     {
       name: 'Vincente',
+      bonuses: [],
       models: [
         { name: 'Piper', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'Goshawk', class: 'light', industryRating: 2, bonuses: [] },
@@ -237,6 +209,7 @@ export class PartsService {
     },
     {
       name: 'Yamashita',
+      bonuses: [],
       models: [
         { name: 'Tanto', class: 'scout', industryRating: 3, bonuses: [] },
         { name: 'Dan-No-Ura', class: 'light', industryRating: 5, bonuses: [] },
@@ -252,6 +225,7 @@ export class PartsService {
     },
     {
       name: 'Yantian Industrial',
+      bonuses: [],
       models: [
         { name: 'Aifeng', class: 'scout', industryRating: 2, bonuses: [] },
         { name: 'Chobra', class: 'light', industryRating: 1, bonuses: [] },
@@ -266,7 +240,10 @@ export class PartsService {
 
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
+
   inactiveParts: Array<Part> = [];
+  inactivePartFilter: partType = partType.any;
+
 
   constructor() {
     this.createEveryPart();
@@ -325,7 +302,7 @@ export class PartsService {
     this.hoverClear();
   }
 
-  /* // Stat Getters // */
+  //Stat Getters
   getTotalMechValue(hover: boolean = false) {
     var totalValue = 0;
     if (hover) {
@@ -382,13 +359,13 @@ export class PartsService {
     var topWeight = 0
     if (hover) {
       for (let i = 0; i < this.activeAndHoverParts.length; i++) {
-        if (this.activeAndHoverParts[i].type != 'legs') {
+        if (this.activeAndHoverParts[i].type != partType.legs) {
           topWeight += this.activeAndHoverParts[i].weight || 0;
         }
       }
     } else {
       for (let i = 0; i < this.activeParts.length; i++) {
-        if (this.activeAndHoverParts[i].type != 'legs') {
+        if (this.activeAndHoverParts[i].type != partType.legs) {
           topWeight += this.activeParts[i].weight || 0;
         }
       }
@@ -399,13 +376,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'legs';
+          return part.type == partType.legs;
         })?.weight || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'legs';
+          return part.type == partType.legs;
         })?.weight || 0
       );
     }
@@ -414,13 +391,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'head';
+          return part.type == partType.head;
         })?.armorValue || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'head';
+          return part.type == partType.head;
         })?.armorValue || 0
       );
     }
@@ -429,13 +406,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'core';
+          return part.type == partType.core;
         })?.armorValue || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'core';
+          return part.type == partType.core;
         })?.armorValue || 0
       );
     }
@@ -444,13 +421,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'larm';
+          return part.type == partType.larm;
         })?.armorValue || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'larm';
+          return part.type == partType.larm;
         })?.armorValue || 0
       );
     }
@@ -459,13 +436,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'rarm';
+          return part.type == partType.rarm;
         })?.armorValue || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'rarm';
+          return part.type == partType.rarm;
         })?.armorValue || 0
       );
     }
@@ -474,13 +451,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type == 'legs';
+          return part.type == partType.legs;
         })?.armorValue || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type == 'legs';
+          return part.type == partType.legs;
         })?.armorValue || 0
       );
     }
@@ -489,13 +466,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type === 'rarm';
+          return part.type === partType.rarm;
         })?.attack?.damage || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type === 'rarm';
+          return part.type === partType.rarm;
         })?.attack?.damage || 0
       );
     }
@@ -504,13 +481,13 @@ export class PartsService {
     if (hover) {
       return (
         this.activeAndHoverParts.find((part: Part) => {
-          return part.type === 'larm';
+          return part.type === partType.larm;
         })?.attack?.damage || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
-          return part.type === 'larm';
+          return part.type === partType.larm;
         })?.attack?.damage || 0
       );
     }
@@ -542,30 +519,30 @@ export class PartsService {
   }
 
   //Display
-  getTitleForPart(short: string) {
+  getTitleForPart(short: partType) {
     switch (short) {
-      case 'rarm':
+      case partType.rarm:
         return 'Right Arm';
-      case 'larm':
+      case partType.larm:
         return 'Left Arm';
-      case 'head':
+      case partType.head:
         return 'Head';
-      case 'core':
+      case partType.core:
         return 'Core';
-      case 'legs':
+      case partType.legs:
         return 'Legs';
-      case 'rshoulder':
+      case partType.rshoulder:
         return 'Right Shoulder';
-      case 'lshoulder':
+      case partType.lshoulder:
         return 'Left Shoulder';
-      case 'slotted':
+      case partType.slotted:
         return 'Slot Item';
       default:
         return 'ERROR!';
     }
   }
 
-  //part gen
+  //Part Gen
   createEveryPart() {
     for (let i = 0; i < this.manufacturers.length; i++) {
       for (let j = 0; j < this.manufacturers[i].models.length; j++) {
@@ -586,12 +563,12 @@ export class PartsService {
             powerConsumption: 0,
             armorValue: 0,
             cost: 0,
-            bonuses: this.manufacturers[i].models[j].bonuses
+            bonuses: this.manufacturers[i].models[j].bonuses || []
           };
 
           //SWITCH TYPE: base weight, power, armor
           switch (this.partTypes[k]) {
-            case 'rarm':
+            case partType.rarm:
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
@@ -601,7 +578,7 @@ export class PartsService {
                 armorPiercing: 10,
               };
               break;
-            case 'larm':
+            case partType.larm:
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
@@ -611,32 +588,32 @@ export class PartsService {
                 armorPiercing: 10,
               };
               break;
-            case 'head':
+            case partType.head:
               tempPart.weight = 50;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 80;
               break;
-            case 'core':
+            case partType.core:
               tempPart.weight = 300;
               tempPart.powerProduction = 200;
               tempPart.armorValue = 350;
               break;
-            case 'legs':
+            case partType.legs:
               tempPart.weight = 400;
               tempPart.powerConsumption = 100;
               tempPart.armorValue = 400;
               break;
-            case 'rshoulder':
+            case partType.rshoulder:
               tempPart.weight = 40;
               tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
               break;
-            case 'lshoulder':
+            case partType.lshoulder:
               tempPart.weight = 40;
               tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
               break;
-            case 'slotted':
+            case partType.slotted:
               tempPart.weight = 10;
               tempPart.powerConsumption = 10;
               tempPart.armorValue = 10;
@@ -712,14 +689,15 @@ export class PartsService {
           }
 
           //manufacturer mod
-          //  //MANUFACTURER SPECIFIC BONUSES, hopefully possible to iterate over manufacturer.bonuses array?
+        //  //MANUFACTURER SPECIFIC BONUSES, hopefully possible to iterate over manufacturer.bonuses array?
+          for (let i = 0; i < tempPart.manufacturer.bonuses.length; i++) {
+            tempPart = this.resolveBonus(tempPart, tempPart.manufacturer.bonuses);
+          }
 
           //make->MODEL mod
           //  //MODEL SPECIFI BONUSES, iterable.
-          if (tempPart.bonuses) {
-            for (let i = 0; i < tempPart.bonuses.length; i++) {
-              console.log(tempPart.bonuses[i]);
-            }
+          for (let i = 0; i < tempPart.bonuses.length; i++) {
+            tempPart = this.resolveBonus(tempPart, tempPart.bonuses);
           }
 
           this.allParts.push(tempPart);
@@ -727,4 +705,20 @@ export class PartsService {
       }
     }
   }
+
+  resolveBonus(part: Part, bonuses: Array<Bonus>): Part {
+    for (let i = 0; i < bonuses.length; i++) {
+      var pK: partType = bonuses[i].partKey
+      var mod: Array<string> = bonuses[i].modifier.split('|')
+      if (pK == partType.any || part.type == pK) {
+        if (mod[1] == '-') {
+          console.log('subtract ' + mod[2] + " " + mod[0])
+        } else if (mod[1] == '+') {
+          console.log('add ' + mod[2] + " " + mod[0])
+        }
+      }
+    }
+    return part;
+  }
+
 }

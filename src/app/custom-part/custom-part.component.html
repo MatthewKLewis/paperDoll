@@ -21,31 +21,31 @@
             <p>{{prop.key}}: {{prop.value}}</p>
             <mat-slider thumbLabel [(ngModel)]="prop.value" [max]="maxPoints" (change)="calculatePoints($event, prop.key)"></mat-slider>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'head'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 777">
             <p>Head Options Dropdown</p>
             <button [mat-menu-trigger-for]="headMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'core'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 778">
             <p>Core Options Dropdown</p>
             <button [mat-menu-trigger-for]="coreMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'rarm'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 779">
             <p>Right Arm Options Dropdown</p>
             <button [mat-menu-trigger-for]="rarmMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'larm'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 780">
             <p>Left Arm Options Dropdown</p>
             <button [mat-menu-trigger-for]="larmMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'legs'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 781">
             <p>Legs Options Dropdown</p>
             <button [mat-menu-trigger-for]="legsMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'rshoulder'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 782">
             <p>Right Shoulder Options Dropdown</p>
             <button [mat-menu-trigger-for]="rshoulderMenu" mat-flat-button color="primary">Choose One...</button>
         </div>
-        <div class="sliderable-value" *ngIf="tempPart.type == 'lshoulder'">
+        <div class="sliderable-value" *ngIf="tempPart.type == 783">
             <p>Left Shoulder Options Dropdown</p>
             <button [mat-menu-trigger-for]="lshoulderMenu" mat-flat-button color="primary">Choose One...</button>
         </div>

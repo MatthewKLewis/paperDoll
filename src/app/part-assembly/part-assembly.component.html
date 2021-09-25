@@ -8,15 +8,15 @@
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="partsService.inactiveParts" class="list"
       (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
 
-      <button (click)="partsService.inactivePartFilter = '' ">All</button>
-      <button (click)="partsService.inactivePartFilter = 'head' ">Heads</button>
-      <button (click)="partsService.inactivePartFilter = 'core' ">Cores</button>
-      <button (click)="partsService.inactivePartFilter = 'arm' ">Arms</button>
-      <button (click)="partsService.inactivePartFilter = 'leg' ">Legs</button>
-      <button (click)="partsService.inactivePartFilter = 'misc' ">Misc</button>
+      <button (click)="partsService.inactivePartFilter = 777 ">All</button>
+      <button (click)="partsService.inactivePartFilter = 778 ">Heads</button>
+      <button (click)="partsService.inactivePartFilter = 779 ">Cores</button>
+      <button (click)="partsService.inactivePartFilter = 780 ">Arms</button>
+      <button (click)="partsService.inactivePartFilter = 781 ">Legs</button>
+      <button (click)="partsService.inactivePartFilter = 782 ">Misc</button>
 
       <div *ngFor="let part of partsService.inactiveParts"
-        [class]="'box' + ' a' + part.quality + ' ' + (partsService.inactivePartFilter && !part.type.includes(partsService.inactivePartFilter) && 'disabled')"
+        [class]="'box' + ' a' + part.quality + ' ' + (partsService.inactivePartFilter && part.type == partsService.inactivePartFilter && 'disabled')"
         (mouseenter)="partsService.hoverToCompare(part)" 
         (mouseleave)="partsService.hoverClear()" cdkDrag
         (click)="toolTip(part)"

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Part, Attack, Defense, PartsService } from '../parts-service.service';
+import { Part, Attack, Defense, PartsService, partType } from '../parts-service.service';
 
 
 
@@ -16,16 +16,14 @@ export class PartAssemblyComponent {
     this.anvilHit.volume = 0.1;
   }
 
-  getImagePath(partType: string) {
-    switch (partType) {
-      case 'head':
+  getImagePath(pT: partType) {
+    switch (pT) {
+      case partType.head:
         return '../assets/images/Head.png';
-      case 'core':
+      case partType.core:
         return '../assets/images/Core.png';
-      case 'legs':
+      case partType.legs:
         return '../assets/images/Legs.png';
-      case 'misc':
-        return '#';
       default:
         return '../assets/images/LeftArm.png';
     }
