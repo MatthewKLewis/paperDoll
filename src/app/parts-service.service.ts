@@ -98,17 +98,25 @@ export interface Part {
   attack?: Attack;
   defense?: Defense;
   mobility?: Mobility;
+
+  bonuses?: Array<any>
+}
+export interface Bonus {
+  partKey: string,
+  description?: string;
+  modifier: string,
 }
 export interface Model {
   name: string;
   class: string;
   description?: string;
   industryRating: number;
-  bonuses: Array<any>;
+  bonuses: Array<Bonus>;
 }
 export interface Manufacturer {
   name: string;
   models: Array<Model>;
+  bonuses?: Array<Bonus>
 }
 
 //END OF INTERFACES AND UTILITY FUNCTIONS
@@ -253,6 +261,8 @@ export class PartsService {
       ],
     },
   ];
+  
+  allParts: Array<Part> = [];
 
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
@@ -260,6 +270,9 @@ export class PartsService {
 
   constructor() {
     this.createEveryPart();
+    for (let i = 0; i < 20; i++) {
+      this.inactiveParts.push(this.allParts[Math.floor(Math.random() * this.allParts.length)])
+    }
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -364,6 +377,38 @@ export class PartsService {
       }
     }
     return totalWeight;
+  }
+  getTopWeight(hover: boolean = false) {
+    var topWeight = 0
+    if (hover) {
+      for (let i = 0; i < this.activeAndHoverParts.length; i++) {
+        if (this.activeAndHoverParts[i].type != 'legs') {
+          topWeight += this.activeAndHoverParts[i].weight || 0;
+        }
+      }
+    } else {
+      for (let i = 0; i < this.activeParts.length; i++) {
+        if (this.activeAndHoverParts[i].type != 'legs') {
+          topWeight += this.activeParts[i].weight || 0;
+        }
+      }
+    }
+    return topWeight;
+  }
+  getLegWeight(hover: boolean = false) {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == 'legs';
+        })?.weight || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == 'legs';
+        })?.weight || 0
+      );
+    }
   }
   getHeadArmor(hover: boolean = false): number {
     if (hover) {
@@ -528,7 +573,10 @@ export class PartsService {
           //base identity
           var tempPart: Part = {
             id: i * 100 + j * 10 + k,
-            name: this.manufacturers[i].models[j].name + ' ' + this.getTitleForPart(this.partTypes[k]),
+            name:
+              this.manufacturers[i].models[j].name +
+              ' ' +
+              this.getTitleForPart(this.partTypes[k]),
             description: this.manufacturers[i].models[j].description || '',
             manufacturer: this.manufacturers[i],
             class: this.manufacturers[i].models[j].class,
@@ -538,77 +586,139 @@ export class PartsService {
             powerConsumption: 0,
             armorValue: 0,
             cost: 0,
+            bonuses: this.manufacturers[i].models[j].bonuses
           };
 
-          //base weight, power, armor
+          //SWITCH TYPE: base weight, power, armor
           switch (this.partTypes[k]) {
             case 'rarm':
-              tempPart.weight = 100
-              tempPart.powerConsumption = 20
-              tempPart.armorValue = 100
+              tempPart.weight = 100;
+              tempPart.powerConsumption = 20;
+              tempPart.armorValue = 100;
               tempPart.attack = {
                 damageType: 'ballistic',
-                damage: 10,
-                armorPiercing: 1,
-              }
+                damage: 50,
+                armorPiercing: 10,
+              };
               break;
             case 'larm':
-              tempPart.weight = 100
-              tempPart.powerConsumption = 20
-              tempPart.armorValue = 100
+              tempPart.weight = 100;
+              tempPart.powerConsumption = 20;
+              tempPart.armorValue = 100;
               tempPart.attack = {
                 damageType: 'ballistic',
-                damage: 10,
-                armorPiercing: 1,
-              }
+                damage: 50,
+                armorPiercing: 10,
+              };
               break;
             case 'head':
-              tempPart.weight = 50
-              tempPart.powerConsumption = 20
-              tempPart.armorValue = 80
+              tempPart.weight = 50;
+              tempPart.powerConsumption = 20;
+              tempPart.armorValue = 80;
               break;
             case 'core':
-              tempPart.weight = 300
-              tempPart.powerProduction = 200
-              tempPart.armorValue = 350
+              tempPart.weight = 300;
+              tempPart.powerProduction = 200;
+              tempPart.armorValue = 350;
               break;
             case 'legs':
-              tempPart.weight = 400
-              tempPart.powerConsumption = 100
-              tempPart.armorValue = 400
+              tempPart.weight = 400;
+              tempPart.powerConsumption = 100;
+              tempPart.armorValue = 400;
               break;
             case 'rshoulder':
-              tempPart.weight = 40
-              tempPart.powerConsumption = 10
-              tempPart.armorValue = 80
+              tempPart.weight = 40;
+              tempPart.powerConsumption = 10;
+              tempPart.armorValue = 80;
               break;
             case 'lshoulder':
-              tempPart.weight = 40
-              tempPart.powerConsumption = 10
-              tempPart.armorValue = 80
+              tempPart.weight = 40;
+              tempPart.powerConsumption = 10;
+              tempPart.armorValue = 80;
               break;
             case 'slotted':
-              tempPart.weight = 10
-              tempPart.powerConsumption = 10
-              tempPart.armorValue = 10
+              tempPart.weight = 10;
+              tempPart.powerConsumption = 10;
+              tempPart.armorValue = 10;
               break;
             default:
-              tempPart.weight = -1
-              tempPart.powerConsumption = -1
-              tempPart.armorValue = -1
+              tempPart.weight = -1;
+              tempPart.powerConsumption = -1;
+              tempPart.armorValue = -1;
               break;
           }
 
-          tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4)
-          if (tempPart.powerProduction) {tempPart.powerProduction += tempPart.quality * 10}
+          //Base cost and powerProduction for cores.
+          tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4);
+          if (tempPart.powerProduction) {
+            tempPart.powerProduction += tempPart.quality * 10;
+          }
 
-          //class mod
-
-          //type mod
+          //weightclass mod
+          //  //increase weight, increase armorclass, decrease mobility, increase damage - for heavies
+          //  //increase mobility, decrease armor, decrease weight, decrase damage - for light
+          switch (tempPart.class) {
+            case 'scout':
+              tempPart.weight -= 30;
+              tempPart.armorValue -= 30;
+              if (tempPart.attack) {
+                tempPart.attack.damage -= 20;
+              } else if (tempPart.mobility) {
+                tempPart.mobility.speed = 10;
+                tempPart.mobility.stability = 10;
+                tempPart.mobility.thrust = 10;
+              }
+              break;
+            case 'light':
+              tempPart.weight -= 10;
+              tempPart.armorValue -= 10;
+              if (tempPart.attack) {
+                tempPart.attack.damage -= 10;
+              } else if (tempPart.mobility) {
+                tempPart.mobility.speed = 10;
+                tempPart.mobility.stability = 10;
+                tempPart.mobility.thrust = 10;
+              }
+              break;
+            case 'medium':
+              //do nothing
+              break;
+            case 'heavy':
+              tempPart.weight += 10;
+              tempPart.armorValue += 30;
+              if (tempPart.attack) {
+                tempPart.attack.damage += 10;
+              } else if (tempPart.mobility) {
+                tempPart.mobility.speed = 10;
+                tempPart.mobility.stability = 10;
+                tempPart.mobility.thrust = 10;
+              }
+              break;
+            case 'superheavy':
+              tempPart.weight += 100;
+              tempPart.armorValue += 0;
+              if (tempPart.attack) {
+                tempPart.attack.damage += 30;
+              } else if (tempPart.mobility) {
+                tempPart.mobility.speed = 10;
+                tempPart.mobility.stability = 10;
+                tempPart.mobility.thrust = 10;
+              }
+              break;
+          }
 
           //manufacturer mod
+          //  //MANUFACTURER SPECIFIC BONUSES, hopefully possible to iterate over manufacturer.bonuses array?
 
-          this.inactiveParts.push(tempPart)
+          //make->MODEL mod
+          //  //MODEL SPECIFI BONUSES, iterable.
+          if (tempPart.bonuses) {
+            for (let i = 0; i < tempPart.bonuses.length; i++) {
+              console.log(tempPart.bonuses[i]);
+            }
+          }
+
+          this.allParts.push(tempPart);
         }
       }
     }
