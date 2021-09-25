@@ -70,17 +70,16 @@ export interface Manufacturer {
   models: Array<Model>;
   bonuses: Array<Bonus>;
 }
-
 export enum partType {
   'head' = 777,
-  'core',
-  'larm',
-  'rarm',
-  'legs',
-  'lshoulder',
-  'rshoulder',
-  'slotted',
-  'any',
+  'core' = 778,
+  'larm' = 779,
+  'rarm' = 780,
+  'legs' = 781,
+  'lshoulder' = 782,
+  'rshoulder' = 783,
+  'slotted' = 784,
+  'any' = 785,
 }
 
 //END OF INTERFACES AND UTILITY FUNCTIONS
@@ -242,7 +241,7 @@ export class PartsService {
   activeAndHoverParts: Array<Part> = [];
 
   inactiveParts: Array<Part> = [];
-  inactivePartFilter: partType = partType.any;
+  inactivePartFilter: partType | null = null;
 
 
   constructor() {

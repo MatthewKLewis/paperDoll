@@ -8,15 +8,18 @@
     <div id="inactivePartsElement" cdkDropList [cdkDropListData]="partsService.inactiveParts" class="list"
       (cdkDropListDropped)="partsService.drop($event); anvilHit.play()">
 
-      <button (click)="partsService.inactivePartFilter = 777 ">All</button>
-      <button (click)="partsService.inactivePartFilter = 778 ">Heads</button>
-      <button (click)="partsService.inactivePartFilter = 779 ">Cores</button>
-      <button (click)="partsService.inactivePartFilter = 780 ">Arms</button>
+      <button (click)="partsService.inactivePartFilter = null ">All</button>
+      <button (click)="partsService.inactivePartFilter = 777 ">Heads</button>
+      <button (click)="partsService.inactivePartFilter = 778 ">Cores</button>
+      <button (click)="partsService.inactivePartFilter = 779 ">L Arms</button>
+      <button (click)="partsService.inactivePartFilter = 780 ">R Arms</button>
       <button (click)="partsService.inactivePartFilter = 781 ">Legs</button>
-      <button (click)="partsService.inactivePartFilter = 782 ">Misc</button>
+      <button (click)="partsService.inactivePartFilter = 782 ">L Shoulders</button>
+      <button (click)="partsService.inactivePartFilter = 783 ">R Shoulders</button>
+      <button (click)="partsService.inactivePartFilter = 784 ">Slot Items</button>
 
       <div *ngFor="let part of partsService.inactiveParts"
-        [class]="'box' + ' a' + part.quality + ' ' + (partsService.inactivePartFilter && part.type == partsService.inactivePartFilter && 'disabled')"
+        [class]="'box' + ' a' + part.quality + ' ' + (partsService.inactivePartFilter && part.type != partsService.inactivePartFilter && 'disabled')"
         (mouseenter)="partsService.hoverToCompare(part)" 
         (mouseleave)="partsService.hoverClear()" cdkDrag
         (click)="toolTip(part)"
@@ -26,7 +29,7 @@
         <p>{{part.weight}}kgs</p>
         <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
         <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-        <p>{{part.cost}}</p>
+        <p>{{part.cost.toFixed(0)}}</p>
       </div>
     </div>
   </div>
@@ -40,7 +43,7 @@
         <p>{{part.weight}}kgs</p>
         <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
         <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
-        <p>{{part.cost}}</p>
+        <p>{{part.cost.toFixed(0)}}</p>
       </div>
     </div>
   </div>
