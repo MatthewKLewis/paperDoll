@@ -659,6 +659,7 @@ export class PartsService {
           //  //increase mobility, decrease armor, decrease weight, decrase damage - for light
           switch (tempPart.class) {
             case 'scout':
+              tempPart.cost *= .8
               tempPart.weight -= 30;
               tempPart.armorValue -= 30;
               if (tempPart.attack) {
@@ -670,6 +671,7 @@ export class PartsService {
               }
               break;
             case 'light':
+              tempPart.cost *= .9
               tempPart.weight -= 10;
               tempPart.armorValue -= 10;
               if (tempPart.attack) {
@@ -684,6 +686,7 @@ export class PartsService {
               //do nothing
               break;
             case 'heavy':
+              tempPart.cost *= 1.1
               tempPart.weight += 10;
               tempPart.armorValue += 30;
               if (tempPart.attack) {
@@ -695,8 +698,9 @@ export class PartsService {
               }
               break;
             case 'superheavy':
+              tempPart.cost *= 1.2
               tempPart.weight += 100;
-              tempPart.armorValue += 0;
+              tempPart.armorValue += 80;
               if (tempPart.attack) {
                 tempPart.attack.damage += 30;
               } else if (tempPart.mobility) {

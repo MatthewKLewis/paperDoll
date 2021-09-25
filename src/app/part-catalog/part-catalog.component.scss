@@ -2,6 +2,15 @@
     font-family: 'Calibri';
 }
 
+mat-paginator {}
+
+.mat-cell {
+    padding: 0 5px 0 5px;
+}
+.mat-sort-header {
+    padding: 0 5px 0 5px;
+}
+
 button {
     margin: 5px 0px 10px 5px;
 }
@@ -14,16 +23,13 @@ hr {
     height: 1px;
 }
 
-mat-slider, progress {
-    width: 90%;
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
 }
 
 tr.mat-row {
     height: 5px;
-}
-
-::ng-deep.mat-menu-content {
-    overflow: hidden!important;
 }
   
 .wrapper {
@@ -39,7 +45,7 @@ tr.mat-row {
     background-color: #ccc;
     border-radius: 5px;
     grid-column: 1/4;
-
+    
     input, span {
         margin: 5px;
         height: 24px;
@@ -48,4 +54,14 @@ tr.mat-row {
 
 table {
     width: 100%;
+    border: 1px solid #e0e0e0;
+}
+
+.mat-column-damage {
+    border-right: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+}
+
+.mat-column-damageType, .mat-column-armorPiercing {
+    border-right: 1px solid #e0e0e0;
 }

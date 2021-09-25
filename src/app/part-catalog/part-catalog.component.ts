@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Part, PartsService } from '../parts-service.service';
@@ -10,10 +11,11 @@ import { Part, PartsService } from '../parts-service.service';
 })
 export class PartCatalogComponent implements OnInit {
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) zSort!: MatSort;
 
-  displayedColumns: Array<string> = ['name', 'scout', 'light', 'medium', 'heavy', 'superheavy']
-  displayedModelColumns: Array<string> = ['industryRating', 'name', 'class', 'description']
+  displayedModelColumns: Array<string> = ['quality', 'name', 'class', 'armorValue', 'damage', 'damageType', 'armorPiercing', 'powerConsumption', 'weight', 'cost']
+  starStr: string = '⭐'
 
   allParts!: MatTableDataSource<Part>
 
@@ -26,9 +28,20 @@ export class PartCatalogComponent implements OnInit {
   ngAfterViewInit(): void {
     console.log(this.zSort)
     this.allParts.sort = this.zSort;
+    this.allParts.paginator = this.paginator;
+    console.log(this.allParts.filteredData[0])
   }
 
   sortData(event:any) {
     this.allParts.sort = this.zSort
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.allParts.filter = filterValue.trim().toLowerCase();
+
+    if (this.allParts.paginator) {
+      this.allParts.paginator.firstPage();
+    }
   }
 }
