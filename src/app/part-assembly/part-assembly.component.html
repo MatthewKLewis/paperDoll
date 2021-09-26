@@ -27,8 +27,8 @@
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
-        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p *ngIf="part.powerConsumption < 0" style="color: green">{{part.powerConsumption}}kw</p>
+        <p *ngIf="part.powerConsumption > 0" style="color: red">{{part.powerConsumption}}kw</p>
         <p>{{part.cost.toFixed(0)}}</p>
       </div>
     </div>
@@ -41,8 +41,8 @@
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
         <p>{{part.weight}}kgs</p>
-        <p *ngIf="part.powerProduction" style="color: green">{{part.powerProduction}}kw</p>
-        <p *ngIf="!part.powerProduction" style="color: red">{{part.powerConsumption}}kw</p>
+        <p *ngIf="part.powerConsumption < 0" style="color: green">{{part.powerConsumption}}kw</p>
+        <p *ngIf="part.powerConsumption > 0" style="color: red">{{part.powerConsumption}}kw</p>
         <p>{{part.cost.toFixed(0)}}</p>
       </div>
     </div>
@@ -58,13 +58,6 @@
         </span>
       </p>
       <hr>
-      <p>
-        Power Production: {{partsService.getTotalPowerProduction(false)}}
-        <span *ngIf="partsService.activeAndHoverParts.length > 0"
-          [ngClass]="{'red-text': partsService.getTotalPowerProduction(false) > partsService.getTotalPowerProduction(true), 'blue-text': partsService.getTotalPowerProduction(false) < partsService.getTotalPowerProduction(true)} ">
-          > {{partsService.getTotalPowerProduction(true)}}
-        </span>
-      </p>
       <p>
         Power Consumption: {{partsService.getTotalPowerConsumption(false)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"

@@ -14,7 +14,7 @@ export class PartCatalogComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) zSort!: MatSort;
 
-  displayedModelColumns: Array<string> = ['quality', 'name', 'class', 'armorValue', 'damage', 'damageType', 'armorPiercing', 'powerConsumption', 'weight', 'cost']
+  displayedModelColumns: Array<string> = ['quality', 'manufacturer', 'name', 'class', 'armorValue', 'damage', 'damageType', 'armorPiercing', 'powerConsumption', 'weight', 'cost']
   starStr: string = '⭐'
 
   allParts!: MatTableDataSource<Part>
@@ -29,7 +29,7 @@ export class PartCatalogComponent implements OnInit {
     console.log(this.zSort)
     this.allParts.sort = this.zSort;
     this.allParts.paginator = this.paginator;
-    console.log(this.allParts.filteredData[0])
+    console.log(this.allParts.filteredData[0].manufacturer.name)
   }
 
   sortData(event:any) {

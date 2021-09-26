@@ -5,28 +5,10 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
 
-function sortByPartType(partA: Part, partB: Part): number {  
+function sortByPartType(partA: Part, partB: Part): number {
   return partA.type - partB.type;
 }
 
-export interface Attack {
-  damageType: string;
-  damage: number;
-  armorPiercing: number;
-}
-export interface Defense {
-  name: string;
-  type: string;
-}
-export interface Sensor {
-  range: number;
-  decibels: number;
-}
-export interface Mobility {
-  speed: number;
-  stability: number;
-  thrust: number;
-}
 export interface Part {
   id: number;
   name: string;
@@ -41,22 +23,30 @@ export interface Part {
 
   weight: number;
   armorValue: number;
-  powerConsumption?: number;
+  powerConsumption: number;
 
   cost: number;
 
-  sensor?: Sensor;
-  powerProduction?: number;
-  attack?: Attack;
-  defense?: Defense;
-  mobility?: Mobility;
+  sensorPower?: number;
+  sensorRange?: number;
 
-  bonuses: Array<any>
+  attackPower?: number;
+  attackRange?: number;
+
+  defense?: number;
+
+  stability?: number;
+  speed?: number;
+  thrust?: number;
+
+  bonuses: Array<any>;
 }
 export interface Bonus {
-  partKey: partType,
+  partType: partType;
+  partProp: keyof Part;
+  bonusAdds: boolean;
+  bonusCoefficient: number;
   description?: string;
-  modifier: string,
 }
 export interface Model {
   name: string;
@@ -88,13 +78,25 @@ export enum partType {
   providedIn: 'root',
 })
 export class PartsService {
-
-  partTypes: Array<partType> = [partType.head, partType.core, partType.larm, partType.rarm, partType.legs];
+  partTypes: Array<partType> = [
+    partType.head,
+    partType.core,
+    partType.larm,
+    partType.rarm,
+    partType.legs,
+  ];
   manufacturers: Array<Manufacturer> = [
     {
       name: 'Avionissimo',
       bonuses: [
-        {partKey: partType.any, description: 'all avionissimo parts are slightly lighter than the competition', modifier: 'weight|-|5'}
+        {
+          partType: partType.any,
+          partProp: 'weight',
+          bonusAdds: false,
+          bonusCoefficient: 5,
+          description:
+            'all avionissimo parts are slightly lighter than the competition',
+        },
       ],
       models: [
         {
@@ -103,7 +105,14 @@ export class PartsService {
           industryRating: 5,
           description: `The Avionissimo Evra is the lightest frame from this manufacturer, and their best regarded.`,
           bonuses: [
-            {partKey: partType.legs, description: '', modifier: 'mobility|+|5'}
+            {
+              partType: partType.legs,
+              partProp: 'speed',
+              bonusAdds: true,
+              bonusCoefficient: 5,
+              description:
+                'all avionissimo parts are slightly lighter than the competition',
+            },
           ],
         },
         {
@@ -234,7 +243,7 @@ export class PartsService {
       ],
     },
   ];
-  
+
   allParts: Array<Part> = [];
 
   activeParts: Array<Part> = [];
@@ -243,11 +252,12 @@ export class PartsService {
   inactiveParts: Array<Part> = [];
   inactivePartFilter: partType | null = null;
 
-
   constructor() {
     this.createEveryPart();
     for (let i = 0; i < 20; i++) {
-      this.inactiveParts.push(this.allParts[Math.floor(Math.random() * this.allParts.length)])
+      this.inactiveParts.push(
+        this.allParts[Math.floor(Math.random() * this.allParts.length)]
+      );
     }
   }
 
@@ -328,19 +338,6 @@ export class PartsService {
     }
     return totalPC;
   }
-  getTotalPowerProduction(hover: boolean = false) {
-    var totalPP = 0;
-    if (hover) {
-      for (let i = 0; i < this.activeAndHoverParts.length; i++) {
-        totalPP += this.activeAndHoverParts[i].powerProduction || 0;
-      }
-    } else {
-      for (let i = 0; i < this.activeParts.length; i++) {
-        totalPP += this.activeParts[i].powerProduction || 0;
-      }
-    }
-    return totalPP;
-  }
   getTotalWeight(hover: boolean = false) {
     var totalWeight = 0;
     if (hover) {
@@ -355,7 +352,7 @@ export class PartsService {
     return totalWeight;
   }
   getTopWeight(hover: boolean = false) {
-    var topWeight = 0
+    var topWeight = 0;
     if (hover) {
       for (let i = 0; i < this.activeAndHoverParts.length; i++) {
         if (this.activeAndHoverParts[i].type != partType.legs) {
@@ -466,13 +463,13 @@ export class PartsService {
       return (
         this.activeAndHoverParts.find((part: Part) => {
           return part.type === partType.rarm;
-        })?.attack?.damage || 0
+        })?.attackPower || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
           return part.type === partType.rarm;
-        })?.attack?.damage || 0
+        })?.attackPower || 0
       );
     }
   }
@@ -481,13 +478,13 @@ export class PartsService {
       return (
         this.activeAndHoverParts.find((part: Part) => {
           return part.type === partType.larm;
-        })?.attack?.damage || 0
+        })?.attackPower || 0
       );
     } else {
       return (
         this.activeParts.find((part: Part) => {
           return part.type === partType.larm;
-        })?.attack?.damage || 0
+        })?.attackPower || 0
       );
     }
   }
@@ -562,7 +559,7 @@ export class PartsService {
             powerConsumption: 0,
             armorValue: 0,
             cost: 0,
-            bonuses: this.manufacturers[i].models[j].bonuses || []
+            bonuses: this.manufacturers[i].models[j].bonuses || [],
           };
 
           //SWITCH TYPE: base weight, power, armor
@@ -571,21 +568,13 @@ export class PartsService {
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
-              tempPart.attack = {
-                damageType: 'ballistic',
-                damage: 50,
-                armorPiercing: 10,
-              };
+              tempPart.attackPower = 10;
               break;
             case partType.larm:
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
-              tempPart.attack = {
-                damageType: 'ballistic',
-                damage: 50,
-                armorPiercing: 10,
-              };
+              tempPart.attackPower = 10;
               break;
             case partType.head:
               tempPart.weight = 50;
@@ -594,13 +583,16 @@ export class PartsService {
               break;
             case partType.core:
               tempPart.weight = 300;
-              tempPart.powerProduction = 200;
+              tempPart.powerConsumption = -200;
               tempPart.armorValue = 350;
               break;
             case partType.legs:
               tempPart.weight = 400;
               tempPart.powerConsumption = 100;
               tempPart.armorValue = 400;
+              tempPart.speed = 10;
+              tempPart.thrust = 10;
+              tempPart.stability = 10;
               break;
             case partType.rshoulder:
               tempPart.weight = 40;
@@ -626,8 +618,8 @@ export class PartsService {
 
           //Base cost and powerProduction for cores.
           tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4);
-          if (tempPart.powerProduction) {
-            tempPart.powerProduction += tempPart.quality * 10;
+          if (tempPart.powerConsumption < 0) {
+            tempPart.powerConsumption -= tempPart.quality * 10;
           }
 
           //weightclass mod
@@ -635,62 +627,65 @@ export class PartsService {
           //  //increase mobility, decrease armor, decrease weight, decrase damage - for light
           switch (tempPart.class) {
             case 'scout':
-              tempPart.cost *= .8
+              tempPart.cost *= 0.8;
               tempPart.weight -= 30;
               tempPart.armorValue -= 30;
-              if (tempPart.attack) {
-                tempPart.attack.damage -= 20;
-              } else if (tempPart.mobility) {
-                tempPart.mobility.speed = 10;
-                tempPart.mobility.stability = 10;
-                tempPart.mobility.thrust = 10;
+              if (tempPart.attackPower) {
+                tempPart.attackPower -= 20;
+              } else if (tempPart.speed) {
+                tempPart.speed = 10;
+                tempPart.stability = 10;
+                tempPart.thrust = 10;
               }
               break;
             case 'light':
-              tempPart.cost *= .9
+              tempPart.cost *= 0.9;
               tempPart.weight -= 10;
               tempPart.armorValue -= 10;
-              if (tempPart.attack) {
-                tempPart.attack.damage -= 10;
-              } else if (tempPart.mobility) {
-                tempPart.mobility.speed = 10;
-                tempPart.mobility.stability = 10;
-                tempPart.mobility.thrust = 10;
+              if (tempPart.attackPower) {
+                tempPart.attackPower -= 10;
+              } else if (tempPart.speed) {
+                tempPart.speed = 10;
+                tempPart.stability = 10;
+                tempPart.thrust = 10;
               }
               break;
             case 'medium':
               //do nothing
               break;
             case 'heavy':
-              tempPart.cost *= 1.1
+              tempPart.cost *= 1.1;
               tempPart.weight += 10;
               tempPart.armorValue += 30;
-              if (tempPart.attack) {
-                tempPart.attack.damage += 10;
-              } else if (tempPart.mobility) {
-                tempPart.mobility.speed = 10;
-                tempPart.mobility.stability = 10;
-                tempPart.mobility.thrust = 10;
+              if (tempPart.attackPower) {
+                tempPart.attackPower += 10;
+              } else if (tempPart.speed) {
+                tempPart.speed = 10;
+                tempPart.stability = 10;
+                tempPart.thrust = 10;
               }
               break;
             case 'superheavy':
-              tempPart.cost *= 1.2
+              tempPart.cost *= 1.2;
               tempPart.weight += 100;
               tempPart.armorValue += 80;
-              if (tempPart.attack) {
-                tempPart.attack.damage += 30;
-              } else if (tempPart.mobility) {
-                tempPart.mobility.speed = 10;
-                tempPart.mobility.stability = 10;
-                tempPart.mobility.thrust = 10;
+              if (tempPart.attackPower) {
+                tempPart.attackPower += 30;
+              } else if (tempPart.speed) {
+                tempPart.speed = 10;
+                tempPart.stability = 10;
+                tempPart.thrust = 10;
               }
               break;
           }
 
           //manufacturer mod
-        //  //MANUFACTURER SPECIFIC BONUSES, hopefully possible to iterate over manufacturer.bonuses array?
+          //  //MANUFACTURER SPECIFIC BONUSES, hopefully possible to iterate over manufacturer.bonuses array?
           for (let i = 0; i < tempPart.manufacturer.bonuses.length; i++) {
-            tempPart = this.resolveBonus(tempPart, tempPart.manufacturer.bonuses);
+            tempPart = this.resolveBonus(
+              tempPart,
+              tempPart.manufacturer.bonuses
+            );
           }
 
           //make->MODEL mod
@@ -707,17 +702,21 @@ export class PartsService {
 
   resolveBonus(part: Part, bonuses: Array<Bonus>): Part {
     for (let i = 0; i < bonuses.length; i++) {
-      var pK: partType = bonuses[i].partKey
-      var mod: Array<string> = bonuses[i].modifier.split('|')
-      if (pK == partType.any || part.type == pK) {
-        if (mod[1] == '-') {
-          console.log('subtract ' + mod[2] + " " + mod[0])
-        } else if (mod[1] == '+') {
-          console.log('add ' + mod[2] + " " + mod[0])
+      var pK: partType = bonuses[i].partType;
+      if (part[bonuses[i].partProp as keyof Part] && (part.type === pK || pK == partType.any)) {
+        if (bonuses[i].bonusAdds) {
+          for (let j = 0; j < bonuses[i].bonusCoefficient; j++) {
+            part[bonuses[i].partProp as keyof Part]++;
+          }
+        } else {
+          for (let k = 0; k < bonuses[i].bonusCoefficient; k++) {
+            part[bonuses[i].partProp as keyof Part]--;
+          }
         }
+      } else {
+        //console.log('PROPERTY NOT FOUND ERROR!');
       }
     }
     return part;
   }
-
 }

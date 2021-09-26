@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Part, Attack, Defense, PartsService, partType } from '../parts-service.service';
+import { Part, PartsService, partType } from '../parts-service.service';
 
 
 
