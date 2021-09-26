@@ -51,26 +51,26 @@
   <div class="container">
     <div class="stats">
       <p>
-        Total Mech Value: {{partsService.getTotalMechValue(false)}}
+        Total Mech Value: {{partsService.getTotalMechValue(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getTotalMechValue(false) > partsService.getTotalMechValue(true), 'blue-text': partsService.getTotalMechValue(false) < partsService.getTotalMechValue(true)} ">
-          > {{partsService.getTotalMechValue(true)}}
+          > {{partsService.getTotalMechValue(true).toFixed(0)}}
         </span>
       </p>
       <hr>
       <p>
-        Power Consumption: {{partsService.getTotalPowerConsumption(false)}}
+        Power Consumption: {{partsService.getTotalPowerConsumption(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getTotalPowerConsumption(false) < partsService.getTotalPowerConsumption(true), 'blue-text': partsService.getTotalPowerConsumption(false) > partsService.getTotalPowerConsumption(true)} ">
-          > {{partsService.getTotalPowerConsumption(true)}}
+          > {{partsService.getTotalPowerConsumption(true).toFixed(0)}}
         </span>
       </p>
       <hr>
       <p>
-        Total Weight: {{partsService.getTotalWeight(false)}}
+        Total Weight: {{partsService.getTotalWeight(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getTotalWeight(false) < partsService.getTotalWeight(true), 'blue-text': partsService.getTotalWeight(false) > partsService.getTotalWeight(true)} ">
-          > {{partsService.getTotalWeight(true)}}
+          > {{partsService.getTotalWeight(true).toFixed(0)}}
         </span>
       </p>
       <p class="sub">Leg Stability: {{'xxx'}}</p>
@@ -78,38 +78,38 @@
       <p class="sub">Booster Power: {{'xxx'}}</p>
       <hr>
       <p>
-        Head Armor: {{partsService.getHeadArmor(false)}}
+        Head Armor: {{partsService.getHeadArmor(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getHeadArmor(false) > partsService.getHeadArmor(true), 'blue-text': partsService.getHeadArmor(false) < partsService.getHeadArmor(true)} ">
-          > {{partsService.getHeadArmor(true)}}
+          > {{partsService.getHeadArmor(true).toFixed(0)}}
         </span>
       </p>
       <p>
-        Core Armor: {{partsService.getCoreArmor(false)}}
+        Core Armor: {{partsService.getCoreArmor(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getCoreArmor(false) > partsService.getCoreArmor(true), 'blue-text': partsService.getCoreArmor(false) < partsService.getCoreArmor(true)} ">
-          > {{partsService.getCoreArmor(true)}}
+          > {{partsService.getCoreArmor(true).toFixed(0)}}
         </span>
       </p>
       <p>
-        L Arm Armor: {{partsService.getLarmArmor(false)}}
+        L Arm Armor: {{partsService.getLarmArmor(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getLarmArmor(false) > partsService.getLarmArmor(true), 'blue-text': partsService.getLarmArmor(false) < partsService.getLarmArmor(true)} ">
-          > {{partsService.getLarmArmor(true)}}
+          > {{partsService.getLarmArmor(true).toFixed(0)}}
         </span>
       </p>
       <p>
-        R Arm Armor: {{partsService.getRarmArmor(false)}}
+        R Arm Armor: {{partsService.getRarmArmor(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getRarmArmor(false) > partsService.getRarmArmor(true), 'blue-text': partsService.getRarmArmor(false) < partsService.getRarmArmor(true)} ">
-          > {{partsService.getRarmArmor(true)}}
+          > {{partsService.getRarmArmor(true).toFixed(0)}}
         </span>
       </p>
       <p>
-        Leg Armor: {{partsService.getLegArmor(false)}}
+        Leg Armor: {{partsService.getLegArmor(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getLegArmor(false) > partsService.getLegArmor(true), 'blue-text': partsService.getLegArmor(false) < partsService.getLegArmor(true)} ">
-          > {{partsService.getLegArmor(true)}}
+          > {{partsService.getLegArmor(true).toFixed(0)}}
         </span>
       </p>
       <hr>
@@ -117,18 +117,18 @@
       <p>Sensor Strength: 100</p>
       <hr>
       <p>
-        R Arm Weapon Damage: {{partsService.getRarmWeaponDamage(false)}}
+        R Arm Weapon Damage: {{partsService.getRarmWeaponDamage(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getRarmWeaponDamage(false) > partsService.getRarmWeaponDamage(true), 'blue-text': partsService.getRarmWeaponDamage(false) < partsService.getRarmWeaponDamage(true)} ">
-          > {{partsService.getRarmWeaponDamage(true)}}
+          > {{partsService.getRarmWeaponDamage(true).toFixed(0)}}
         </span>
       </p>
       <p class="sub">R Shoulder Weapon:</p>
       <p>
-        L Arm Weapon Damage: {{partsService.getLarmWeaponDamage(false)}}
+        L Arm Weapon Damage: {{partsService.getLarmWeaponDamage(false).toFixed(0)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getLarmWeaponDamage(false) > partsService.getLarmWeaponDamage(true), 'blue-text': partsService.getLarmWeaponDamage(false) < partsService.getLarmWeaponDamage(true)} ">
-          > {{partsService.getLarmWeaponDamage(true)}}
+          > {{partsService.getLarmWeaponDamage(true).toFixed(0)}}
         </span>
       </p>
       <p class="sub">L Shoulder Weapon:</p>
@@ -158,8 +158,9 @@
 
   <div class="container">
     <div class="stub">
-      <button [disabled]="!partsService.isMechaComplete()" mat-raised-button color="primary">Ready!</button>
       <p *ngIf="!partsService.isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
+      <p *ngIf="partsService.getTotalPowerConsumption() > 0" style="color: red;">NOT ENOUGH POWER</p>
+      <button [disabled]="!partsService.isMechaComplete()" mat-raised-button color="primary">Ready!</button>
     </div>
   </div>
 

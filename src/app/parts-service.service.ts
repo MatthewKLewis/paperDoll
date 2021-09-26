@@ -94,8 +94,6 @@ export class PartsService {
           partProp: 'weight',
           bonusAdds: false,
           bonusCoefficient: 5,
-          description:
-            'all avionissimo parts are slightly lighter than the competition',
         },
       ],
       models: [
@@ -110,8 +108,6 @@ export class PartsService {
               partProp: 'speed',
               bonusAdds: true,
               bonusCoefficient: 5,
-              description:
-                'all avionissimo parts are slightly lighter than the competition',
             },
           ],
         },
@@ -167,7 +163,7 @@ export class PartsService {
       ],
     },
     {
-      name: 'GAZAN',
+      name: 'VOLGAZ',
       bonuses: [],
       models: [
         { name: 'Kalinka', class: 'scout', industryRating: 1, bonuses: [] },
@@ -178,7 +174,7 @@ export class PartsService {
           name: 'Josef',
           class: 'superheavy',
           industryRating: 5,
-          description: `The GAZAN Josef - The best in class mecha for the SuperHeavy category.`,
+          description: `The VOLGAZ Josef - The best in class mecha for the SuperHeavy category.`,
           bonuses: [],
         },
       ],
@@ -568,13 +564,13 @@ export class PartsService {
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
-              tempPart.attackPower = 10;
+              tempPart.attackPower = 100;
               break;
             case partType.larm:
               tempPart.weight = 100;
               tempPart.powerConsumption = 20;
               tempPart.armorValue = 100;
-              tempPart.attackPower = 10;
+              tempPart.attackPower = 100;
               break;
             case partType.head:
               tempPart.weight = 50;
@@ -631,11 +627,11 @@ export class PartsService {
               tempPart.weight -= 30;
               tempPart.armorValue -= 30;
               if (tempPart.attackPower) {
-                tempPart.attackPower -= 20;
-              } else if (tempPart.speed) {
-                tempPart.speed = 10;
-                tempPart.stability = 10;
-                tempPart.thrust = 10;
+                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+              } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed += 20;
+                tempPart.stability -= 20;
+                tempPart.thrust += 20;
               }
               break;
             case 'light':
@@ -643,11 +639,11 @@ export class PartsService {
               tempPart.weight -= 10;
               tempPart.armorValue -= 10;
               if (tempPart.attackPower) {
-                tempPart.attackPower -= 10;
-              } else if (tempPart.speed) {
-                tempPart.speed = 10;
-                tempPart.stability = 10;
-                tempPart.thrust = 10;
+                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+              }else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed += 10;
+                tempPart.stability -= 10;
+                tempPart.thrust += 10;
               }
               break;
             case 'medium':
@@ -658,11 +654,11 @@ export class PartsService {
               tempPart.weight += 10;
               tempPart.armorValue += 30;
               if (tempPart.attackPower) {
-                tempPart.attackPower += 10;
-              } else if (tempPart.speed) {
-                tempPart.speed = 10;
-                tempPart.stability = 10;
-                tempPart.thrust = 10;
+                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+              } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed -= 10;
+                tempPart.stability += 10;
+                tempPart.thrust -= 10;
               }
               break;
             case 'superheavy':
@@ -670,11 +666,11 @@ export class PartsService {
               tempPart.weight += 100;
               tempPart.armorValue += 80;
               if (tempPart.attackPower) {
-                tempPart.attackPower += 30;
-              } else if (tempPart.speed) {
-                tempPart.speed = 10;
-                tempPart.stability = 10;
-                tempPart.thrust = 10;
+                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+              } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed -= 20;
+                tempPart.stability += 20;
+                tempPart.thrust -= 20;
               }
               break;
           }

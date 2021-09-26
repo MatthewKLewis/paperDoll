@@ -30,7 +30,6 @@ export class MakeModelComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    console.log(this.zSort)
     this.allModels.sort = this.zSort;
   }
 
