@@ -95,6 +95,12 @@ export class PartsService {
           bonusAdds: false,
           bonusCoefficient: 5,
         },
+        {
+          partType: partType.legs,
+          partProp: 'speed',
+          bonusAdds: true,
+          bonusCoefficient: 2,
+        },
       ],
       models: [
         {
@@ -125,7 +131,20 @@ export class PartsService {
     },
     {
       name: 'Corgistics',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.core,
+          partProp: 'powerConsumption',
+          bonusAdds: false,
+          bonusCoefficient: 5,
+        },
+        {
+          partType: partType.head,
+          partProp: 'sensorRange',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+      ],
       models: [
         {
           name: 'Micro',
@@ -147,7 +166,20 @@ export class PartsService {
     },
     {
       name: 'Fleetwood Marine',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.rarm,
+          partProp: 'attackPower',
+          bonusAdds: true,
+          bonusCoefficient: 2,
+        },
+        {
+          partType: partType.legs,
+          partProp: 'speed',
+          bonusAdds: true,
+          bonusCoefficient: 2,
+        },
+      ],
       models: [
         { name: 'FM-00', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'FM-12', class: 'light', industryRating: 2, bonuses: [] },
@@ -164,7 +196,20 @@ export class PartsService {
     },
     {
       name: 'VOLGAZ',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.any,
+          partProp: 'armorValue',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+        {
+          partType: partType.legs,
+          partProp: 'stability',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+      ],
       models: [
         { name: 'Kalinka', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'Razvedik', class: 'light', industryRating: 2, bonuses: [] },
@@ -181,7 +226,14 @@ export class PartsService {
     },
     {
       name: 'Mantissa',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.head,
+          partProp: 'sensorPower',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+      ],
       models: [
         { name: 'Hyperion', class: 'scout', industryRating: 4, bonuses: [] },
         { name: 'Radix', class: 'light', industryRating: 5, bonuses: [] },
@@ -197,7 +249,20 @@ export class PartsService {
     },
     {
       name: 'Vincente',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.larm,
+          partProp: 'attackPower',
+          bonusAdds: true,
+          bonusCoefficient: 2,
+        },
+        {
+          partType: partType.rarm,
+          partProp: 'attackPower',
+          bonusAdds: true,
+          bonusCoefficient: 2,
+        },
+      ],
       models: [
         { name: 'Piper', class: 'scout', industryRating: 1, bonuses: [] },
         { name: 'Goshawk', class: 'light', industryRating: 2, bonuses: [] },
@@ -213,7 +278,14 @@ export class PartsService {
     },
     {
       name: 'Yamashita',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.legs,
+          partProp: 'speed',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+      ],
       models: [
         { name: 'Tanto', class: 'scout', industryRating: 3, bonuses: [] },
         { name: 'Dan-No-Ura', class: 'light', industryRating: 5, bonuses: [] },
@@ -229,7 +301,20 @@ export class PartsService {
     },
     {
       name: 'Yantian Industrial',
-      bonuses: [],
+      bonuses: [
+        {
+          partType: partType.legs,
+          partProp: 'thrust',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+        {
+          partType: partType.any,
+          partProp: 'cost',
+          bonusAdds: false,
+          bonusCoefficient: 10,
+        },
+      ],
       models: [
         { name: 'Aifeng', class: 'scout', industryRating: 2, bonuses: [] },
         { name: 'Chobra', class: 'light', industryRating: 1, bonuses: [] },
@@ -586,7 +671,7 @@ export class PartsService {
               tempPart.weight = 400;
               tempPart.powerConsumption = 100;
               tempPart.armorValue = 400;
-              tempPart.speed = 10;
+              tempPart.speed = 30;
               tempPart.thrust = 10;
               tempPart.stability = 10;
               break;
@@ -612,67 +697,103 @@ export class PartsService {
               break;
           }
 
-          //Base cost and powerProduction for cores.
+          //Base cost and power for cores.
           tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4);
           if (tempPart.powerConsumption < 0) {
             tempPart.powerConsumption -= tempPart.quality * 10;
+          } else {
+            tempPart.powerConsumption += tempPart.quality * 2;
           }
 
           //weightclass mod
-          //  //increase weight, increase armorclass, decrease mobility, increase damage - for heavies
-          //  //increase mobility, decrease armor, decrease weight, decrase damage - for light
           switch (tempPart.class) {
+
             case 'scout':
-              tempPart.cost *= 0.8;
-              tempPart.weight -= 30;
-              tempPart.armorValue -= 30;
+              tempPart.cost *= 0.8
+              tempPart.weight -= 30
+              tempPart.powerConsumption *= .6
+
+              // alter by quality
+              tempPart.armorValue -= 40 - (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed += 20;
-                tempPart.stability -= 20;
-                tempPart.thrust += 20;
+                tempPart.speed += 20 + tempPart.quality;
+                tempPart.stability -= 20 //stability gets no benefit from quality
+                tempPart.thrust += 20 + tempPart.quality;
               }
+              tempPart.powerConsumption -= (tempPart.quality * 2)
+              tempPart.armorValue += (tempPart.quality * 10)
               break;
+
             case 'light':
               tempPart.cost *= 0.9;
               tempPart.weight -= 10;
-              tempPart.armorValue -= 10;
+              tempPart.powerConsumption *= .8
+
+              // alter by quality
+              tempPart.armorValue -= 10  - (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
-              }else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed += 10;
-                tempPart.stability -= 10;
-                tempPart.thrust += 10;
+                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+              } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed += 10 + tempPart.quality;
+                tempPart.stability -= 10 //stability gets no benefit from quality
+                tempPart.thrust += 10 + tempPart.quality;
               }
+              tempPart.powerConsumption -= (tempPart.quality * 2)
+              tempPart.armorValue += (tempPart.quality * 10)
               break;
+
             case 'medium':
-              //do nothing
+              // alter by quality
+              tempPart.armorValue += 0  + (tempPart.quality * 5);
+              if (tempPart.attackPower) {
+                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+              } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
+                tempPart.speed += tempPart.quality;
+                tempPart.stability += tempPart.quality;
+                tempPart.thrust += tempPart.quality;
+              }
+              tempPart.powerConsumption -= (tempPart.quality * 2)
+              tempPart.armorValue += (tempPart.quality * 10)
               break;
+
             case 'heavy':
               tempPart.cost *= 1.1;
               tempPart.weight += 10;
-              tempPart.armorValue += 30;
+              tempPart.powerConsumption *= 1.2
+              
+              // alter by quality
+              tempPart.armorValue += 30  + (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed -= 10;
-                tempPart.stability += 10;
-                tempPart.thrust -= 10;
+                tempPart.speed -= 10 //speed and thrust get no benefit from quality
+                tempPart.stability += 10 + tempPart.quality;
+                tempPart.thrust -= 10 //speed and thrust get no benefit from quality
               }
+              tempPart.powerConsumption -= (tempPart.quality * 2)
+              tempPart.armorValue += (tempPart.quality * 10)
               break;
+
             case 'superheavy':
               tempPart.cost *= 1.2;
               tempPart.weight += 100;
-              tempPart.armorValue += 80;
+              tempPart.powerConsumption *= 1.6
+
+              // alter by quality
+              tempPart.armorValue += 80  + (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower *= ((tempPart.weight + (tempPart.quality * 5)) / 100);
+                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed -= 20;
-                tempPart.stability += 20;
-                tempPart.thrust -= 20;
+                tempPart.speed -= 20 //speed and thrust get no benefit from quality
+                tempPart.stability += 20 + tempPart.quality;
+                tempPart.thrust -= 20 //speed and thrust get no benefit from quality
               }
+              tempPart.powerConsumption -= (tempPart.quality * 2)
+              tempPart.armorValue += (tempPart.quality * 10)
               break;
+              
           }
 
           //manufacturer mod

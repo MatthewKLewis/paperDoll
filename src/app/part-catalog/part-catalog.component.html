@@ -13,7 +13,7 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Avionissimo" #input>
         </mat-form-field>
 
-        <mat-paginator [pageSizeOptions]="[20, 50, 100]"
+        <mat-paginator [pageSizeOptions]="[100, 200]"
             showFirstLastButtons 
             aria-label="Select page of periodic elements">
         </mat-paginator>
@@ -27,6 +27,10 @@
             <ng-container matColumnDef="manufacturer">
                 <th mat-header-cell mat-sort-header="manufacturer" *matHeaderCellDef>Manufacturer</th>
                 <td mat-cell *matCellDef="let part">{{part.manufacturer.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th mat-header-cell mat-sort-header="type" *matHeaderCellDef>type</th>
+                <td mat-cell *matCellDef="let part">{{nameFromEnum(part.type)}}</td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell mat-sort-header="name" *matHeaderCellDef>Name</th>
@@ -50,7 +54,7 @@
             </ng-container>
             <ng-container matColumnDef="powerConsumption">
                 <th mat-header-cell mat-sort-header="powerConsumption" *matHeaderCellDef>Power Consumption</th>
-                <td mat-cell *matCellDef="let part"> {{part.powerConsumption}} </td>
+                <td mat-cell *matCellDef="let part"> {{part.powerConsumption.toFixed(0)}} </td>
             </ng-container>
             <ng-container matColumnDef="weight">
                 <th mat-header-cell mat-sort-header="weight" *matHeaderCellDef>Weight</th>

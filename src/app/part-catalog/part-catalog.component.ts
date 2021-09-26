@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Part, PartsService } from '../parts-service.service';
+import { Part, partType, PartsService } from '../parts-service.service';
 
 @Component({
   selector: 'app-part-catalog',
@@ -14,7 +14,7 @@ export class PartCatalogComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) zSort!: MatSort;
 
-  displayedModelColumns: Array<string> = ['quality', 'manufacturer', 'name', 'class', 'armorValue', 'attackPower', 'speed', 'powerConsumption', 'weight', 'cost']
+  displayedModelColumns: Array<string> = ['quality', 'manufacturer', 'type', 'name', 'class', 'armorValue', 'attackPower', 'speed', 'powerConsumption', 'weight', 'cost']
   starStr: string = '⭐'
 
   allParts!: MatTableDataSource<Part>
@@ -41,5 +41,9 @@ export class PartCatalogComponent implements OnInit {
     if (this.allParts.paginator) {
       this.allParts.paginator.firstPage();
     }
+  }
+
+  nameFromEnum(p: partType) {
+    return partType[p]
   }
 }
