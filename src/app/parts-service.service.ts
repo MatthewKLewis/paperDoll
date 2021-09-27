@@ -215,6 +215,12 @@ export class PartsService {
           bonusAdds: true,
           bonusCoefficient: 5,
         },
+        {
+          partType: partType.any,
+          partProp: 'weight',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
       ],
       models: [
         { name: 'Kalinka', class: 'scout', industryRating: 1, bonuses: [] },
