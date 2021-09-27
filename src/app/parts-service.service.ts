@@ -146,7 +146,7 @@ export class PartsService {
           partType: partType.core,
           partProp: 'powerConsumption',
           bonusAdds: false,
-          bonusCoefficient: 5,
+          bonusCoefficient: 2,
         },
         {
           partType: partType.head,
@@ -686,7 +686,7 @@ export class PartsService {
               break;
             case partType.head:
               tempPart.weight = 50;
-              tempPart.powerConsumption = 5;
+              tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
               tempPart.sensorPower = 10;
               tempPart.sensorRange = 100;
@@ -828,6 +828,11 @@ export class PartsService {
           if (tempPart.sensorPower && tempPart.sensorRange) {
             tempPart.sensorPower *= tempPart.quality;
             tempPart.sensorRange += tempPart.quality * 10;
+          }
+
+          //heads can't provide power
+          if (tempPart.type != partType.core && tempPart.powerConsumption < 1) {
+            tempPart.powerConsumption = 1;
           }
 
           //manufacturer mod

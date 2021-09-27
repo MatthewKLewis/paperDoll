@@ -11,7 +11,7 @@ import { Part, PartsService } from '../parts-service.service';
 export class SetCompareComponent implements AfterViewInit {
 
   @ViewChild(MatSort) zSort!: MatSort;
-  displayedColumns = ['setID', 'manufacturer', 'name', 'class', 'quality', 'points', 'armor', 'weight', 'power', 'attack', 'speed', 'thrust', 'stability', 'balance', 'sensorRange', 'sensorStrength'];
+  displayedColumns = ['setID', 'manufacturer', 'name', 'class', 'quality', 'points', 'armor', 'attack', 'speed', 'thrust', 'weight', 'stability', 'balance', 'sensorRange', 'sensorStrength', 'power', ];
   starStr: string = '⭐'
 
   mechas: Array<Array<Part>> = [];
