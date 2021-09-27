@@ -537,34 +537,30 @@ export class PartsService {
     }
   }
   getSpeed(hover: boolean = false): number {
+    var totalSpeed = 0;
     if (hover) {
-      return (
-        this.activeAndHoverParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.speed || 0
-      );
+      for (let i = 0; i < this.activeAndHoverParts.length; i++) {
+        totalSpeed += this.activeAndHoverParts[i].speed || 0;
+      }
     } else {
-      return (
-        this.activeParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.speed || 0
-      );
+      for (let i = 0; i < this.activeParts.length; i++) {
+        totalSpeed += this.activeParts[i].speed || 0;
+      }
     }
+    return totalSpeed;
   }
   getThrust(hover: boolean = false): number {
+    var totalThrust = 0;
     if (hover) {
-      return (
-        this.activeAndHoverParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.thrust || 0
-      );
+      for (let i = 0; i < this.activeAndHoverParts.length; i++) {
+        totalThrust += this.activeAndHoverParts[i].thrust || 0;
+      }
     } else {
-      return (
-        this.activeParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.thrust || 0
-      );
+      for (let i = 0; i < this.activeParts.length; i++) {
+        totalThrust += this.activeParts[i].thrust || 0;
+      }
     }
+    return totalThrust;
   }
   getRarmWeaponDamage(hover: boolean = false): number {
     if (hover) {
@@ -749,6 +745,11 @@ export class PartsService {
               }
               tempPart.armorValue += (tempPart.quality * 10)
               tempPart.powerConsumption -= tempPart.quality * 2
+
+              if (tempPart.type == partType.core) { //light cores contribute to speed
+                tempPart.speed = 30;
+                tempPart.thrust = 20;
+              }
               break;
 
             case 'light':
@@ -768,6 +769,11 @@ export class PartsService {
               }
               tempPart.armorValue += (tempPart.quality * 10)
               tempPart.powerConsumption -= tempPart.quality * 2
+
+              if (tempPart.type == partType.core) { //light cores contribute to speed
+                tempPart.speed = 15;
+                tempPart.thrust = 10;
+              }
               break;
 
             case 'medium':

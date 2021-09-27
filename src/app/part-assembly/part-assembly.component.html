@@ -81,10 +81,10 @@
         </span>
       </p>
       <p class="sub">
-        Balance: {{partsService.getTotalWeight(false) - partsService.getStability(false)}}
+        Balance: {{partsService.getStability(false) - partsService.getTotalWeight(false)}}
         <span *ngIf="partsService.activeAndHoverParts.length > 0"
           [ngClass]="{'red-text': partsService.getStability(false) > partsService.getStability(true), 'blue-text': partsService.getStability(false) < partsService.getStability(true)} ">
-          > {{partsService.getTotalWeight(true) - partsService.getStability(true)}}
+          > {{partsService.getStability(true) - partsService.getTotalWeight(true)}}
         </span>
       </p>
       <p>

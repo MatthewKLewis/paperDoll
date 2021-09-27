@@ -44,7 +44,6 @@ export class SetCompareComponent implements AfterViewInit {
       var sensorRange = 0;
 
       this.mechas[i].forEach((part: Part) => {
-        totalPoints += part.armorValue + (part.attackPower || 0) + (part.speed || 0)  + (part.thrust || 0)  + (part.stability || 0)
         totalArmor += part.armorValue;
         totalWeight += part.weight;
         totalPower += part.powerConsumption;
@@ -54,6 +53,8 @@ export class SetCompareComponent implements AfterViewInit {
         totalStability += part.stability || 0;
         sensorStrength += part.sensorPower || 0;
         sensorRange += part.sensorRange || 0;
+        //totalPoints += part.armorValue + (part.attackPower || 0) + (part.speed || 0)  + (part.thrust || 0)  + (part.stability || 0)
+        totalPoints += part.armorValue + (part.attackPower || 0) + (part.speed || 0) * 2  + (part.thrust || 0) * 2  + (part.stability || 0) + (part.sensorRange || 0) + (part.sensorPower || 0)
       });
       
       this.mechaCompanionStatArray.filteredData.push({
