@@ -11,7 +11,7 @@ import { Part, PartsService } from '../parts-service.service';
 export class SetCompareComponent implements AfterViewInit {
 
   @ViewChild(MatSort) zSort!: MatSort;
-  displayedColumns = ['setID', 'manufacturer', 'name', 'class', 'quality', 'points', 'armor', 'weight', 'power', 'attack', 'speed', 'thrust', 'stability', 'balance'];
+  displayedColumns = ['setID', 'manufacturer', 'name', 'class', 'quality', 'points', 'armor', 'weight', 'power', 'attack', 'speed', 'thrust', 'stability', 'balance', 'sensorRange', 'sensorStrength'];
   starStr: string = '⭐'
 
   mechas: Array<Array<Part>> = [];
@@ -40,6 +40,8 @@ export class SetCompareComponent implements AfterViewInit {
       var totalSpeed = 0;
       var totalThrust = 0;
       var totalStability = 0;
+      var sensorStrength = 0;
+      var sensorRange = 0;
 
       this.mechas[i].forEach((part: Part) => {
         totalPoints += part.armorValue + (part.attackPower || 0) + (part.speed || 0)  + (part.thrust || 0)  + (part.stability || 0)
@@ -50,6 +52,8 @@ export class SetCompareComponent implements AfterViewInit {
         totalSpeed += part.speed || 0;
         totalThrust += part.thrust || 0;
         totalStability += part.stability || 0;
+        sensorStrength += part.sensorPower || 0;
+        sensorRange += part.sensorRange || 0;
       });
       
       this.mechaCompanionStatArray.filteredData.push({
@@ -67,6 +71,8 @@ export class SetCompareComponent implements AfterViewInit {
         thrust: totalThrust,
         stability: totalStability,
         balance: totalStability - totalWeight,
+        sensorRange: sensorRange,
+        sensorStrength: sensorStrength,
       });
     }
   }

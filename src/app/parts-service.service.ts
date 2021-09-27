@@ -740,7 +740,8 @@ export class PartsService {
               // alter by quality
               tempPart.armorValue -= 40 - (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+                tempPart.attackPower += (tempPart.weight / 3) + (tempPart.quality * 5)
+                tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 20 + tempPart.quality;
                 tempPart.stability *= 0.8 //no benefit at light from quality
@@ -758,7 +759,8 @@ export class PartsService {
               // alter by quality
               tempPart.armorValue -= 10  - (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+                tempPart.attackPower += (tempPart.weight / 3) + (tempPart.quality * 5)
+                tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 10 + tempPart.quality;
                 tempPart.stability *= 0.9 //no benefit at light from quality
@@ -772,7 +774,8 @@ export class PartsService {
               // alter by quality
               tempPart.armorValue += 0  + (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+                tempPart.attackPower += (tempPart.weight / 3) + (tempPart.quality * 5)
+                tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += tempPart.quality;
                 tempPart.thrust += tempPart.quality;
@@ -790,7 +793,8 @@ export class PartsService {
               // alter by quality
               tempPart.armorValue += 30  + (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+                tempPart.attackPower += (tempPart.weight / 3) + (tempPart.quality * 5)
+                tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed -= 10 //speed and thrust get no benefit from quality at heavy
                 tempPart.stability *= 1.1  + (tempPart.quality / 10)
@@ -808,7 +812,8 @@ export class PartsService {
               // alter by quality
               tempPart.armorValue += 80  + (tempPart.quality * 5);
               if (tempPart.attackPower) {
-                tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
+                tempPart.attackPower += (tempPart.weight / 3) + (tempPart.quality * 5)
+                tempPart.attackPower = Math.floor(tempPart.attackPower)
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed -= 20 //speed and thrust get no benefit from quality at heavy
                 tempPart.stability *= 1.4 + (tempPart.quality / 10)
@@ -817,7 +822,12 @@ export class PartsService {
               tempPart.armorValue += (tempPart.quality * 10)
               tempPart.powerConsumption -= tempPart.quality * 2
               break;
-              
+          }
+
+          //more range over quality
+          if (tempPart.sensorPower && tempPart.sensorRange) {
+            tempPart.sensorPower *= tempPart.quality;
+            tempPart.sensorRange += tempPart.quality * 10;
           }
 
           //manufacturer mod
