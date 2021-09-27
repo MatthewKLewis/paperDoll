@@ -31,9 +31,8 @@ export interface Part {
   sensorRange?: number;
 
   attackPower?: number;
-  attackRange?: number;
-
-  defense?: number;
+  // future stats?
+  // future stats?
 
   stability?: number;
   speed?: number;
@@ -86,6 +85,11 @@ export class PartsService {
     partType.rarm,
     partType.legs,
   ];
+  optionalPartTypes: Array<partType> = [
+    partType.lshoulder,
+    partType.rshoulder,
+    partType.slotted,
+  ];
   manufacturers: Array<Manufacturer> = [
     {
       name: 'Avionissimo',
@@ -110,28 +114,14 @@ export class PartsService {
           class: 'scout',
           industryRating: 5,
           description: `The Avionissimo Evra is the lightest frame from this manufacturer, and their best regarded.`,
-          bonuses: [
-            // {
-            //   partType: partType.legs,
-            //   partProp: 'speed',
-            //   bonusAdds: true,
-            //   bonusCoefficient: 5,
-            // },
-          ],
+          bonuses: [],
         },
         {
           name: 'Hugo',
           class: 'light',
           industryRating: 4,
           description: `Avionissimo's Hugo model is a solid entry in the light mech category.`,
-          bonuses: [
-            // {
-            //   partType: partType.any,
-            //   partProp: 'powerConsumption',
-            //   bonusAdds: false,
-            //   bonusCoefficient: 5,
-            // },
-          ],
+          bonuses: [],
         },
         { name: 'Guillaume', class: 'medium', industryRating: 3, bonuses: [] },
         { name: 'Valjean', class: 'heavy', industryRating: 2, bonuses: [] },
@@ -216,10 +206,10 @@ export class PartsService {
           bonusCoefficient: 5,
         },
         {
-          partType: partType.any,
-          partProp: 'weight',
+          partType: partType.legs,
+          partProp: 'stability',
           bonusAdds: true,
-          bonusCoefficient: 5,
+          bonusCoefficient: 2,
         },
       ],
       models: [
@@ -346,8 +336,29 @@ export class PartsService {
       ],
     },
   ];
+  afterMarketManufacturers: Array<Manufacturer> = [
+    {
+      name: 'Pinnacle',
+      slogan: 'At The Pinnacle',
+      models: [],
+      bonuses: [],
+    },
+    {
+      name: 'Lash Tech',
+      slogan: 'Whip it Good.',
+      models: [],
+      bonuses: [],
+    },
+    {
+      name: 'PUG',
+      slogan: 'Believe it!',
+      models: [],
+      bonuses: [],
+    },
+  ]
 
   allParts: Array<Part> = [];
+  optionalParts: Array<Part> = [];
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
   inactiveParts: Array<Part> = [];
@@ -598,6 +609,36 @@ export class PartsService {
       );
     }
   }
+  getRshoulderDamage(hover: boolean = false): number {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type === partType.rshoulder;
+        })?.attackPower || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type === partType.rshoulder;
+        })?.attackPower || 0
+      );
+    }
+  }
+  getLshoulderDamage(hover: boolean = false): number {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type === partType.lshoulder;
+        })?.attackPower || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type === partType.lshoulder;
+        })?.attackPower || 0
+      );
+    }
+  }
 
   //Mecha Stats and Readiness
   hoverToCompare(hovPart: Part) {
@@ -652,7 +693,7 @@ export class PartsService {
   createEveryPart() {
     for (let i = 0; i < this.manufacturers.length; i++) {
       for (let j = 0; j < this.manufacturers[i].models.length; j++) {
-        for (let k = 0; k < this.partTypes.length; k++) {
+        for (let k = 0; k < (this.partTypes.length); k++) { // Don't make shoulders or slots per Make >> Model
           //base identity
           var tempPart: Part = {
             id: i * 100 + j * 10 + k,
@@ -710,11 +751,13 @@ export class PartsService {
               tempPart.weight = 40;
               tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
+              tempPart.attackPower = 1;
               break;
             case partType.lshoulder:
               tempPart.weight = 40;
               tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
+              tempPart.attackPower = 1;
               break;
             case partType.slotted:
               tempPart.weight = 10;

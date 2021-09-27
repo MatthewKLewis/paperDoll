@@ -172,8 +172,8 @@
 
   <div class="container">
     <div class="dolly">
-      <!-- <div [ngClass]="{'red-text': partsService.getLShoulderDamage(false)} " class="doll-slot lshoulder">L Shoulder</div> -->
-      <!-- <div [ngClass]="{'red-text': partsService.getRShoulderDamage(false)} " class="doll-slot rshoulder">R Shoulder</div> -->
+      <div [ngClass]="{'filled-doll': partsService.getLshoulderDamage(false)} " class="doll-slot lshoulder">L Shoulder (Optional)</div>
+      <div [ngClass]="{'filled-doll': partsService.getRshoulderDamage(false)} " class="doll-slot rshoulder">R Shoulder (Optional)</div>
       <div [ngClass]="{'filled-doll': partsService.getHeadArmor(false)} " class="doll-slot head">Head</div>
       <div [ngClass]="{'filled-doll': partsService.getCoreArmor(false)} " class="doll-slot core">Core</div>
       <div [ngClass]="{'filled-doll': partsService.getLarmWeaponDamage(false)} " class="doll-slot larm">Left Arm</div>
