@@ -446,38 +446,6 @@ export class PartsService {
     }
     return totalWeight;
   }
-  getTopWeight(hover: boolean = false) {
-    var topWeight = 0;
-    if (hover) {
-      for (let i = 0; i < this.activeAndHoverParts.length; i++) {
-        if (this.activeAndHoverParts[i].type != partType.legs) {
-          topWeight += this.activeAndHoverParts[i].weight || 0;
-        }
-      }
-    } else {
-      for (let i = 0; i < this.activeParts.length; i++) {
-        if (this.activeAndHoverParts[i].type != partType.legs) {
-          topWeight += this.activeParts[i].weight || 0;
-        }
-      }
-    }
-    return topWeight;
-  }
-  getLegWeight(hover: boolean = false) {
-    if (hover) {
-      return (
-        this.activeAndHoverParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.weight || 0
-      );
-    } else {
-      return (
-        this.activeParts.find((part: Part) => {
-          return part.type == partType.legs;
-        })?.weight || 0
-      );
-    }
-  }
   getHeadArmor(hover: boolean = false): number {
     if (hover) {
       return (
@@ -550,6 +518,51 @@ export class PartsService {
         this.activeParts.find((part: Part) => {
           return part.type == partType.legs;
         })?.armorValue || 0
+      );
+    }
+  }
+  getStability(hover: boolean = false): number {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.stability || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.stability || 0
+      );
+    }
+  }
+  getSpeed(hover: boolean = false): number {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.speed || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.speed || 0
+      );
+    }
+  }
+  getThrust(hover: boolean = false): number {
+    if (hover) {
+      return (
+        this.activeAndHoverParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.thrust || 0
+      );
+    } else {
+      return (
+        this.activeParts.find((part: Part) => {
+          return part.type == partType.legs;
+        })?.thrust || 0
       );
     }
   }
@@ -661,26 +674,26 @@ export class PartsService {
           switch (this.partTypes[k]) {
             case partType.rarm:
               tempPart.weight = 100;
-              tempPart.powerConsumption = 40;
+              tempPart.powerConsumption = 35;
               tempPart.armorValue = 100;
               tempPart.attackPower = 100;
               break;
             case partType.larm:
               tempPart.weight = 100;
-              tempPart.powerConsumption = 40;
+              tempPart.powerConsumption = 35;
               tempPart.armorValue = 100;
               tempPart.attackPower = 100;
               break;
             case partType.head:
               tempPart.weight = 50;
-              tempPart.powerConsumption = 10;
+              tempPart.powerConsumption = 5;
               tempPart.armorValue = 80;
               tempPart.sensorPower = 10;
               tempPart.sensorRange = 100;
               break;
             case partType.core:
               tempPart.weight = 300;
-              tempPart.powerConsumption = -220;
+              tempPart.powerConsumption = -230;
               tempPart.armorValue = 350;
               break;
             case partType.legs:
@@ -734,6 +747,7 @@ export class PartsService {
                 tempPart.thrust += 20 + tempPart.quality;
               }
               tempPart.armorValue += (tempPart.quality * 10)
+              tempPart.powerConsumption -= tempPart.quality * 2
               break;
 
             case 'light':
@@ -751,6 +765,7 @@ export class PartsService {
                 tempPart.thrust += 10 + tempPart.quality;
               }
               tempPart.armorValue += (tempPart.quality * 10)
+              tempPart.powerConsumption -= tempPart.quality * 2
               break;
 
             case 'medium':
@@ -764,6 +779,7 @@ export class PartsService {
                 tempPart.stability *= 1.0  + (tempPart.quality / 10)
               }
               tempPart.armorValue += (tempPart.quality * 10)
+              tempPart.powerConsumption -= tempPart.quality * 2
               break;
 
             case 'heavy':
@@ -781,6 +797,7 @@ export class PartsService {
                 tempPart.thrust -= 10 //speed and thrust get no benefit from quality at heavy
               }
               tempPart.armorValue += (tempPart.quality * 10)
+              tempPart.powerConsumption -= tempPart.quality * 2
               break;
 
             case 'superheavy':
@@ -798,6 +815,7 @@ export class PartsService {
                 tempPart.thrust -= 20 //speed and thrust get no benefit from quality at heavy
               }
               tempPart.armorValue += (tempPart.quality * 10)
+              tempPart.powerConsumption -= tempPart.quality * 2
               break;
               
           }

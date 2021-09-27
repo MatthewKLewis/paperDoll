@@ -73,9 +73,34 @@
           > {{partsService.getTotalWeight(true).toFixed(0)}}
         </span>
       </p>
-      <p class="sub">Leg Stability: {{'xxx'}}</p>
-      <p class="sub">Leg Mobility: {{'xxx'}}</p>
-      <p class="sub">Booster Power: {{'xxx'}}</p>
+      <p class="sub">
+        Stability: {{partsService.getStability(false).toFixed(0)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getStability(false) > partsService.getStability(true), 'blue-text': partsService.getStability(false) < partsService.getStability(true)} ">
+          > {{partsService.getStability(true).toFixed(0)}}
+        </span>
+      </p>
+      <p class="sub">
+        Balance: {{partsService.getTotalWeight(false) - partsService.getStability(false)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getStability(false) > partsService.getStability(true), 'blue-text': partsService.getStability(false) < partsService.getStability(true)} ">
+          > {{partsService.getTotalWeight(true) - partsService.getStability(true)}}
+        </span>
+      </p>
+      <p>
+        Speed: {{partsService.getSpeed(false).toFixed(0)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getSpeed(false) > partsService.getSpeed(true), 'blue-text': partsService.getSpeed(false) < partsService.getSpeed(true)} ">
+          > {{partsService.getSpeed(true).toFixed(0)}}
+        </span>
+      </p>
+      <p>
+        Thrust: {{partsService.getThrust(false).toFixed(0)}}
+        <span *ngIf="partsService.activeAndHoverParts.length > 0"
+          [ngClass]="{'red-text': partsService.getThrust(false) > partsService.getThrust(true), 'blue-text': partsService.getThrust(false) < partsService.getThrust(true)} ">
+          > {{partsService.getThrust(true).toFixed(0)}}
+        </span>
+      </p>
       <hr>
       <p>
         Head Armor: {{partsService.getHeadArmor(false).toFixed(0)}}
@@ -161,6 +186,7 @@
     <div class="stub">
       <p *ngIf="!partsService.isMechaComplete()" style="color: red;">INCOMPLETE BUILD</p>
       <p *ngIf="partsService.getTotalPowerConsumption() > 0" style="color: red;">NOT ENOUGH POWER</p>
+      <p *ngIf="partsService.getStability() < partsService.getTotalWeight()" style="color: red;">NOT ENOUGH STABILITY</p>
       <button [disabled]="!partsService.isMechaComplete()" mat-raised-button color="primary">Ready!</button>
     </div>
   </div>
