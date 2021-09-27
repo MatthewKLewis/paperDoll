@@ -18,7 +18,11 @@ mat-slider, progress {
     width: 90%;
 }
 
-tr.mat-row {
+tr.mat-header-row {
+    height: 10px;
+}
+
+::ng-deep.tr.mat-row {
     height: 5px;
 }
 

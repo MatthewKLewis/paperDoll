@@ -59,6 +59,7 @@ export interface Manufacturer {
   name: string;
   models: Array<Model>;
   bonuses: Array<Bonus>;
+  slogan?: string
 }
 export enum partType {
   'head' = 777,
@@ -88,6 +89,7 @@ export class PartsService {
   manufacturers: Array<Manufacturer> = [
     {
       name: 'Avionissimo',
+      slogan: `Like a feather on the wind.`,
       bonuses: [
         {
           partType: partType.any,
@@ -109,12 +111,12 @@ export class PartsService {
           industryRating: 5,
           description: `The Avionissimo Evra is the lightest frame from this manufacturer, and their best regarded.`,
           bonuses: [
-            {
-              partType: partType.legs,
-              partProp: 'speed',
-              bonusAdds: true,
-              bonusCoefficient: 5,
-            },
+            // {
+            //   partType: partType.legs,
+            //   partProp: 'speed',
+            //   bonusAdds: true,
+            //   bonusCoefficient: 5,
+            // },
           ],
         },
         {
@@ -122,7 +124,14 @@ export class PartsService {
           class: 'light',
           industryRating: 4,
           description: `Avionissimo's Hugo model is a solid entry in the light mech category.`,
-          bonuses: [],
+          bonuses: [
+            // {
+            //   partType: partType.any,
+            //   partProp: 'powerConsumption',
+            //   bonusAdds: false,
+            //   bonusCoefficient: 5,
+            // },
+          ],
         },
         { name: 'Guillaume', class: 'medium', industryRating: 3, bonuses: [] },
         { name: 'Valjean', class: 'heavy', industryRating: 2, bonuses: [] },
@@ -131,6 +140,7 @@ export class PartsService {
     },
     {
       name: 'Corgistics',
+      slogan: `Thinktegrity.`,
       bonuses: [
         {
           partType: partType.core,
@@ -166,6 +176,7 @@ export class PartsService {
     },
     {
       name: 'Fleetwood Marine',
+      slogan: `Mission Ready.`,
       bonuses: [
         {
           partType: partType.rarm,
@@ -196,16 +207,11 @@ export class PartsService {
     },
     {
       name: 'VOLGAZ',
+      slogan: `Siberian Born.`,
       bonuses: [
         {
           partType: partType.any,
           partProp: 'armorValue',
-          bonusAdds: true,
-          bonusCoefficient: 5,
-        },
-        {
-          partType: partType.legs,
-          partProp: 'stability',
           bonusAdds: true,
           bonusCoefficient: 5,
         },
@@ -226,10 +232,17 @@ export class PartsService {
     },
     {
       name: 'Mantissa',
+      slogan: `The question isn't who is going to let me; it's who is going to stop me.`,
       bonuses: [
         {
           partType: partType.head,
           partProp: 'sensorPower',
+          bonusAdds: true,
+          bonusCoefficient: 5,
+        },
+        {
+          partType: partType.head,
+          partProp: 'sensorRange',
           bonusAdds: true,
           bonusCoefficient: 5,
         },
@@ -249,6 +262,7 @@ export class PartsService {
     },
     {
       name: 'Vincente',
+      slogan: `Vincente made them equal.`,
       bonuses: [
         {
           partType: partType.larm,
@@ -278,12 +292,13 @@ export class PartsService {
     },
     {
       name: 'Yamashita',
+      slogan: `Speed Lives.`,
       bonuses: [
         {
           partType: partType.legs,
           partProp: 'speed',
           bonusAdds: true,
-          bonusCoefficient: 5,
+          bonusCoefficient: 10,
         },
       ],
       models: [
@@ -301,6 +316,7 @@ export class PartsService {
     },
     {
       name: 'Yantian Industrial',
+      slogan: `Yantian takes flight.`,
       bonuses: [
         {
           partType: partType.legs,
@@ -309,10 +325,10 @@ export class PartsService {
           bonusCoefficient: 5,
         },
         {
-          partType: partType.any,
-          partProp: 'cost',
-          bonusAdds: false,
-          bonusCoefficient: 10,
+          partType: partType.legs,
+          partProp: 'stability',
+          bonusAdds: true,
+          bonusCoefficient: 5,
         },
       ],
       models: [
@@ -326,10 +342,8 @@ export class PartsService {
   ];
 
   allParts: Array<Part> = [];
-
   activeParts: Array<Part> = [];
   activeAndHoverParts: Array<Part> = [];
-
   inactiveParts: Array<Part> = [];
   inactivePartFilter: partType | null = null;
 
@@ -647,33 +661,35 @@ export class PartsService {
           switch (this.partTypes[k]) {
             case partType.rarm:
               tempPart.weight = 100;
-              tempPart.powerConsumption = 20;
+              tempPart.powerConsumption = 40;
               tempPart.armorValue = 100;
               tempPart.attackPower = 100;
               break;
             case partType.larm:
               tempPart.weight = 100;
-              tempPart.powerConsumption = 20;
+              tempPart.powerConsumption = 40;
               tempPart.armorValue = 100;
               tempPart.attackPower = 100;
               break;
             case partType.head:
               tempPart.weight = 50;
-              tempPart.powerConsumption = 20;
+              tempPart.powerConsumption = 10;
               tempPart.armorValue = 80;
+              tempPart.sensorPower = 10;
+              tempPart.sensorRange = 100;
               break;
             case partType.core:
               tempPart.weight = 300;
-              tempPart.powerConsumption = -200;
+              tempPart.powerConsumption = -220;
               tempPart.armorValue = 350;
               break;
             case partType.legs:
               tempPart.weight = 400;
-              tempPart.powerConsumption = 100;
+              tempPart.powerConsumption = 120;
               tempPart.armorValue = 400;
               tempPart.speed = 30;
               tempPart.thrust = 10;
-              tempPart.stability = 10;
+              tempPart.stability = 1000;
               break;
             case partType.rshoulder:
               tempPart.weight = 40;
@@ -699,13 +715,8 @@ export class PartsService {
 
           //Base cost and power for cores.
           tempPart.cost = tempPart.weight * Math.pow(tempPart.quality, 4);
-          if (tempPart.powerConsumption < 0) {
-            tempPart.powerConsumption -= tempPart.quality * 10;
-          } else {
-            tempPart.powerConsumption += tempPart.quality * 2;
-          }
 
-          //weightclass mod
+          //weightclass mod NO TAMPER!
           switch (tempPart.class) {
 
             case 'scout':
@@ -719,10 +730,9 @@ export class PartsService {
                 tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 20 + tempPart.quality;
-                tempPart.stability -= 20 //stability gets no benefit from quality
+                tempPart.stability *= 0.8 //no benefit at light from quality
                 tempPart.thrust += 20 + tempPart.quality;
               }
-              tempPart.powerConsumption -= (tempPart.quality * 2)
               tempPart.armorValue += (tempPart.quality * 10)
               break;
 
@@ -737,10 +747,9 @@ export class PartsService {
                 tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 10 + tempPart.quality;
-                tempPart.stability -= 10 //stability gets no benefit from quality
+                tempPart.stability *= 0.9 //no benefit at light from quality
                 tempPart.thrust += 10 + tempPart.quality;
               }
-              tempPart.powerConsumption -= (tempPart.quality * 2)
               tempPart.armorValue += (tempPart.quality * 10)
               break;
 
@@ -751,10 +760,9 @@ export class PartsService {
                 tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += tempPart.quality;
-                tempPart.stability += tempPart.quality;
                 tempPart.thrust += tempPart.quality;
+                tempPart.stability *= 1.0  + (tempPart.quality / 10)
               }
-              tempPart.powerConsumption -= (tempPart.quality * 2)
               tempPart.armorValue += (tempPart.quality * 10)
               break;
 
@@ -768,11 +776,10 @@ export class PartsService {
               if (tempPart.attackPower) {
                 tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed -= 10 //speed and thrust get no benefit from quality
-                tempPart.stability += 10 + tempPart.quality;
-                tempPart.thrust -= 10 //speed and thrust get no benefit from quality
+                tempPart.speed -= 10 //speed and thrust get no benefit from quality at heavy
+                tempPart.stability *= 1.1  + (tempPart.quality / 10)
+                tempPart.thrust -= 10 //speed and thrust get no benefit from quality at heavy
               }
-              tempPart.powerConsumption -= (tempPart.quality * 2)
               tempPart.armorValue += (tempPart.quality * 10)
               break;
 
@@ -786,11 +793,10 @@ export class PartsService {
               if (tempPart.attackPower) {
                 tempPart.attackPower += (tempPart.weight / 5) + (tempPart.quality * 5) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
-                tempPart.speed -= 20 //speed and thrust get no benefit from quality
-                tempPart.stability += 20 + tempPart.quality;
-                tempPart.thrust -= 20 //speed and thrust get no benefit from quality
+                tempPart.speed -= 20 //speed and thrust get no benefit from quality at heavy
+                tempPart.stability *= 1.4 + (tempPart.quality / 10)
+                tempPart.thrust -= 20 //speed and thrust get no benefit from quality at heavy
               }
-              tempPart.powerConsumption -= (tempPart.quality * 2)
               tempPart.armorValue += (tempPart.quality * 10)
               break;
               

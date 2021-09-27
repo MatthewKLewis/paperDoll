@@ -19,6 +19,7 @@ import { CustomPartComponent } from './custom-part/custom-part.component';
 import { PartAssemblyComponent } from './part-assembly/part-assembly.component';
 import { MakeModelComponent } from './make-model/make-model.component';
 import { PartCatalogComponent } from './part-catalog/part-catalog.component';
+import { SetCompareComponent } from './set-compare/set-compare.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PartCatalogComponent } from './part-catalog/part-catalog.component';
     PartAssemblyComponent,
     MakeModelComponent,
     PartCatalogComponent,
+    SetCompareComponent,
   ],
   imports: [
     BrowserModule,

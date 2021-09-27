@@ -1,0 +1,67 @@
+<div class="wrapper">
+
+    <div>
+        <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="mechaCompanionStatArray" class="mat-elevation-z8">
+            
+            <ng-container matColumnDef="setID">
+                <th mat-header-cell mat-sort-header="setID" *matHeaderCellDef> setID </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.setID}}</td>
+            </ng-container>
+            <ng-container matColumnDef="manufacturer">
+                <th mat-header-cell mat-sort-header="manufacturer" *matHeaderCellDef> manufacturer </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.manufacturer}}</td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header="name" *matHeaderCellDef> name </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="class">
+                <th mat-header-cell mat-sort-header="class" *matHeaderCellDef> class </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.class}}</td>
+            </ng-container>
+            <ng-container matColumnDef="quality">
+                <th mat-header-cell mat-sort-header="quality" *matHeaderCellDef> quality </th>
+                <td mat-cell *matCellDef="let mecha">{{starStr.repeat(mecha.quality)}}</td>
+            </ng-container>
+            <ng-container matColumnDef="points">
+                <th mat-header-cell mat-sort-header="points" *matHeaderCellDef> points </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.points}}</td>
+            </ng-container>
+            <ng-container matColumnDef="armor">
+                <th mat-header-cell mat-sort-header="armor" *matHeaderCellDef> armor </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.armor}}</td>
+            </ng-container>
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell mat-sort-header="weight" *matHeaderCellDef> weight </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.weight}}</td>
+            </ng-container>
+            <ng-container matColumnDef="power">
+                <th mat-header-cell mat-sort-header="power" *matHeaderCellDef> power </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.power}}</td>
+            </ng-container>
+            <ng-container matColumnDef="attack">
+                <th mat-header-cell mat-sort-header="attack" *matHeaderCellDef> attack </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.attack}}</td>
+            </ng-container>
+            <ng-container matColumnDef="speed">
+                <th mat-header-cell mat-sort-header="speed" *matHeaderCellDef> speed </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.speed}}</td>
+            </ng-container>
+            <ng-container matColumnDef="thrust">
+                <th mat-header-cell mat-sort-header="thrust" *matHeaderCellDef> thrust </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.thrust}}</td>
+            </ng-container>
+            <ng-container matColumnDef="stability">
+                <th mat-header-cell mat-sort-header="stability" *matHeaderCellDef> stability </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.stability.toFixed(0)}}</td>
+            </ng-container>
+            <ng-container matColumnDef="balance">
+                <th mat-header-cell mat-sort-header="balance" *matHeaderCellDef> balance </th>
+                <td mat-cell *matCellDef="let mecha">{{mecha.balance.toFixed(0)}}</td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

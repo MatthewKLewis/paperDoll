@@ -48,6 +48,14 @@
                 <th mat-header-cell mat-sort-header="attackPower" *matHeaderCellDef>Attack Points</th>
                 <td mat-cell *matCellDef="let part"> {{part?.attackPower}} </td>
             </ng-container>
+            <ng-container matColumnDef="stability">
+                <th mat-header-cell mat-sort-header="stability" *matHeaderCellDef>stability</th>
+                <td mat-cell *matCellDef="let part"> {{part?.stability}} </td>
+            </ng-container>
+            <ng-container matColumnDef="thrust">
+                <th mat-header-cell mat-sort-header="thrust" *matHeaderCellDef>thrust</th>
+                <td mat-cell *matCellDef="let part"> {{part?.thrust}} </td>
+            </ng-container>
             <ng-container matColumnDef="speed">
                 <th mat-header-cell mat-sort-header="speed" *matHeaderCellDef>Speed</th>
                 <td mat-cell *matCellDef="let part"> {{part?.speed}} </td>

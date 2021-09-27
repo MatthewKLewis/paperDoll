@@ -14,7 +14,7 @@ export class PartCatalogComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) zSort!: MatSort;
 
-  displayedModelColumns: Array<string> = ['quality', 'manufacturer', 'type', 'name', 'class', 'armorValue', 'attackPower', 'speed', 'powerConsumption', 'weight', 'cost']
+  displayedModelColumns: Array<string> = ['quality', 'manufacturer', 'type', 'name', 'class', 'armorValue', 'attackPower', 'speed', 'stability', 'thrust', 'powerConsumption', 'weight', 'cost']
   starStr: string = '⭐'
 
   allParts!: MatTableDataSource<Part>
