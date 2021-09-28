@@ -28,7 +28,8 @@ export class PartCatalogComponent implements OnInit {
   ngAfterViewInit(): void {
     this.allParts.sort = this.zSort;
     this.allParts.paginator = this.paginator;
-    console.log(this.allParts.filteredData)
+    console.log(this.partsService.allParts)
+    console.log(this.partsService.optionalParts)
   }
 
   sortData(event:any) {

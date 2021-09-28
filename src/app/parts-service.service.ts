@@ -371,6 +371,11 @@ export class PartsService {
         this.allParts[Math.floor(Math.random() * this.allParts.length)]
       );
     }
+    for (let i = 0; i < 4; i++) {
+      this.inactiveParts.push(
+        this.optionalParts[Math.floor(Math.random() * this.optionalParts.length)]
+      );
+    }
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -696,7 +701,7 @@ export class PartsService {
         for (let k = 0; k < (this.partTypes.length); k++) { // Don't make shoulders or slots per Make >> Model
           //base identity
           var tempPart: Part = {
-            id: i * 100 + j * 10 + k,
+            id: (i+1) * 100 + (j+1) * 10 + (k+1),
             name:
               this.manufacturers[i].models[j].name +
               ' ' +
@@ -907,6 +912,30 @@ export class PartsService {
 
           this.allParts.push(tempPart);
         }
+      }
+    }
+
+    for (let i = 0; i < this.afterMarketManufacturers.length; i++) {
+      for (let j = 0; j < this.optionalPartTypes.length; j++) {
+        //base identity
+        var tempPart: Part = {
+          id: (i+1) * 10000 + (j+1),
+          name:
+            this.afterMarketManufacturers[i].name +
+            ' ' +
+            this.getTitleForPart(this.optionalPartTypes[j]),
+          manufacturer: this.afterMarketManufacturers[i],
+          class: 'N/A',
+          quality: 6,
+          type: this.optionalPartTypes[j],
+          weight: 10,
+          powerConsumption: 10,
+          armorValue: 10,
+          cost: 10,
+          bonuses: [],
+        };
+        
+        this.optionalParts.push(tempPart)
       }
     }
   }
