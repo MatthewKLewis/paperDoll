@@ -794,7 +794,7 @@ export class PartsService {
                 tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 20 + tempPart.quality;
-                tempPart.stability *= 0.8 //no benefit at light from quality
+                tempPart.stability *= 0.825 //no benefit at light from quality
                 tempPart.thrust += 20 + tempPart.quality;
               }
               tempPart.armorValue += (tempPart.quality * 10)
@@ -818,7 +818,7 @@ export class PartsService {
                 tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += 10 + tempPart.quality;
-                tempPart.stability *= 0.9 //no benefit at light from quality
+                tempPart.stability *= 0.925 //no benefit at light from quality
                 tempPart.thrust += 10 + tempPart.quality;
               }
               tempPart.armorValue += (tempPart.quality * 10)
@@ -839,7 +839,7 @@ export class PartsService {
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed += tempPart.quality;
                 tempPart.thrust += tempPart.quality;
-                tempPart.stability *= 1.0  + (tempPart.quality / 10)
+                tempPart.stability *= 1.0  + (tempPart.quality / 40)
               }
               tempPart.armorValue += (tempPart.quality * 10)
               tempPart.powerConsumption -= tempPart.quality * 2
@@ -847,7 +847,7 @@ export class PartsService {
 
             case 'heavy':
               tempPart.cost *= 1.1;
-              tempPart.weight += 10;
+              tempPart.weight += 40;
               tempPart.powerConsumption *= 1.2
               
               // alter by quality
@@ -857,7 +857,7 @@ export class PartsService {
                 tempPart.attackPower = Math.floor(tempPart.attackPower) 
               } else if (tempPart.speed && tempPart.stability && tempPart.thrust) {
                 tempPart.speed -= 10 //speed and thrust get no benefit from quality at heavy
-                tempPart.stability *= 1.1  + (tempPart.quality / 10)
+                tempPart.stability *= 1.1  + (tempPart.quality / 15)
                 tempPart.thrust -= 10 //speed and thrust get no benefit from quality at heavy
               }
               tempPart.armorValue += (tempPart.quality * 10)
@@ -928,8 +928,8 @@ export class PartsService {
           class: 'N/A',
           quality: 6,
           type: this.optionalPartTypes[j],
-          weight: 10,
-          powerConsumption: 10,
+          weight: 80,
+          powerConsumption: 40,
           armorValue: 10,
           cost: 10,
           bonuses: [],

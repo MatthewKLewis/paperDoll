@@ -44,7 +44,7 @@
   
     .box {
       display: grid;
-      grid-template-columns: 38px 50% auto auto auto;
+      grid-template-columns: 38px auto auto auto auto auto;
       margin: 5px;
       padding: 10px 10px;
       border-radius: 5px;
@@ -165,7 +165,7 @@
   // DRAG PREVIEW
   .cdk-drag-preview {
     display: grid;
-    grid-template-columns: 38px 50% auto auto auto;
+    grid-template-columns: 38px auto auto auto auto auto;
     margin: 5px;
     padding: 10px 10px;
     border-radius: 5px;

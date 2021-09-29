@@ -26,6 +26,7 @@
       >
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
+        <p>{{part.class}}</p>
         <p>{{part.weight}}kgs</p>
         <p *ngIf="part.powerConsumption < 0" style="color: green">{{part.powerConsumption}}kw</p>
         <p *ngIf="part.powerConsumption > 0" style="color: red">{{part.powerConsumption}}kw</p>
@@ -40,6 +41,7 @@
       <div [class]="'box ' + ' a' + part.quality" *ngFor="let part of partsService.activeParts" cdkDrag>
         <img class="icon" [src]="getImagePath(part.type)">
         <p>{{part.name}}</p>
+        <p>{{part.class}}</p>
         <p>{{part.weight}}kgs</p>
         <p *ngIf="part.powerConsumption < 0" style="color: green">{{part.powerConsumption}}kw</p>
         <p *ngIf="part.powerConsumption > 0" style="color: red">{{part.powerConsumption}}kw</p>
